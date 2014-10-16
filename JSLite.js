@@ -74,7 +74,8 @@
 
 	WCJ.extend({
 		isFunction:function (value) { return ({}).toString.call(value) == "[object Function]" },
-		isObject:function (value) { return value instanceof Object }
+		isObject:function (value) { return value instanceof Object },
+		isArray:function (value) { return value instanceof Array }
 	})
 
 	window.WCJ = window.$$ = WCJ;
