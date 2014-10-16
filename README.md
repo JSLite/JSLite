@@ -3,6 +3,7 @@ JSLite
 jQuery lite.
 
 ## 核心Core
+```js
 $$("#box")              //选择器
 $$.isFunction           //判断对象是否为【函数】
 $$.isObject             //判断是否为【Object】
@@ -13,7 +14,7 @@ $$.error                //创建自定义错误
 
 $$("#box").each()       //获取类型
 $$("#box").extend()
-
+```
 
 
 ## 事件Event
