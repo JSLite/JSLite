@@ -76,7 +76,21 @@
 		isFunction:function (value) { return ({}).toString.call(value) == "[object Function]" },
 		isObject:function (value) { return value instanceof Object },
 		isArray:function (value) { return value instanceof Array },
-		likeArray:function (obj) { return typeof obj.length == 'number' }
+		likeArray:function (obj) { return typeof obj.length == 'number' },
+        type: function (obj) {
+            switch (obj) {
+                case null: return "Null";
+                case (void 0): return "Undefined";
+            }
+            var type = typeof (obj);
+            switch (type) {
+                case 'boolean': return "Boolean";
+                case 'number': return "Number";
+                case 'string': return "String";
+                case 'function': return "Function";
+            }
+            return "Object";
+        }
 	})
 
 	window.WCJ = window.$$ = WCJ;
