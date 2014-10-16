@@ -72,7 +72,9 @@
 	    }
 	})
 
-	WCJ.extend()
+	WCJ.extend({
+		isFunction:function (value) { return ({}).toString.call(value) == "[object Function]" }
+	})
 
 	window.WCJ = window.$$ = WCJ;
 })(window);
