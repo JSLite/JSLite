@@ -90,7 +90,8 @@
                 case 'function': return "Function";
             }
             return "Object";
-        }
+        },
+        error:function(msg) {throw msg;}
 	})
 
 	window.WCJ = window.$$ = WCJ;
