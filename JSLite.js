@@ -1,26 +1,33 @@
 (function(window, undefined) {
 	"use strict";
-	var ess,emptyArray = [],slice = emptyArray.slice,
+	var ess,emptyArray = [],slice = emptyArray.slice,elementTypes = [1, 9, 11],
 		WCJ = (function(){
 		var WCJ = function( selector ) {
 		    return new WCJ.fn.init(selector);
 		};
 		WCJ.fn = WCJ.prototype = {
 			init:function( selector ){
-				var dom = (function(){
-			        var found;
-			        return (document && /^#([\w-]+)$/.test(selector))?
-			        ((found = document.getElementById(RegExp.$1)) ? [found] : emptyArray ):
-				    slice.call(
-					    /^\.([\w-]+)$/.test(selector) ? document.getElementsByClassName(RegExp.$1) :
-					    /^[\w-]+$/.test(selector) ? document.getElementsByTagName(selector) :
-					    document.querySelectorAll(selector)
-				    );
-				})();
-				dom = dom || emptyArray;
-				dom.__proto__ = WCJ.fn.init.prototype;
-				dom.selector = selector || '';
-				return dom;
+				var dom ;
+    			if (!selector) 
+    				dom = emptyArray,dom.selector = selector || '',dom.__proto__ = WCJ.fn.init.prototype;
+    			else {
+	                if (elementTypes.indexOf(selector.nodeType) >= 0 || selector === window)
+	                	dom = [selector], selector = null;
+	                else dom = (function(){
+				        var found;
+				        return (document && /^#([\w-]+)$/.test(selector))?
+				        ((found = document.getElementById(RegExp.$1)) ? [found] : emptyArray ):
+					    slice.call(
+						    /^\.([\w-]+)$/.test(selector) ? document.getElementsByClassName(RegExp.$1) :
+						    /^[\w-]+$/.test(selector) ? document.getElementsByTagName(selector) :
+						    document.querySelectorAll(selector)
+					    );
+					})();
+					dom = dom || emptyArray;
+					dom.__proto__ = WCJ.fn.init.prototype;
+					dom.selector = selector || '';
+    			}
+    			return dom;
 			},
 			size:function(){return this.length;}
 		}
