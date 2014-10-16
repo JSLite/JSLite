@@ -81,6 +81,7 @@
 	    get: function(index){
 	      return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
 	    },
+	    empty: function(){ return this.each(function(){ this.innerHTML = '' }) },
 	    text: function(text){
 	      return text === undefined ?
 	        (this.length > 0 ? this[0].textContent : null) :
