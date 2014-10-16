@@ -116,5 +116,10 @@
 		}
 	})
 
+	//字符串处理
+    WCJ.extend(String.prototype,{
+        trim: function () {return this.replace(/(^\s*)|(\s*$)/g, "");},
+        leftTrim: function () {return this.replace(/(^\s*)/g, "");}
+    })
 	window.WCJ = window.$$ = WCJ;
 })(window);
