@@ -64,9 +64,15 @@
 		return WCJ;
 	})();
 
-	WCJ.extend()
+	WCJ.fn.extend({
+		forEach: emptyArray.forEach,
+	    each: function(callback){
+	      this.forEach(function(el, idx){ callback.call(el, idx, el) });
+	      return this;
+	    }
+	})
 
-	WCJ.fn.extend()
+	WCJ.extend()
 
 	window.WCJ = window.$$ = WCJ;
 })(window);
