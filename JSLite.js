@@ -70,6 +70,9 @@
 	    each: function(callback){
 	      this.forEach(function(el, idx){ callback.call(el, idx, el) });
 	      return this;
+	    },
+	    get: function(index){
+	      return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
 	    }
 	})
 
