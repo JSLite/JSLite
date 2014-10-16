@@ -21,7 +21,8 @@
 				dom.__proto__ = WCJ.fn.init.prototype;
 				dom.selector = selector || '';
 				return dom;
-			}
+			},
+			size:function(){return this.length;}
 		}
 		WCJ.fn.init.prototype = WCJ.fn;
         WCJ.extend = WCJ.fn.extend = function () {
