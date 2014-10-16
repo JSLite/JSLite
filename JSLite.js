@@ -80,7 +80,23 @@
 	    },
 	    get: function(index){
 	      return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
-	    }
+	    },
+        bind: function(type, func) {
+			this.each(function(){
+				if (this.addEventListener) this.addEventListener(type, func, false);
+				else if (this.attachEvent) this.attachEvent("on" + type, func);
+				else this["on" + type] = func;
+			})
+			return this;
+		},
+		unbind:function(type, func) {
+			this.each(function(ele,obj){
+				if (this.removeEventListener) this.removeEventListener(type, func, false);
+				else if (this[i].detachEvent) this.detachEvent("on" + type, func);
+				else this["on" + type] = null;
+			})
+			return this;
+		}
 	})
 
 	WCJ.extend({
