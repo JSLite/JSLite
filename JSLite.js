@@ -11,7 +11,9 @@
     			if (!selector) 
     				dom = emptyArray,dom.selector = selector || '',dom.__proto__ = WCJ.fn.init.prototype;
     			else {
-	                if (elementTypes.indexOf(selector.nodeType) >= 0 || selector === window)
+    				if (WCJ.isArray(selector))
+    					dom = selector;
+	                else if (elementTypes.indexOf(selector.nodeType) >= 0 || selector === window)
 	                	dom = [selector], selector = null;
 	                else dom = (function(){
 				        var found;
@@ -78,6 +80,9 @@
 	    each: function(callback){
 	      this.forEach(function(el, idx){ callback.call(el, idx, el) });
 	      return this;
+	    },
+	    map: function(fn){
+	    	return WCJ(WCJ.map(this, function(el, i){ return fn.call(el, i, el) }));
 	    },
 	    get: function(index){
 	      return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
