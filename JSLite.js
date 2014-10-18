@@ -1,6 +1,6 @@
 (function(window, undefined) {
 	"use strict";
-	var ess,emptyArray = [],slice = emptyArray.slice,elementTypes = [1, 9, 11],
+	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],
 		WCJ = (function(){
 		var WCJ = function( selector ) {
 		    return new WCJ.fn.init(selector);
@@ -108,6 +108,11 @@
 				else this["on" + type] = null;
 			})
 			return this;
+		},
+		filter:function(selector){
+			return WCJ(filter.call(this, function(element){
+        		return WCJ.matches(element, selector)
+		    }))
 		}
 	});
 
