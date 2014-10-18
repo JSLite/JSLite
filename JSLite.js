@@ -1,4 +1,4 @@
-(function(window, undefined) {
+;(function(window, undefined) {
 	"use strict";
 	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],
 		WCJ = (function(){
@@ -113,7 +113,8 @@
 			return WCJ(filter.call(this, function(element){
         		return WCJ.matches(element, selector)
 		    }))
-		}
+		},
+		pluck: function(property){ return WCJ.map(this, function(el){ return el[property] })}
 	});
 
 	WCJ.extend({
