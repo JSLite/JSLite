@@ -114,7 +114,13 @@
         		return WCJ.matches(element, selector)
 		    }))
 		},
-		pluck: function(property){ return WCJ.map(this, function(el){ return el[property] })}
+		pluck: function(property){ return WCJ.map(this, function(el){ return el[property] })},
+		parent: function(){
+			var arr=this.pluck('parentNode');
+			return filter.call(arr, function(item, idx){ 
+				return arr.indexOf(item) == idx 
+			});
+		}
 	});
 
 	WCJ.extend({
