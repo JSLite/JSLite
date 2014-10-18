@@ -11,6 +11,7 @@ $$.isArray              //判断对象是否为【数组】
 $$.likeArray            
 $$.type                 //获取类型
 $$.error                //创建自定义错误
+$$.matches(element, selector) //如果当前元素能被指定的css选择器查找到,则返回true,否则返回false.
 
 $$.map({"w":1,"c":2,"j":3},function(item,index){
      return index
