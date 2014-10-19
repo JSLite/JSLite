@@ -135,7 +135,7 @@
 	});
 
 	WCJ.extend({
-		isDocument:function (obj) { return obj != null && obj.nodeType ? obj.nodeType == obj.DOCUMENT_NODE : false ;},
+		isDocument:function (obj) { return obj = obj ? obj != null && obj.nodeType ? obj.nodeType == obj.DOCUMENT_NODE : false : undefined;},
 		isFunction:function (value) { return ({}).toString.call(value) == "[object Function]" },
 		isObject:function (value) { return value instanceof Object },
 		isArray:function (value) { return value instanceof Array },
