@@ -120,6 +120,17 @@
 			return filter.call(arr, function(item, idx){ 
 				return arr.indexOf(item) == idx 
 			});
+		},
+		parents: function(selector){
+			var ancestors = [], nodes = this
+			while (nodes.length > 0)
+			nodes = WCJ.map(nodes, function(node){
+			  if ((node = node.parentNode) && !WCJ.isDocument(node) && ancestors.indexOf(node) < 0) {
+			    ancestors.push(node)
+			    return node
+			  }
+			});
+    		return selector == null ? WCJ(ancestors) : WCJ(ancestors).filter(selector);
 		}
 	});
 
