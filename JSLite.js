@@ -210,7 +210,6 @@
 					res.push(val);
 				}
 			}
-
 			return res;
 		};
 	}
@@ -225,6 +224,19 @@
 	        return -1;
 	    }
 	}
+	//低版本IE对forEach方法的支持
+	if (!Array.prototype.forEach) {  
+	    Array.prototype.forEach = function(fun /*, thisp*/){  
+	        var len = this.length;  
+	        if (typeof fun != "function")  
+	            throw new TypeError();  
+	        var thisp = arguments[1];  
+	        for (var i = 0; i < len; i++){  
+	            if (i in this)  
+	                fun.call(thisp, this[i], i, this);  
+	        }  
+	    };  
+	} 
 
 	//字符串处理
     WCJ.extend(String.prototype,{
