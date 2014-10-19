@@ -5,6 +5,7 @@ jQuery lite.
 ## 核心Core
 ```js
 $$("#box")              //选择器
+$$.isDocument           //判断对象是否为【document】
 $$.isFunction           //判断对象是否为【函数】
 $$.isObject             //判断是否为【Object】
 $$.isArray              //判断对象是否为【数组】
