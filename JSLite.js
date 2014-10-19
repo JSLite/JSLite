@@ -185,6 +185,9 @@
 		    var matchesSelector = element.webkitMatchesSelector || element.mozMatchesSelector ||
 		                          element.oMatchesSelector || element.msMatchesSelector || element.matchesSelector;
 		    if (matchesSelector) return matchesSelector.call(element, selector);
+		},
+		inArray:function(elem, array, i){
+			return emptyArray.indexOf.call(array, elem, i)
 		}
 	});
 	

@@ -6,7 +6,8 @@ jQuery lite.
 ```js
 $$("#box")        //选择器
 $$.extend         //通过源对象扩展目标对象的属性
-$$.fn             //是一个对象，它拥有WCJ对象上所有可用的方法。扩展一个方法例如：$$.fn.each=function(){ return this;}
+$$.fn             //是一个对象，它拥有WCJ对象上所有可用的方法。扩展一个方法例如：
+    //$$.fn.each=function(){ return this;}
 $$.isDocument     //判断对象是否为【document】
 $$.isFunction     //判断对象是否为【函数】
 $$.isObject       //判断是否为【Object】
@@ -14,12 +15,14 @@ $$.isArray        //判断对象是否为【数组】
 $$.likeArray      //判断对象是否为数组或者是字符
 $$.type           //获取类型
 $$.map            //遍历集合中的元素返回一个新的数组，过滤null and undefined。
-$$.map({"w":1,"c":2,"j":3},function(item,index){
-     return index
-}); 
+    //$$.map({"w":1,"c":2,"j":3},function(item,index){
+    //     return index
+    //}); 
 $$.matches        //当前元素能被指定的css选择器查找到,则返回true,否则返回false.
 $$.error          //创建自定义错误
 $$.matches(element, selector) //如果当前元素能被指定的css选择器查找到,则返回true,否则返回false.
+$$.inArray        //搜索数组中指定值并返回它的索引（如果没有找到则返回-1)
+    //inArray(element, array, [fromIndex])
 
 $$("#box").each()     //遍历
 $$("#box").map()      //遍历对象集合中的所有元素返回一个新的集合对象
