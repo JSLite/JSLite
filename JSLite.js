@@ -214,6 +214,17 @@
 			return res;
 		};
 	}
+	//低版本IE对indexOf方法的支持
+	if(!Array.indexOf){
+	    Array.prototype.indexOf = function(obj){              
+	        for(var i=0; i<this.length; i++){
+	            if(this[i]==obj){
+	                return i;
+	            }
+	        }
+	        return -1;
+	    }
+	}
 
 	//字符串处理
     WCJ.extend(String.prototype,{
