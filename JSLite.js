@@ -36,7 +36,7 @@
 		WCJ.fn.init.prototype = WCJ.fn;
         WCJ.extend = WCJ.fn.extend = function () {
             var options, name, src, copy,
-			target = arguments[0] || {},
+			target = arguments[0],
 			i = 1,
 			length = arguments.length,
 			deep = false;
