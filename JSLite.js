@@ -77,6 +77,11 @@
 	WCJ.fn.extend({
 		forEach: emptyArray.forEach,
 		concat: emptyArray.concat,
+		ready: function(callback){
+			if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(WCJ)
+			else document.addEventListener('DOMContentLoaded', function(){callback(WCJ) }, false)
+			return this
+		},
 	    each: function(callback){
 	      this.forEach(function(el, idx){ callback.call(el, idx, el) });
 	      return this;
