@@ -23,7 +23,7 @@ $$.error          //创建自定义错误
 $$.matches(element, selector) //如果当前元素能被指定的css选择器查找到,则返回true,否则返回false.
 $$.inArray        //搜索数组中指定值并返回它的索引（如果没有找到则返回-1)
     //inArray(element, array, [fromIndex])
-
+$$(document).ready(fun)//当页面dom加载完毕 “DOMContentLoaded” 事件触发时触发
 $$("#box").each()     //遍历
 $$("#box").map()      //遍历对象集合中的所有元素返回一个新的集合对象
 $$("#box").get(1)     //当前对象集合中获取所有元素或单个元素
