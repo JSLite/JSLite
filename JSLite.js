@@ -138,7 +138,10 @@
 		},
 		next: function(selector){
 			return WCJ(this.pluck('nextElementSibling')).filter(selector || '*') 
-		}
+		},
+        nextAll: function (selector) {
+      		return WCJ(WCJ.sibling(this,'nextElementSibling')).filter(selector || '*');
+        }
 	});
 
 	WCJ.extend({
