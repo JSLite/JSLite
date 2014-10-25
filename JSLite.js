@@ -135,6 +135,9 @@
 		},
 		prev: function(selector){ 
 			return WCJ(this.pluck('previousElementSibling')).filter(selector || '*') 
+		},
+		next: function(selector){
+			return WCJ(this.pluck('nextElementSibling')).filter(selector || '*') 
 		}
 	});
 
