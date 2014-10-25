@@ -14,6 +14,8 @@
     			else {
     				if (WCJ.isArray(selector))
     					dom = selector;
+				    else if (WCJ.isObject(selector))
+				    	dom = [selector], selector = null
 	                else if (elementTypes.indexOf(selector.nodeType) >= 0 || selector === window)
 	                	dom = [selector], selector = null;
 	                else dom = (function(){
@@ -128,14 +130,7 @@
 			});
 		},
 		parents: function(selector){
-			var ancestors = [], nodes = this
-			while (nodes.length > 0)
-			nodes = WCJ.map(nodes, function(node){
-			  if ((node = node.parentNode) && !WCJ.isDocument(node) && ancestors.indexOf(node) < 0) {
-			    ancestors.push(node)
-			    return node
-			  }
-			});
+			var ancestors=WCJ.sibling(this,'parentNode');
     		return selector == null ? WCJ(ancestors) : WCJ(ancestors).filter(selector);
 		}
 	});
@@ -194,7 +189,17 @@
 		},
 		inArray:function(elem, array, i){
 			return emptyArray.indexOf.call(array, elem, i)
-		}
+		},
+	    sibling:function(nodes,ty){
+			var ancestors = [];
+			while (nodes.length > 0)
+			nodes = WCJ.map(nodes, function(node){
+				if ((node = node[ty]) && !WCJ.isDocument(node) && ancestors.indexOf(node) < 0) 
+					ancestors.push(node)
+					return node
+			});
+			return ancestors;
+	    }
 	});
 	
 	//解决低版本浏览器对filter方法的支持
