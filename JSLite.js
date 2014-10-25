@@ -132,6 +132,9 @@
 		parents: function(selector){
 			var ancestors=WCJ.sibling(this,'parentNode');
     		return selector == null ? WCJ(ancestors) : WCJ(ancestors).filter(selector);
+		},
+		prev: function(selector){ 
+			return WCJ(this.pluck('previousElementSibling')).filter(selector || '*') 
 		}
 	});
 
