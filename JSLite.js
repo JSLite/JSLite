@@ -141,7 +141,10 @@
 		},
         nextAll: function (selector) {
       		return WCJ(WCJ.sibling(this,'nextElementSibling')).filter(selector || '*');
-        }
+        },
+		prevAll: function (selector) {
+			return WCJ(WCJ.sibling(this,'previousElementSibling')).filter(selector || '*');
+		}
 	});
 
 	WCJ.extend({
