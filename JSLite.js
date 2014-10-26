@@ -125,11 +125,10 @@
 		pluck: function(property){ return WCJ.map(this, function(el){ return el[property] })},
 		find: function(selector){
 			var nodes = this.children(),ancestors=[];
+			while (nodes.length > 0)
 			nodes=WCJ.map(nodes, function(node,inx){
-				ancestors.push(node);
-				return filter.call(ancestors, function(item, idx){
-					return ancestors.indexOf(item) == idx 
-				});
+				if (ancestors.indexOf(node)<0) ancestors.push(node);
+				if ((nodes = WCJ(node).children())&&nodes.length>0 ) return nodes;
 			});
 			return WCJ(ancestors).filter(selector || '*');
 		},

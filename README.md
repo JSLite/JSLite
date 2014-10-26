@@ -20,8 +20,8 @@ $$.map            //遍历集合中的元素返回一个新的数组，过滤nul
     //}); 
 $$.error          //创建自定义错误
 $$.matches(element, selector) //如果当前元素能被指定的css选择器查找到,则返回true,否则返回false.
-$$.sibling(elm,type)//根据类型获取对象的集合
-$$.inArray          //搜索数组中指定值并返回它的索引（如果没有找到则返回-1)
+$$.sibling(elm,type)  //根据类型获取对象的集合
+$$.inArray            //搜索数组中指定值并返回它的索引（如果没有找到则返回-1)
     //inArray(element, array, [fromIndex])
 $$(document).ready(fun)//当页面dom加载完毕 “DOMContentLoaded” 事件触发时触发
 $$("#box").each()     //遍历
@@ -31,6 +31,7 @@ $$("#box").empty()    //对象集合中移除所有的dom子节点。
 $$("#box").text()     //取得所有匹配元素的文本内容。
 $$("#box").filter()   //筛选出与指定表达式匹配的元素集合。filter(selector) 
 $$("#box").pluck()    //获取对象集合中每一个元素的属性值
+$$("#box").find()     //后代节点的集合(可以带上滤选择器)
 $$("#box").children() //获得每个匹配元素集合元素的直接子元素(可以带上滤选择器)
 $$("#box").parent()   //对象集合中每个元素的直接父元素。
 $$("#box").parents()  //获取对象集合每个元素所有的祖先元素（不包含根元素）
