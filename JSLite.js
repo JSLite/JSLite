@@ -123,6 +123,16 @@
 		    }))
 		},
 		pluck: function(property){ return WCJ.map(this, function(el){ return el[property] })},
+		find: function(selector){
+			var nodes = this.children(),ancestors=[];
+			nodes=WCJ.map(nodes, function(node,inx){
+				ancestors.push(node);
+				return filter.call(ancestors, function(item, idx){
+					return ancestors.indexOf(item) == idx 
+				});
+			});
+			return WCJ(ancestors).filter(selector || '*');
+		},
 		children:function(selector){
 			var arr=this.pluck('children'),e=[];
 			filter.call(arr, function(item, idx){ 
