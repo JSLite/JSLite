@@ -98,6 +98,12 @@
 		    		else this.setAttribute(name,value);
 		    	});
 	    },
+	    hasClass:function(name){
+			if (!name) return false
+			return emptyArray.some.call(this, function(el){
+				return this.test(el.className)
+			}, new RegExp('(^|\\s)' + name + '(\\s|$)'))
+	    },
         bind: function(type, func) {
 			this.each(function(){
 				if (this.addEventListener) this.addEventListener(type, func, false);
