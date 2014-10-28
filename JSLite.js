@@ -1,6 +1,6 @@
 ;(function(window, undefined) {
 	"use strict";
-	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],
+	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],A={},
 		WCJ = (function(){
 		var WCJ = function( selector ) {
 		    return new WCJ.fn.init(selector);
@@ -236,7 +236,28 @@
 			return ancestors;
 	    }
 	});
-	
+
+	['after','prepend','before','append'].forEach(function(operator, operatorIndex) {
+	    WCJ.fn[operator] = function(){
+	    	var argType, nodes = WCJ.map(arguments, function(arg) {
+	    	      argType = WCJ.type(arg)
+	    	      return argType == "object" || argType == "array" || arg == null ?
+	    	        arg : arguments[0]
+	    	    }),position
+	    	if (nodes.length < 1) return this
+	    	return this.each(function(_, target){
+	    		position = 	operatorIndex == 0 ? "afterEnd" : 
+	    					operatorIndex == 1 ? "afterBegin":
+	    					operatorIndex == 2 ? "beforeBegin":
+	    					operatorIndex == 3 ? "beforeEnd":
+	    					null
+	    		nodes.forEach(function(node){
+	                target.insertAdjacentHTML(position,node)
+	    		})
+	    	})
+	    }
+	});
+
 	//解决低版本浏览器对filter方法的支持
 	if (!Array.prototype.filter){
 		Array.prototype.filter = function(fun /*, thisArg */){
