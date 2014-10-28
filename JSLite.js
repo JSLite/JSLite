@@ -116,7 +116,7 @@
             })
 	    },
 	    removeClass:function(name){
-	    	var cls,classList;
+	    	var cls;
 	    	return this.each(function(idx){
 	    		cls = this.className; 
 	    		if (name === undefined) return cls = "";

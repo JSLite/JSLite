@@ -33,7 +33,7 @@ $$("#box").text()     //取得所有匹配元素的文本内容。
 $$("#box").attr()     //读取或设置dom的属性。
 $$("#box").hasClass() //集合中是否有元素含有指定的class。
 $$("#box").addClass() //为每个匹配的元素添加指定的class类名
-$$("#box").removeClass() //为每个匹配的元素添加指定的class类名
+$$("#box").removeClass() //清除集合中所有元素的指定class类名，不填写清空
 $$("#box").filter()   //筛选出与指定表达式匹配的元素集合。filter(selector) 
 $$("#box").pluck()    //获取对象集合中每一个元素的属性值
 $$("#box").find()     //后代节点的集合(可以带上滤选择器)
