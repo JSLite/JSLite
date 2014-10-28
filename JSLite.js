@@ -88,6 +88,16 @@
 	        (this.length > 0 ? this[0].textContent : null) :
 	        this.each(function(){ this.textContent = text });
 	    },
+	    attr: function(name,value){
+	    	var result,k;
+	    	return (typeof name == 'string' && !(1 in arguments)) ?
+		        (!this.length || this[0].nodeType !== 1 ? undefined :
+		          (!(result = this[0].getAttribute(name)) && name in this[0]) ? this[0][name] : result
+		        ) : this.each(function(n){
+		    		if (WCJ.isObject(name)) for(k in name) this.setAttribute(k, name[k]);
+		    		else this.setAttribute(name,value);
+		    	});
+	    },
         bind: function(type, func) {
 			this.each(function(){
 				if (this.addEventListener) this.addEventListener(type, func, false);
