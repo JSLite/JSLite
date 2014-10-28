@@ -175,6 +175,15 @@
 		isFunction:function (value) { return ({}).toString.call(value) == "[object Function]" },
 		isObject:function (value) { return value instanceof Object },
 		isArray:function (value) { return value instanceof Array },
+		isContainsNode:function(parent,node){
+	    	return document.documentElement.isContainsNode ?
+		    parent !== node && parent.isContainsNode(node):
+		    (function(){
+		    	while (node && (node = node.parentNode))
+		    	if (node === parent) return true
+		    	return false
+			})();
+	    },
 		likeArray:function (obj) { return typeof obj.length == 'number' },
         type: function (obj) {
             switch (obj) {
