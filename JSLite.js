@@ -39,36 +39,23 @@
 		WCJ.fn.init.prototype = WCJ.fn;
         WCJ.extend = WCJ.fn.extend = function () {
             var options, name, src, copy,
-			target = arguments[0],
-			i = 1,
+			target = arguments[0],i = 1,
 			length = arguments.length,
 			deep = false;
             //处理深拷贝的情况
-            if (typeof (target) === "boolean") { 
-                deep = target;
-                target = arguments[1] || {};
-                i = 2;
-            }
+            if (typeof (target) === "boolean")
+            	deep = target,target = arguments[1] || {},i = 2;
             //处理时，目标是一个字符串或（深拷贝可能的情况下）的东西
-            if (typeof (target) !== "object" && !WCJ.isFunction(target)) {
-                target = {};
-            }
+            if (typeof (target) !== "object" && !WCJ.isFunction(target)) 
+            	target = {};
             //扩展WCJ的本身，如果只有一个参数传递
-            if (length === i) {
-                target = this;
-                --i;
-            }
+            if (length === i) target = this,--i;
             for (; i < length; i++) {
                 if ((options = arguments[i]) != null) {
                     for (name in options) {
-                        src = target[name];
-                        copy = options[name];
-                        if (target === copy) {
-                            continue;
-                        }
-                        if (copy !== undefined) {
-                            target[name] = copy;
-                        }
+                        src = target[name],copy = options[name];
+                        if (target === copy) continue;
+                        if (copy !== undefined) target[name] = copy;
                     }
                 }
             }
