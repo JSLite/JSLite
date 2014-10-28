@@ -115,6 +115,18 @@
 				classList.length ? this.className = cls + (cls ? " " : "") + classList.join(" "):null;
             })
 	    },
+	    removeClass:function(name){
+	    	var cls,classList;
+	    	return this.each(function(idx){
+	    		cls = this.className; 
+	    		if (name === undefined) return cls = "";
+	    		name.split(/\s+/).forEach(function(k){
+	    			cls=cls.replace(new RegExp('(^|\\s)'+k+'(\\s|$)')," ").trim();
+	    		},this);
+	    		cls?this.className = cls:this.className = "";
+
+	    	})
+	    },
         bind: function(type, func) {
 			this.each(function(){
 				if (this.addEventListener) this.addEventListener(type, func, false);
