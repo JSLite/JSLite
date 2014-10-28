@@ -102,7 +102,18 @@
 			if (!name) return false
 			return emptyArray.some.call(this, function(el){
 				return this.test(el.className)
-			}, new RegExp('(^|\\s)' + name + '(\\s|$)'))
+			}, new RegExp('(^|\\s)' + name + '(\\s|$)'));
+	    },
+	    addClass:function(name){
+	    	if (!name) return this;
+            var names,classList,cls;
+            return this.each(function(){
+            	classList=[],cls = this.className;
+				name.split(/\s+/).forEach(function(k){
+					if (!WCJ(this).hasClass(k)) classList.push(k);
+				},this);
+				classList.length ? this.className = cls + (cls ? " " : "") + classList.join(" "):null;
+            })
 	    },
         bind: function(type, func) {
 			this.each(function(){
