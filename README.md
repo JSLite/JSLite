@@ -12,6 +12,7 @@ $$.isDocument     //判断对象是否为【document】
 $$.isFunction     //判断对象是否为【函数】
 $$.isObject       //判断是否为【Object】
 $$.isArray        //判断对象是否为【数组】
+$$.isContainsNode(parent,node)//parent是否包含node节点对象
 $$.likeArray      //判断对象是否为数组或者是字符
 $$.type           //获取类型
 $$.map            //遍历集合中的元素返回一个新的数组，过滤null and undefined。
