@@ -32,6 +32,7 @@ $$("#box").empty()    //对象集合中移除所有的dom子节点。
 $$("#box").text()     //取得所有匹配元素的文本内容。
 $$("#box").attr()     //读取或设置dom的属性。
 $$("#box").hasClass() //集合中是否有元素含有指定的class。
+$$("#box").addClass() //为每个匹配的元素添加指定的class类名
 $$("#box").filter()   //筛选出与指定表达式匹配的元素集合。filter(selector) 
 $$("#box").pluck()    //获取对象集合中每一个元素的属性值
 $$("#box").find()     //后代节点的集合(可以带上滤选择器)
@@ -46,10 +47,10 @@ $$("#box").siblings() //获取对此对象【其它】所有兄弟对象(可以�
 $$("#box").extend()   //扩展
 $$("#box").bind()     //绑定事件
 $$("#box").unbind()   //事件移除
-$$("#box")before(content)      //:插入到标签开始前
-$$("#box")prepend(content)     //:插入到标签开始标记之后
-$$("#box")append(content)      //:插入到标签结束标记前
-$$("#box")after(content)       //:插入到标签结束标记后
+$$("#box").before(content)      //:插入到标签开始前
+$$("#box").prepend(content)     //:插入到标签开始标记之后
+$$("#box").append(content)      //:插入到标签结束标记前
+$$("#box").after(content)       //:插入到标签结束标记后
 ```
 
 
