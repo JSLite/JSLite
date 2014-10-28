@@ -1,6 +1,6 @@
 ;(function(window, undefined) {
 	"use strict";
-	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],A={},
+	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],P={},
 		WCJ = (function(){
 		var WCJ = function( selector ) {
 		    return new WCJ.fn.init(selector);
@@ -246,23 +246,51 @@
 	    }
 	});
 
+	P = {
+		singleTagRE:/^<(\w+)\s*\/?>(?:<\/\1>|)$/,
+		tagExpanderRE:/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
+		fragment:function(html){
+    		var dom, container
+    		if (this.singleTagRE.test(html)) dom = WCJ(document.createElement(RegExp.$1));
+    		if (!dom) {
+				if (html.replace) html = html.replace(this.tagExpanderRE, "<$1></$2>")
+				container=document.createElement('div')
+      			container.innerHTML = '' + html
+				dom = WCJ.each(slice.call(container.childNodes), function(){
+					container.removeChild(this)
+				})
+    		}
+    		return dom;
+		}
+	};
+
 	['after','prepend','before','append'].forEach(function(operator, operatorIndex) {
+    	var inside = operatorIndex % 2;
 	    WCJ.fn[operator] = function(){
 	    	var argType, nodes = WCJ.map(arguments, function(arg) {
-	    	      argType = WCJ.type(arg)
-	    	      return argType == "object" || argType == "array" || arg == null ?
-	    	        arg : arguments[0]
-	    	    }),position
+	    	    	argType = WCJ.type(arg)
+	    	    	return argType == "object" || argType == "array" || arg == null ? arg : P.fragment(arg)
+	    	    }),parent,script,copyByClone = this.length > 1
 	    	if (nodes.length < 1) return this
 	    	return this.each(function(_, target){
-	    		position = 	operatorIndex == 0 ? "afterEnd" : 
-	    					operatorIndex == 1 ? "afterBegin":
-	    					operatorIndex == 2 ? "beforeBegin":
-	    					operatorIndex == 3 ? "beforeEnd":
-	    					null
-	    		nodes.forEach(function(node){
-	                target.insertAdjacentHTML(position,node)
-	    		})
+    			parent = inside ? target : target.parentNode
+		        target = operatorIndex == 0 ? target.nextSibling :
+		                 operatorIndex == 1 ? target.firstChild :
+		                 operatorIndex == 2 ? target :
+		                 null
+    			var parentInDocument = WCJ.isContainsNode(document.documentElement, parent)
+		        nodes.forEach(function(node){
+		        	var txt
+		        	if (copyByClone) node = node.cloneNode(true)
+      				parent.insertBefore(node, target);
+		        	if(parentInDocument && node.nodeName != null && node.nodeName.toUpperCase() === 'SCRIPT' &&
+              			(!node.type || node.type === 'text/javascript') && !node.src) txt=node.innerHTML;
+              		else if(parentInDocument &&node.children && node.children.length>0&&WCJ(node)&&(script=WCJ(node).find("script")))
+              			if(script.length>0) script.each(function(_,item){
+              				txt=item.innerHTML
+          				});
+              			txt?window['eval'].call(window, txt):undefined;
+		        })
 	    	})
 	    }
 	});
