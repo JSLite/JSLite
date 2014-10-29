@@ -1,6 +1,6 @@
 ;(function(window, undefined) {
 	"use strict";
-	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],P={},
+	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],P={},handlers = {},_zid = 1,
 		WCJ = (function(){
 		var WCJ = function( selector ) {
 		    return new WCJ.fn.init(selector);
@@ -156,21 +156,13 @@
 
 	    	})
 	    },
-        bind: function(type, func) {
-			this.each(function(){
-				if (this.addEventListener) this.addEventListener(type, func, false);
-				else if (this.attachEvent) this.attachEvent("on" + type, func);
-				else this["on" + type] = func;
-			})
-			return this;
+        bind: function(event, func) {return this.on(event,func)},
+		unbind:function(event, func) {return this.off(event,func)},
+		on:function(event, func){
+			return this.each(function(){ add(this, event,func) })
 		},
-		unbind:function(type, func) {
-			this.each(function(ele,obj){
-				if (this.removeEventListener) this.removeEventListener(type, func, false);
-				else if (this[i].detachEvent) this.detachEvent("on" + type, func);
-				else this["on" + type] = null;
-			})
-			return this;
+		off:function(event, func){
+		    return this.each(function(){ remove(this, event, func) })
 		},
 		filter:function(selector){
 			return WCJ(filter.call(this, function(element){
@@ -230,6 +222,7 @@
 		isFunction:function (value) { return ({}).toString.call(value) == "[object Function]" },
 		isObject:function (value) { return value instanceof Object },
 		isArray:function (value) { return value instanceof Array },
+		isString:function(obj){ return typeof obj == 'string' },
 		isContainsNode:function(parent,node){
 	    	return document.documentElement.isContainsNode ?
 		    parent !== node && parent.isContainsNode(node):
@@ -360,6 +353,53 @@
 		        })
 	    	})
 	    }
+	});
+	
+
+	/* 绑定事件 start */
+	WCJ.event={add:add,remove:remove}
+	function add(element,events,func){
+		var self=this,id=zid(element),set=(handlers[id] || (handlers[id] = []));
+		events.split(/\s/).forEach(function(event){
+			var handler = parse(event);handler.fn = func;handler.i = set.length;
+        	set.push(handler)
+        	console.log(handler)
+			if (element.addEventListener) element.addEventListener(handler.e, func, false);
+		})
+	}
+	function remove(element, events, func){
+		;(events || '').split(/\s/).forEach(function(event){
+			WCJ.event = parse(event)
+			console.log(findHandlers(element, event, func))
+			findHandlers(element, event, func).forEach(function(handler){
+				if (element.removeEventListener) element.removeEventListener(handler.e, handler.fn, false);
+			})
+		})
+	}
+	function zid(element) {
+		return element._zid || (element._zid = _zid++)
+	}
+	function parse(event) {
+		var parts = ('' + event).split('.');
+		return {e: parts[0], ns: parts.slice(1).sort().join(' ')};
+	}
+	function findHandlers(element, event, func){
+		var self=this,event = parse(event),id = zid(element);
+		return (handlers[zid(element)] || []).filter(function(handler) {
+			return handler 
+			&& (!event.e  || handler.e == event.e) 
+			&& (!func || handler.fn === func)
+			&& (!func || handler.fn.toString()===func.toString())
+		})
+	}
+	/* 绑定事件 start */
+
+	;("blur focus focusin focusout load resize scroll unload click dblclick " +
+	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
+	"change select submit keydown keypress keyup error").split(' ').forEach(function(event) {
+		WCJ.fn[event] = function(callback) {
+		  return callback ? this.bind(event, callback) : this;
+		}
 	});
 
 	//解决低版本浏览器对filter方法的支持
