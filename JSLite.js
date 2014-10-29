@@ -303,7 +303,14 @@
 					return node
 			});
 			return ancestors;
-	    }
+	    },
+		noConflict: function( deep ) {
+			if ( window.$$ === JSLite )
+				window.$$ = _$;
+			if ( deep && window.JSLite === JSLite )
+				window.JSLite = _JSLite;
+			return JSLite;
+		}
 	});
 
 	P = {
@@ -407,5 +414,8 @@
         trim: function () {return this.replace(/(^\s*)|(\s*$)/g, "");},
         leftTrim: function () {return this.replace(/(^\s*)/g, "");}
     })
-	window.WCJ = window.$$ = WCJ;
+    window.JSLite = window.WCJ = WCJ
+    window.$ === undefined && (window.$ = JSLite)
+    window.$$ === undefined && (window.$$ = JSLite)
+    window._$ === undefined && (window._$ = JSLite)
 })(window);
