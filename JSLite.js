@@ -83,6 +83,11 @@
 	      return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
 	    },
 	    empty: function(){ return this.each(function(){ this.innerHTML = '' }) },
+	    remove: function(){
+			return this.each(function(){
+				if (this.parentNode != null) this.parentNode.removeChild(this)
+			})
+	    },
 	    text: function(text){
 	      return text === undefined ?
 	        (this.length > 0 ? this[0].textContent : null) :
