@@ -240,6 +240,11 @@
             return "Object";
         },
         error:function(msg) {throw msg;},
+	    getUrlParam:function (name) {
+	        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"),
+        	r = window.location.search.substr(1).match(reg);
+        	if (r != null) return unescape(r[2]); return null;
+	    },
         each:function(elements, callback){
 			var i, key
 			if (this.likeArray(elements)) {
