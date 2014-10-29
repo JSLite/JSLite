@@ -93,6 +93,15 @@
 				WCJ(this).empty().append(html)
 			}) : (0 in this ? this[0].innerHTML : null)
 	    },
+	    css:function(property, value){
+			if(value === undefined && typeof property == 'string') return this[0].style[property];
+			var css="",k;
+			for(k in property) css += k+':'+property[k]+';';
+			if(typeof property == 'string') css = property+":"+value;
+			return this.each(function(el){
+				css ? this.style.cssText += ';' + css :"";
+			});
+	    },
 	    attr: function(name,value){
 	    	var result,k;
 	    	return (typeof name == 'string' && !(1 in arguments)) ?
