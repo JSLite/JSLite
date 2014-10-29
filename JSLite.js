@@ -88,6 +88,11 @@
 	        (this.length > 0 ? this[0].textContent : null) :
 	        this.each(function(){ this.textContent = text });
 	    },
+	    html:function(html){
+			return 0 in arguments ? this.each(function(idx){
+				WCJ(this).empty().append(html)
+			}) : (0 in this ? this[0].innerHTML : null)
+	    },
 	    attr: function(name,value){
 	    	var result,k;
 	    	return (typeof name == 'string' && !(1 in arguments)) ?
