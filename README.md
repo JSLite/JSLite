@@ -34,6 +34,7 @@ $$("#box").text()     //取得所有匹配元素的文本内容。
 $$("#box").html()     //获取或设置对象内容。
 $$("#box").css()      //获取或设置对象的style样式内容。
 $$("#box").attr()     //读取或设置dom的属性。
+$$("#box").offset()   //获取对象left|top|width|height
 $$("#box").hasClass() //集合中是否有元素含有指定的class。
 $$("#box").addClass() //为每个匹配的元素添加指定的class类名
 $$("#box").removeClass() //清除集合中所有元素的指定class类名，不填写清空
