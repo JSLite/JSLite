@@ -137,12 +137,13 @@
 	    },
 	    addClass:function(name){
 	    	if (!name) return this;
-            var names,classList,cls;
+            var classList,cls,newName;
             return this.each(function(idx){
-            	classList=[],cls = this.className;
-				funcArg(this, name, idx, cls).split(/\s+/).forEach(function(k){
+            	classList=[],cls = this.className,newName=funcArg(this, name).trim();
+				newName.split(/\s+/).forEach(function(k){
 					if (!WCJ(this).hasClass(k)) classList.push(k);
 				},this);
+				if (!newName) return this;
 				classList.length ? this.className = cls + (cls ? " " : "") + classList.join(" "):null;
             })
 	    },
