@@ -236,18 +236,12 @@
 	    },
 		likeArray:function (obj) { return typeof obj.length == 'number' },
         type: function (obj) {
-            switch (obj) {
-                case null: return "Null";
-                case (void 0): return "Undefined";
-            }
-            var type = typeof (obj);
-            switch (type) {
-                case 'boolean': return "Boolean";
-                case 'number': return "Number";
-                case 'string': return "String";
-                case 'function': return "Function";
-            }
-            return "Object";
+        	if(!obj) return undefined;
+        	var type="";
+			WCJ.each("Boolean Number HTMLDivElement String Function Array Date RegExp Object Error".split(" "), function(i, name) {
+			  if(toString.call(obj).indexOf(name) > -1) type = name == "HTMLDivElement"?"Object":name;
+			})
+			return type;
         },
         error:function(msg) {throw msg;},
 	    getUrlParam:function (name) {
@@ -331,7 +325,7 @@
 	    WCJ.fn[operator] = function(){
 	    	var argType, nodes = WCJ.map(arguments, function(arg) {
 	    	    	argType = WCJ.type(arg)
-	    	    	return argType == "Object" || argType == "array" || arg == null ? arg : P.fragment(arg)
+	    	    	return argType == "Object" || argType == "Array" || arg == null ? arg : P.fragment(arg)
 	    	    }),parent,script,copyByClone = this.length > 1
 	    	if (nodes.length < 1) return this
 	    	return this.each(function(_, target){
