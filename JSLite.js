@@ -331,7 +331,7 @@
 	    WCJ.fn[operator] = function(){
 	    	var argType, nodes = WCJ.map(arguments, function(arg) {
 	    	    	argType = WCJ.type(arg)
-	    	    	return argType == "object" || argType == "array" || arg == null ? arg : P.fragment(arg)
+	    	    	return argType == "Object" || argType == "array" || arg == null ? arg : P.fragment(arg)
 	    	    }),parent,script,copyByClone = this.length > 1
 	    	if (nodes.length < 1) return this
 	    	return this.each(function(_, target){
