@@ -10,11 +10,8 @@
 				var dom ;
     			if (!selector) 
     				dom = emptyArray,dom.selector = selector || '',dom.__proto__ = WCJ.fn.init.prototype;
-    			else if (typeof selector == 'string'){
-    				selector = selector.trim()
-    				if (selector[0] == '<' && /^\s*<(\w+|!)[^>]*>/.test(selector)) 
-        				dom = P.fragment(selector)
-    			}
+    			else if (typeof selector == 'string' && (selector = selector.trim()) && selector[0] == '<'  && /^\s*<(\w+|!)[^>]*>/.test(selector))
+        			dom = P.fragment(selector),selector=null;
     			else if (WCJ.isFunction(selector)) return WCJ(document).ready(selector)
     			else {
     				if (WCJ.isArray(selector))
