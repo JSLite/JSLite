@@ -91,11 +91,11 @@
 	    text: function(text){
 	      return text === undefined ?
 	        (this.length > 0 ? this[0].textContent : null) :
-	        this.each(function(){ this.textContent = text });
+	        this.each(function(){this.textContent = funcArg(this, text)});
 	    },
 	    html:function(html){
 			return 0 in arguments ? this.each(function(idx){
-				WCJ(this).empty().append(html)
+				WCJ(this).empty().append(funcArg(this, html))
 			}) : (0 in this ? this[0].innerHTML : null)
 	    },
 	    css:function(property, value){
@@ -124,7 +124,7 @@
 		          (!(result = this[0].getAttribute(name)) && name in this[0]) ? this[0][name] : result
 		        ) : this.each(function(n){
 		    		if (WCJ.isObject(name)) for(k in name) this.setAttribute(k, name[k]);
-		    		else this.setAttribute(name,value);
+		    		else this.setAttribute(name,funcArg(this, value));
 		    	});
 	    },
 	    hasClass:function(name){
@@ -136,9 +136,9 @@
 	    addClass:function(name){
 	    	if (!name) return this;
             var names,classList,cls;
-            return this.each(function(){
+            return this.each(function(idx){
             	classList=[],cls = this.className;
-				name.split(/\s+/).forEach(function(k){
+				funcArg(this, name, idx, cls).split(/\s+/).forEach(function(k){
 					if (!WCJ(this).hasClass(k)) classList.push(k);
 				},this);
 				classList.length ? this.className = cls + (cls ? " " : "") + classList.join(" "):null;
@@ -149,7 +149,7 @@
 	    	return this.each(function(idx){
 	    		cls = this.className; 
 	    		if (name === undefined) return cls = "";
-	    		name.split(/\s+/).forEach(function(k){
+	    		funcArg(this, name, idx, cls).split(/\s+/).forEach(function(k){
 	    			cls=cls.replace(new RegExp('(^|\\s)'+k+'(\\s|$)')," ").trim();
 	    		},this);
 	    		cls?this.className = cls:this.className = "";
@@ -355,6 +355,9 @@
 	    }
 	});
 	
+	function funcArg(context, arg, idx, payload) {
+		return WCJ.isFunction(arg) ? arg.call(context, idx, payload) : arg;
+	}
 
 	/* 绑定事件 start */
 	WCJ.event={add:add,remove:remove}
