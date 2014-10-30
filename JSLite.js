@@ -30,10 +30,10 @@
 						    document.querySelectorAll(selector)
 					    );
 					})();
-					dom = dom || emptyArray;
-					dom.__proto__ = WCJ.fn.init.prototype;
-					dom.selector = selector || '';
     			}
+				dom = dom || emptyArray;
+				dom.__proto__ = WCJ.fn.init.prototype;
+				dom.selector = selector || '';
     			return dom;
 			},
 			size:function(){return this.length;}
