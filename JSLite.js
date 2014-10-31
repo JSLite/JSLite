@@ -243,6 +243,11 @@
 		    	return false
 			})();
 	    },
+	    isJson: function (obj) {
+			var isjson = typeof(obj) == "object" && 
+			Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
+			return isjson;
+        },
 		likeArray:function (obj) { return typeof obj.length == 'number' },
         type: function (obj) {
         	if(!obj) return undefined;
@@ -371,7 +376,6 @@
 		events.split(/\s/).forEach(function(event){
 			var handler = parse(event);handler.fn = func;handler.i = set.length;
         	set.push(handler)
-        	console.log(handler)
 			if (element.addEventListener) element.addEventListener(handler.e, func, false);
 		})
 	}
