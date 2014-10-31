@@ -110,6 +110,7 @@
 				css ? this.style.cssText += ';' + css :"";
 			});
 	    },
+	    hide:function(){ return this.css("display", "none")},
 	    offset:function(){
 			if(this.length==0) return null;
 			var obj = this[0].getBoundingClientRect();
