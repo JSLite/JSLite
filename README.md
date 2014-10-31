@@ -41,6 +41,9 @@ $$("#box").hasClass() //集合中是否有元素含有指定的class。
 $$("#box").addClass() //为每个匹配的元素添加指定的class类名
 $$("#box").removeClass() //清除集合中所有元素的指定class类名，不填写清空
 $$("#box").toggleClass() //在匹配的元素集合中的每个元素上添加或删除一个或多个样式类
+$$("#box").toggle()   //显示或隐藏匹配元素
+$$("#box").show()     //显示匹配元素
+$$("#box").hide()     //隐藏匹配元素
 $$("#box").filter()   //筛选出与指定表达式匹配的元素集合。filter(selector) 
 $$("#box").pluck()    //获取对象集合中每一个元素的属性值
 $$("#box").find()     //后代节点的集合(可以带上滤选择器)
