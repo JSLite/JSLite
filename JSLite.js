@@ -101,7 +101,8 @@
 			}) : (0 in this ? this[0].innerHTML : null)
 	    },
 	    css:function(property, value){
-			if(value === undefined && typeof property == 'string') return this[0].style[property];
+	    	var computedStyle = getComputedStyle(this[0], '')
+			if(value === undefined && typeof property == 'string') return computedStyle.getPropertyValue(property);
 			var css="",k;
 			for(k in property) css += k+':'+property[k]+';';
 			if(typeof property == 'string') css = property+":"+value;
@@ -413,7 +414,23 @@
 		  return callback ? this.bind(event, callback) : this;
 		}
 	});
-
+	//修复IE，增加方法getComputedStyle为对象的窗口和getPropertyValue方法的对象，它返回的getComputedStyle
+	if (!window.getComputedStyle) {
+	    window.getComputedStyle = function(el, pseudo) {
+	        this.el = el;
+	        this.getPropertyValue = function(prop) {
+	            var re = /(\-([a-z]){1})/g;
+	            if (prop == 'float') prop = 'styleFloat';
+	            if (re.test(prop)) {
+	                prop = prop.replace(re, function () {
+	                    return arguments[2].toUpperCase();
+	                });
+	            }
+	            return el.currentStyle[prop] ? el.currentStyle[prop] : null;
+	        }
+	        return this;
+	    }
+	}
 	//解决低版本浏览器对filter方法的支持
 	if (!Array.prototype.filter){
 		Array.prototype.filter = function(fun /*, thisArg */){
