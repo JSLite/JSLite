@@ -111,6 +111,11 @@
 			});
 	    },
 	    hide:function(){ return this.css("display", "none")},
+	    show:function(){return this.css("display", "block")},
+	    toggle:function(){
+	    	return this.css("display") == "none" ? this.css("display", "block") : 
+	    			this.css("display", "none");
+	    },
 	    offset:function(){
 			if(this.length==0) return null;
 			var obj = this[0].getBoundingClientRect();
