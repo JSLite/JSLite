@@ -156,7 +156,15 @@
 	    			cls=cls.replace(new RegExp('(^|\\s)'+k+'(\\s|$)')," ").trim();
 	    		},this);
 	    		cls?this.className = cls:this.className = "";
-
+	    	})
+	    },
+	    toggleClass:function(name){
+	    	if(!name) return this;
+	    	return this.each(function(idx){
+	    		var w=WCJ(this),names=funcArg(this, name);
+	    		names.split(/\s+/g).forEach(function(cls){
+	    			w.hasClass(cls)?w.removeClass(cls):w.addClass(cls);
+	    		})
 	    	})
 	    },
         bind: function(event, func) {return this.on(event,func)},
