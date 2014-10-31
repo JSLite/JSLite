@@ -228,10 +228,11 @@
 			return WCJ(WCJ.sibling(this,'previousElementSibling')).filter(selector || '*');
 		},
 		siblings: function(selector){
-			var n=[];
-			this.map(function(i, el){
-				WCJ.map(el.childNodes,function(els){ if (els.nodeType == 1) n.push(els) })
-			});
+			var n=[];this.map(function(i,el){
+				filter.call(el.parentNode.children, function(els, idx){ 
+					 if (els&&els.nodeType == 1&&els!=el) n.push(els)
+				});
+			})
 			return WCJ(n).filter(selector || '*');
 		}
 	});
