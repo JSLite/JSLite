@@ -23,7 +23,7 @@
 	                else dom = (function(){
 				        var found;
 				        return (document && /^#([\w-]+)$/.test(selector))?
-				        ((found = document.getElementById(RegExp.$1)) ? [found] : emptyArray ):
+				        ((found = document.getElementById(RegExp.$1)) ? [found] : [] ):
 					    slice.call(
 						    /^\.([\w-]+)$/.test(selector) ? document.getElementsByClassName(RegExp.$1) :
 						    /^[\w-]+$/.test(selector) ? document.getElementsByTagName(selector) :
