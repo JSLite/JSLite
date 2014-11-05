@@ -325,6 +325,77 @@
 		}
 	});
 
+	WCJ.extend({
+    	ajax:function(method, url, params, successCallback, errorCallback){
+		    var size = function(ar) {
+		        var len = ar.length ? --ar.length : -1;
+		            for (var k in ar) {
+		                len++;
+		            }
+		        return len;
+		    }
+		
+		    var serialize = function(obj, prefix) {
+		        var str = [];
+		        for(var p in obj) {
+		            var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+		            str.push(typeof v == "object" ?
+		                serialize(v, k) :
+		                encodeURIComponent(k) + "=" + encodeURIComponent(v));
+		        }
+		        return str.join("&");
+		    }
+		
+		    var init = function(method, url, params, successCallback, errorCallback) {
+		        params = serialize(params)
+		        var doc = undefined;
+				if(window.XMLHttpRequest) {
+				        var doc = new XMLHttpRequest();
+				}else if (window.ActiveXObject) { 
+					try {
+						var doc = new ActiveXObject("Msxml2.XMLHTTP");
+					} catch (e) {
+						try {
+							var doc = new ActiveXObject("Microsoft.XMLHTTP");
+						} catch (e) {}
+					}
+				}
+				if (!doc) { 
+				        window.alert("不能创建XMLHttpRequest对象");
+				        console.log("不能创建XMLHttpRequest对象")
+				        return false;
+				}
+		        if (method == 'GET') {
+		            url = url +'?'+ params
+		            params = ''
+		        }
+		
+		        doc.onreadystatechange = function() {
+		            if (doc.readyState == XMLHttpRequest.HEADERS_RECEIVED) {
+		                var status = doc.status;
+		                if(status!=200) {
+		                    errorCallback(status, doc.statusText)
+		                }
+		            } else if (doc.readyState == XMLHttpRequest.DONE) {
+		                var data;
+		                var contentType = doc.getResponseHeader("Content-Type");
+		                data = doc.responseText;
+		                successCallback(data);
+		            }
+		        }
+		        doc.open(method, url);
+		        if (params.length > 0) {
+		            doc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		            doc.send(params);
+		        } else {
+		            doc.send();
+		        }
+		        return this;
+		    }
+		    init(method, url, params, successCallback, errorCallback);
+    	}
+	});
+
 	P = {
 		singleTagRE:/^<(\w+)\s*\/?>(?:<\/\1>|)$/,
 		tagExpanderRE:/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
