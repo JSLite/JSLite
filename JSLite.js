@@ -462,7 +462,6 @@
 	function remove(element, events, func){
 		;(events || '').split(/\s/).forEach(function(event){
 			WCJ.event = parse(event)
-			console.log(findHandlers(element, event, func))
 			findHandlers(element, event, func).forEach(function(handler){
 				if (element.removeEventListener) element.removeEventListener(handler.e, handler.fn, false);
 			})
@@ -480,7 +479,6 @@
 		return (handlers[zid(element)] || []).filter(function(handler) {
 			return handler 
 			&& (!event.e  || handler.e == event.e) 
-			&& (!func || handler.fn === func)
 			&& (!func || handler.fn.toString()===func.toString())
 		})
 	}

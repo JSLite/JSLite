@@ -1,6 +1,6 @@
 JSLite
 ======
-jQuery lite.
+[官方网站](http://blog.pc175.com/JSLite/)
 
 ## 核心Core
 ```js
