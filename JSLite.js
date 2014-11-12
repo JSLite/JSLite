@@ -32,7 +32,10 @@
 					})();
     			}
 				dom = dom || emptyArray;
-				dom.__proto__ = WCJ.fn.init.prototype;
+				if (!('__proto__' in {})) 
+					WCJ.extend(dom, WCJ.fn);
+				else
+					dom.__proto__ = WCJ.fn.init.prototype;
 				dom.selector = selector || '';
     			return dom;
 			},
