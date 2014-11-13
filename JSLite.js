@@ -141,6 +141,9 @@
 		    		else this.setAttribute(name,funcArg(this, value));
 		    	});
 	    },
+	    removeAttr:function(name){
+      		return this.each(function(){ this.nodeType === 1 && this.removeAttribute(name)});
+	    },
 	    hasClass:function(name){
 			if (!name) return false
 			return emptyArray.some.call(this, function(el){
