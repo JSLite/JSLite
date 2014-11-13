@@ -246,6 +246,7 @@
 		isObject:function (value) { return value instanceof Object },
 		isArray:function (value) { return value instanceof Array },
 		isString:function(obj){ return typeof obj == 'string' },
+		isWindow:function(obj){ return obj != null && obj == obj.window },
 		isContainsNode:function(parent,node){
 	    	return document.documentElement.isContainsNode ?
 		    parent !== node && parent.isContainsNode(node):
@@ -416,8 +417,7 @@
     		return dom;
 		}
 	};
-
-	['after','prepend','before','append'].forEach(function(operator, operatorIndex) {
+	;['after','prepend','before','append'].forEach(function(operator, operatorIndex) {
     	var inside = operatorIndex % 2;
 	    WCJ.fn[operator] = function(){
 	    	var argType, nodes = WCJ.map(arguments, function(arg) {
