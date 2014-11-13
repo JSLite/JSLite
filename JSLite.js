@@ -78,8 +78,10 @@
 			return this
 		},
 	    each: function(callback){
-	      this.forEach(function(el, idx){ callback.call(el, idx, el) });
-	      return this;
+			emptyArray.every.call(this, function(el, idx){
+				return callback.call(el, idx, el) !== false
+			})
+			return this;
 	    },
 	    map: function(fn){
 	    	return WCJ(WCJ.map(this, function(el, i){ return fn.call(el, i, el) }));
