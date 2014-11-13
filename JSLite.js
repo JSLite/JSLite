@@ -417,6 +417,19 @@
     		return dom;
 		}
 	};
+	;['width', 'height'].forEach(function(dimension){
+		var dimensionProperty = dimension.replace(/./,dimension[0].toUpperCase())
+		WCJ.fn[dimension]=function(value){
+			var offset, el = this[0]
+			if (value === undefined) return WCJ.isWindow(el) ? el['inner' + dimensionProperty] :
+			WCJ.isDocument(el) ? el.documentElement['scroll' + dimensionProperty] :
+			(offset = this.offset()) && offset[dimension]
+			else return this.each(function(idx){
+				el = $(this)
+				el.css(dimension, funcArg(this, value, idx, el[dimension]()))
+			})
+		}
+	})
 	;['after','prepend','before','append'].forEach(function(operator, operatorIndex) {
     	var inside = operatorIndex % 2;
 	    WCJ.fn[operator] = function(){
