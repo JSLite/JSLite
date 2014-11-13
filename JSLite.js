@@ -164,9 +164,9 @@
 	    },
 	    removeClass:function(name){
 	    	var cls;
+	    	if (name === undefined) return this.removeAttr('class');
 	    	return this.each(function(idx){
 	    		cls = this.className; 
-	    		if (name === undefined) return cls = "";
 	    		funcArg(this, name, idx, cls).split(/\s+/).forEach(function(k){
 	    			cls=cls.replace(new RegExp('(^|\\s)'+k+'(\\s|$)')," ").trim();
 	    		},this);
