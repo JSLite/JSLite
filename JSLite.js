@@ -105,6 +105,7 @@
 				WCJ(this).empty().append(funcArg(this, html))
 			}) : (0 in this ? this[0].innerHTML : null)
 	    },
+	    val:function(){return this[0]?this[0].value:undefined;},
 	    css:function(property, value){
 	    	var computedStyle = getComputedStyle(this[0], '')
 			if(value === undefined && typeof property == 'string') return computedStyle.getPropertyValue(property);
