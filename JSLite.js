@@ -209,7 +209,7 @@
 		children:function(selector){
 			var arr=this.pluck('children'),e=[];
 			filter.call(arr, function(item, idx){ 
-				WCJ.map(item,function(els){ if (els.nodeType == 1) e.push(els) })
+				WCJ.map(item,function(els){ if (els&&els.nodeType == 1) e.push(els) })
 			});
 			return WCJ(e).filter(selector || '*');
 		},
