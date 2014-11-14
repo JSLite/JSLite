@@ -117,9 +117,10 @@
 	    },
 	    hide:function(){ return this.css("display", "none")},
 	    show:function(){return this.css("display", "block")},
-	    toggle:function(){
-	    	return this.css("display") == "none" ? this.css("display", "block") : 
-	    			this.css("display", "none");
+	    toggle:function(setting){
+		    return this.each(function(){
+		      var el = $(this);(setting === undefined ? el.css("display") == "none" : setting) ? el.show() : el.hide()
+		    })
 	    },
 	    offset:function(){
 			if(this.length==0) return null;
