@@ -1,7 +1,7 @@
 ;(function(window, undefined) {
 	"use strict";
 	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],P={},handlers = {},_zid = 1,
-		WCJ = (function(){
+	WCJ = (function(){
 		var WCJ = function( selector ) {
 		    return new WCJ.fn.init(selector);
 		};
@@ -117,7 +117,11 @@
 			});
 	    },
 	    hide:function(){ return this.css("display", "none")},
-	    show:function(){return this.css("display", "block")},
+	    show:function(){
+		    return this.each(function(){
+		      this.style.display == "none" && (this.style.display = '')
+		    })
+		},
 	    toggle:function(setting){
 		    return this.each(function(){
 		      var el = $(this);(setting === undefined ? el.css("display") == "none" : setting) ? el.show() : el.hide()
