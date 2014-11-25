@@ -1,6 +1,7 @@
 JSLite
 ======
 [官方网站](http://blog.pc175.com/JSLite/)
+[官方文档-更详细](http://blog.pc175.com/JSLite/doc/)
 
 ## 核心Core
 ```js
@@ -70,6 +71,83 @@ $(".box").height()//对象象集合中第一个元素的高，或设置对象集
 
 ## 事件Event
 
+### bind
+为每个匹配元素的特定事件绑定事件处理函数。可以绑定这些事件 `blur` `focus` `focusin` `focusout` `load` `resize` `scroll` `unload` `click` `dblclick` `mousedown` `mouseup` `mousemove` `mouseover` `mouseout` `mouseenter` `mouseleave` `change` `select` `submit` `keydown` `keypress` `keyup` `error`。
+
+```js
+$("#box").bind("click", function(){
+    console.log("绑定点击事件")
+});
+```
+
+### unbind
+解除绑定事件，从每一个匹配的节点对象中删除绑定的事件。
+
+```js
+var f1=function(){alert('41');}
+$("#box").bind("click",f1)   //⇒ 绑定事件
+$("#box").unbind("click",f1) //⇒ 解除绑定事件
+
+$("#box").bind("click",function(){alert('41');})   //⇒ 绑定事件
+$("#box").unbind("click",function(){alert('41');}) //⇒ 解除绑定事件
+```
+
+### on
+为每个匹配元素的特定事件绑定事件处理函数。可以绑定这些事件 `blur` `focus` `focusin` `focusout` `load` `resize` `scroll` `unload` `click` `dblclick` `mousedown` `mouseup` `mousemove` `mouseover` `mouseout` `mouseenter` `mouseleave` `change` `select` `submit` `keydown` `keypress` `keyup` `error`。
+
+```js
+$("#box").on("click", function(){
+    console.log("绑定点击事件")
+});
+```
+
+### off
+解除绑定事件，从每一个匹配的节点对象中删除绑定的事件。
+
+```js
+var f1=function(){alert('41');}
+$("#box").on("click",f1)   //⇒ 绑定事件
+$("#box").off("click",f1) //⇒ 解除绑定事件
+
+$("#box").on("click",function(){alert('41');})   //⇒ 绑定事件
+$("#box").off("click",function(){alert('41');}) //⇒ 解除绑定事件
+```
+
+
 ## 异步请求Ajax
+执行Ajax请求。<br>
+$.ajax(type, url, data,success(cdata),error(status, statusText))
+
+type：请求方法 ("GET", "POST")<br>
+url：发送请求的地址<br>
+success(cdata)：请求成功之后调用。传入返回后的数据，以及包含成功代码的字符串。<br>
+error(status, statusText)：请求出错时调用。 (超时，解析错误，或者状态码不在HTTP 2xx)。
+
+###### ajax GET请求
+
+```js
+var data = { 'key': 'key', 'from': 'from'}
+$.ajax('GET', url, data,
+function(cdata) {
+    console.log('ok', cdata)
+},
+function(status, statusText) {
+    console.log('error', status, statusText)
+})
+```
+
+###### ajax POST请求
+
+```js
+var data = { 'key': 'key', 'from': 'from'}
+$.ajax('POST', url, data,
+function(data) {
+    console.log('ok', data)
+},
+function(status, statusText) {
+    console.log('error', status, statusText)
+})
+```
+
 
 ## Touch events
