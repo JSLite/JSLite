@@ -107,6 +107,7 @@
 	    },
 	    val:function(){return this[0]?this[0].value:undefined;},
 	    css:function(property, value){
+	    	if (!this[0]) return [];
 	    	var computedStyle = getComputedStyle(this[0], '')
 			if(value === undefined && typeof property == 'string') return computedStyle.getPropertyValue(property);
 			var css="",k;
