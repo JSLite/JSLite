@@ -491,17 +491,28 @@
 
 	P = {
 		singleTagRE:/^<(\w+)\s*\/?>(?:<\/\1>|)$/,
+		fragmentRE:/^\s*<(\w+|!)[^>]*>/,
 		tagExpanderRE:/<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
-		fragment:function(html){
+	    table: document.createElement('table'),
+	    tableRow: document.createElement('tr'),
+		containers:{
+			'*': document.createElement('div'),
+			'tr': document.createElement('tbody'),
+			'tbody': P.table,'thead': P.table,'tfoot': P.table,
+			'td': P.tableRow,'th': P.tableRow
+		},
+		fragment:function(html,name){
     		var dom, container
     		if (this.singleTagRE.test(html)) dom = WCJ(document.createElement(RegExp.$1));
     		if (!dom) {
 				if (html.replace) html = html.replace(this.tagExpanderRE, "<$1></$2>")
-				container=document.createElement('div')
+      			if (name === undefined) name = this.fragmentRE.test(html) && RegExp.$1
+      			if (!(name in this.containers)) name = '*'
+      			container = this.containers[name]
       			container.innerHTML = '' + html
 				dom = WCJ.each(slice.call(container.childNodes), function(){
 					container.removeChild(this)
-				})
+				});
     		}
     		return dom;
 		}
@@ -532,8 +543,10 @@
 		        target = operatorIndex == 0 ? target.nextSibling :
 		                 operatorIndex == 1 ? target.firstChild :
 		                 operatorIndex == 2 ? target :
-		                 null
+		                 null;
+
     			var parentInDocument = WCJ.isContainsNode(document.documentElement, parent)
+
 		        nodes.forEach(function(node){
 		        	var txt
 		        	if (copyByClone) node = node.cloneNode(true)
@@ -545,7 +558,7 @@
               				txt=item.innerHTML
           				});
               			txt?window['eval'].call(window, txt):undefined;
-		        })
+		        });
 	    	})
 	    }
 	});
