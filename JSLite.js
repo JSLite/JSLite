@@ -561,6 +561,10 @@
 		        });
 	    	})
 	    }
+		WCJ.fn[inside ? operator+'To' : 'insert'+(operatorIndex ? 'Before' : 'After')] = function(html){
+			WCJ(html)[operator](this)
+			return this
+	    }
 	});
 	
 	function funcArg(context, arg, idx, payload) {
