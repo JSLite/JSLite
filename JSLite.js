@@ -272,6 +272,9 @@
 		isArray:function (value) { return value instanceof Array },
 		isString:function(obj){ return typeof obj == 'string' },
 		isWindow:function(obj){ return obj != null && obj == obj.window },
+		isPlainObject:function(obj){
+			return this.isObject(obj) && !this.isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype
+		},
 		isContainsNode:function(parent,node){
 	    	return document.documentElement.isContainsNode ?
 		    parent !== node && parent.isContainsNode(node):

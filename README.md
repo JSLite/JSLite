@@ -13,6 +13,7 @@ $.isDocument     //判断对象是否为【document】
 $.isWindow     //判断是否为window对象
 $.isFunction     //判断对象是否为【函数】
 $.isObject       //判断是否为【Object】
+$.isPlainObject  //如果通过 "{}" 或者 "new Object" 创建的则返回true
 $.isArray        //判断对象是否为【数组】
 $.isJson         //判断对象是否为Json格式的对象
 $.isContainsNode(parent,node)//parent是否包含node节点对象
