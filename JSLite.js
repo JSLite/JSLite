@@ -216,6 +216,21 @@
         		return WCJ.matches(element, selector)
 		    }))
 		},
+	    not:function(selector){
+	    	var nodes = [];
+	    	if (WCJ.isFunction(selector)&& selector.call !== undefined){
+	    		this.each(function(idx){
+	    			if (!selector.call(this,idx)) nodes.push(this);
+	    		});
+	    	}else {
+	    		var excludes = typeof selector == 'string' ? this.filter(selector):
+			    (WCJ.likeArray(selector) && WCJ.isFunction(selector.item)) ? slice.call(selector) : WCJ(selector)  		
+		        this.forEach(function(el){
+		        	if (excludes.indexOf(el) < 0) nodes.push(el)
+		        })
+	    	}
+	    	return WCJ(nodes)
+	    },
 		pluck: function(property){ return WCJ.map(this, function(el){ return el[property] })},
 		find: function(selector){
 			var nodes = this.children(),ancestors=[];
