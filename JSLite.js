@@ -106,7 +106,13 @@
 				WCJ(this).empty().append(funcArg(this, html))
 			}) : (0 in this ? this[0].innerHTML : null)
 	    },
-	    val:function(){return this[0]?this[0].value:undefined;},
+	    val:function(value){
+			return 0 in arguments ?
+			this.each(function(idx){this.value = funcArg(this, value, idx, this.value)}) :
+			(this[0] && (this[0].multiple ? 
+				WCJ(this[0]).find('option').filter(function(){ return this.selected }).pluck('value') :
+				this[0].value))
+	    },
 	    css:function(property, value){
 	    	if (!this[0]) return [];
 	    	var computedStyle = getComputedStyle(this[0], '')
