@@ -420,10 +420,9 @@
 				        return false;
 				}
 		        if (method == 'GET') {
-		            url = url +'?'+ params
+		        	params?url =(url.indexOf('?')>-1?url +'&'+ params:url +'?'+ params) :null;
 		            params = ''
 		        }
-		
 		        doc.onreadystatechange = function() {
 		            if (doc.readyState == XMLHttpRequest.HEADERS_RECEIVED) {
 		                var status = doc.status;
