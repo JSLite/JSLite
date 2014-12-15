@@ -380,72 +380,100 @@
 	});
 
 	WCJ.extend({
-    	ajax:function(method, url, params, successCallback, errorCallback){
-		    var size = function(ar) {
-		        var len = ar.length ? --ar.length : -1;
-		            for (var k in ar) {
-		                len++;
-		            }
-		        return len;
-		    }
-		
-		    var serialize = function(obj, prefix) {
-		        var str = [];
-		        for(var p in obj) {
-		            var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-		            str.push(typeof v == "object" ?
-		                serialize(v, k) :
-		                encodeURIComponent(k) + "=" + encodeURIComponent(v));
-		        }
-		        return str.join("&");
-		    }
-		
-		    var init = function(method, url, params, successCallback, errorCallback) {
-		        params = serialize(params)
-		        var doc = undefined;
-				if(window.XMLHttpRequest) {
-				        var doc = new XMLHttpRequest();
-				}else if (window.ActiveXObject) { 
-					try {
-						var doc = new ActiveXObject("Msxml2.XMLHTTP");
-					} catch (e) {
-						try {
-							var doc = new ActiveXObject("Microsoft.XMLHTTP");
-						} catch (e) {}
+		ajaxSettings:{
+			// 默认请求类型
+			type: 'GET',
+			// 如果请求成功时执行回调
+			success: function(){},
+			// 如果请求失败时执行回调
+			error: function(){},
+			xhr: function () {
+			  return new window.XMLHttpRequest();
+			},
+			// MIME类型的映射
+			accepts: {
+			  script: 'text/javascript, application/javascript',
+			  json:   'application/json',
+			  xml:    'application/xml, text/xml',
+			  html:   'text/html',
+			  text:   'text/plain'
+			}
+		},
+		get:function(url, success){ WCJ.ajax({type:'GET',url: url, success: success}) },
+		post:function(url, data, success, dataType){
+			if (data instanceof Function) dataType = dataType || success, success = data, data = null;
+			WCJ.ajax({type: 'POST', url: url, data: data, success: success, dataType: dataType });
+		},
+    	ajax:function(options){
+    		var key,settings,
+				setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
+			    serialize = function(obj, prefix) {
+			        var str = [];
+			        for(var p in obj) {
+			            var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
+			            str.push(typeof v == "object" ?serialize(v, k) :
+			                encodeURIComponent(k) + "=" + encodeURIComponent(v));
+			        }
+			        return str.join("&");
+			    };
+				options = options || {};
+    			if (WCJ.isString(options)) {
+    				if (arguments[0]=="GET") {
+    					if (arguments[2]&&WCJ.isFunction(arguments[2])) {
+    						WCJ.get(arguments[1],arguments[2])
+    					};
+    				}else if(arguments[0]=="POST"){
+    					WCJ.post(arguments[1],arguments[2],arguments[3],arguments[4])
+    				};
+    				return;
+    			};
+    			settings=$.extend({}, options || {});
+		    	for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key];
+    			//{ type, url, data, success, dataType, contentType }
+			var data = settings.data,
+			    callback = settings.success || function(){},
+			    errback = settings.error || function(){},
+			    mime = $.ajaxSettings.accepts[settings.dataType],
+			    content = settings.contentType,
+			    xhr = new XMLHttpRequest(),
+        		nativeSetHeader = xhr.setRequestHeader,
+			    headers={};
+    			if (!settings.crossDomain) setHeader('X-Requested-With', 'XMLHttpRequest'),setHeader('Accept', mime || '*/*');
+				if (settings.headers) for (name in settings.headers) setHeader(name, settings.headers[name]);
+			    if (settings.contentType || (settings.contentType !== false && settings.data && settings.type.toUpperCase() != 'GET'))
+			    	setHeader('Content-Type', settings.contentType || 'application/x-www-form-urlencoded');
+			xhr.onreadystatechange = function(){
+				if (xhr.readyState == 4) {
+					if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 0) {
+						if (mime == 'application/json'&&!(/^\s*$/.test(xhr.responseText))) {
+							var result, error = false;
+								result = xhr.responseText
+							try {
+								if (settings.dataType == 'script')    (1,eval)(result)
+								else if (settings.dataType == 'xml')  result = xhr.responseXML
+								else if (settings.dataType == 'json') result = /^\s*$/.test(result) ? null : JSON.parse(result)
+							} catch (e) { error = e }
+
+							if (error) errback(error, 'parsererror', xhr, settings);
+							else callback(result, 'success', xhr);
+						} else {
+							callback(xhr.responseText, 'success', xhr)
+						};
+					} else {
+						errback(xhr, 'error');
 					}
 				}
-				if (!doc) { 
-				        window.alert("不能创建XMLHttpRequest对象");
-				        console.log("不能创建XMLHttpRequest对象")
-				        return false;
-				}
-		        if (method == 'GET') {
-		        	params?url =(url.indexOf('?')>-1?url +'&'+ params:url +'?'+ params) :null;
-		            params = ''
-		        }
-		        doc.onreadystatechange = function() {
-		            if (doc.readyState == XMLHttpRequest.HEADERS_RECEIVED) {
-		                var status = doc.status;
-		                if(status!=200) {
-		                    errorCallback(status, doc.statusText)
-		                }
-		            } else if (doc.readyState == XMLHttpRequest.DONE) {
-		                var data;
-		                var contentType = doc.getResponseHeader("Content-Type");
-		                data = doc.responseText;
-		                successCallback(data);
-		            }
-		        }
-		        doc.open(method, url);
-		        if (params.length > 0) {
-		            doc.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-		            doc.send(params);
-		        } else {
-		            doc.send();
-		        }
-		        return this;
-		    }
-		    init(method, url, params, successCallback, errorCallback);
+			};
+			data=serialize(data);
+			if (data&&data instanceof Object&&settings.type=='GET'){
+				data?settings.url =(settings.url.indexOf('?')>-1?settings.url +'&'+ data:settings.url +'?'+ data) :null;
+			}
+			xhr.open(settings.type || 'GET', settings.url || window.location, true);
+			if (mime) xhr.setRequestHeader('Accept', mime);
+			if (data instanceof Object && mime == 'application/json' ) data = JSON.stringify(data), content = content || 'application/json';
+    		for (name in headers) nativeSetHeader.apply(xhr, headers[name]);
+			xhr.send(data);
+
     	}
 	});
 

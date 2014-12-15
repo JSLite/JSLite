@@ -132,10 +132,15 @@ $("#box").off("click",function(){alert('41');}) //⇒ 解除绑定事件
 
 
 ## 异步请求Ajax
+
+## ajax
 执行Ajax请求。<br>
-$.ajax(type, url, data,success(cdata),error(status, statusText))
 
 type：请求方法 ("GET", "POST")<br>
+data：(默认：none)<br>发送到服务器的数据；如果是get请求，它会自动被作为参数拼接到url上。非String对象<br>
+dataType：(`json`, `jsonp`, `xml`, `html`, or `text`)<br>
+contentType：一个额外的"{键:值}"对映射到请求一起发送<br>
+headers：(默认：{})： 一个额外的"{键:值}"对映射到请求一起发送<br>
 url：发送请求的地址<br>
 success(cdata)：请求成功之后调用。传入返回后的数据，以及包含成功代码的字符串。<br>
 error(status, statusText)：请求出错时调用。 (超时，解析错误，或者状态码不在HTTP 2xx)。
@@ -144,12 +149,22 @@ error(status, statusText)：请求出错时调用。 (超时，解析错误，�
 
 ```js
 var data = { 'key': 'key', 'from': 'from'}
-$.ajax('GET', url, data,
+$.ajax('GET', 'http://127.0.0.1/api.php', 
 function(cdata) {
     console.log('ok', cdata)
-},
-function(status, statusText) {
-    console.log('error', status, statusText)
+})
+
+$.ajax({
+    type:'GET',
+    dataType:'json',
+    data:{'nike':'a'},
+    url:'http://127.0.0.1/api.php',
+    success:function(data){
+       console.log('success:',data)
+    },
+    error:function(d){
+       console.log('error:',d)
+    }
 })
 ```
 
@@ -157,13 +172,55 @@ function(status, statusText) {
 
 ```js
 var data = { 'key': 'key', 'from': 'from'}
-$.ajax('POST', url, data,
+$.ajax('POST', 'http://127.0.0.1/api.php', data,
 function(data) {
     console.log('ok', data)
-},
-function(status, statusText) {
-    console.log('error', status, statusText)
 })
+
+
+$.ajax({
+    type:'POST',
+    dataType:'json',
+    data:{'nike':'a'},
+    url:'http://127.0.0.1/api.php',
+    success:function(data){
+       console.log('success:',data)
+    },
+    error:function(d){
+       console.log('error:',d)
+    }
+})
+
+$.ajax({
+    type:'POST',
+    data:{'nike':'a'},
+    url:'http://127.0.0.1/api.php',
+    success:function(data){
+       console.log('success:',data)
+    },
+    error:function(d){
+       console.log('error:',d)
+    }
+})
+
+$.ajax({
+    type:'POST',
+    dataType:'json',
+    data:{'nike':'a'},
+    url:'http://127.0.0.1/api.php',
+    success:function(data){
+       console.log('success:',data)
+    },
+    error:function(d){
+       console.log('error:',d)
+    },
+    headers: {
+        "Access-Control-Allow-Origin":"http://pc175.com",
+        "Access-Control-Allow-Headers":"X-Requested-With"
+    },
+    contentType: 'application/json'
+})
+
 ```
 
 
