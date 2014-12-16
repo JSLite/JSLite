@@ -419,8 +419,11 @@
 				options = options || {};
     			if (WCJ.isString(options)) {
     				if (arguments[0]=="GET") {
+    					var  urls=arguments[1];
     					if (arguments[2]&&WCJ.isFunction(arguments[2])) {
-    						WCJ.get(arguments[1],arguments[2])
+    						WCJ.get(urls,arguments[2])
+    					}else if(arguments[2]&&WCJ.isJson(arguments[2])){
+    						WCJ.get(urls.indexOf('?')>-1?urls+'&'+serialize(arguments[2]):urls+'?'+serialize(arguments[2]),arguments[3])
     					};
     				}else if(arguments[0]=="POST"){
     					WCJ.post(arguments[1],arguments[2],arguments[3],arguments[4])
