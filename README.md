@@ -19,6 +19,7 @@ $.isJson         //判断对象是否为Json格式的对象
 $.isContainsNode(parent,node)//parent是否包含node节点对象
 $.getUrlParam("param")         //获取url参数的值
 $.likeArray      //判断对象是否为数组或者是字符
+$.intersect      //数组交集
 $.type           //获取类型
 $.map            //遍历集合中的元素返回一个新的数组，过滤null and undefined。
 $.error          //创建自定义错误
