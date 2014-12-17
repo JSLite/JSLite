@@ -320,6 +320,13 @@
 			})
 			return type;
         },
+        intersect:function(a,b){
+            var array=[];
+            a.forEach(function(item){
+                if(b.indexOf(item)>-1) array.push(item);
+            })
+            return array;
+        },
         error:function(msg) {throw msg;},
 	    getUrlParam:function (name) {
 	        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"),
