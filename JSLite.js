@@ -218,8 +218,10 @@
 		    return this.each(function(){ remove(this, event, func) })
 		},
 		trigger:function(event, data){
+			var type = event,specialEvents={}
+        	specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents';
 		    if (typeof type == 'string') {
-				event = document.createEvent('Events');
+				event = document.createEvent(specialEvents[type] || 'Events');
 				event.initEvent(type,true, true);
 		    }else return;
 		    event._data = data;
@@ -649,8 +651,15 @@
 		var self=this,id=zid(element),set=(handlers[id] || (handlers[id] = []));
 		events.split(/\s/).forEach(function(event){
 			var handler = parse(event);handler.fn = func;handler.i = set.length;
+			var proxyfn = function (event) {
+				var result = func.apply(element, [event].concat(event._data));
+				if (result === false) {
+				  event.preventDefault();
+				}
+				return result;
+			};
         	set.push(handler)
-			if (element.addEventListener) element.addEventListener(handler.e, func, false);
+			if (element.addEventListener) element.addEventListener(handler.e, proxyfn, false);
 		})
 	}
 	function remove(element, events, func){
