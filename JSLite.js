@@ -217,6 +217,16 @@
 		off:function(event, func){
 		    return this.each(function(){ remove(this, event, func) })
 		},
+		trigger:function(event, data){
+		    if (typeof type == 'string') {
+				event = document.createEvent('Events');
+				event.initEvent(type,true, true);
+		    }else return;
+		    event._data = data;
+		    return this.each(function(){
+      			if('dispatchEvent' in this) this.dispatchEvent(event);
+		    });
+		},
 		filter:function(selector){
 			return WCJ(filter.call(this, function(element){
         		return WCJ.matches(element, selector)
@@ -672,7 +682,7 @@
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup error paste").split(' ').forEach(function(event) {
 		WCJ.fn[event] = function(callback) {
-		  return callback ? this.bind(event, callback) : this;
+		  return callback ? this.bind(event, callback) : this.trigger(event);
 		}
 	});
 
