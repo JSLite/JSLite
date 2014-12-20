@@ -646,27 +646,26 @@
 	}
 
 	/* 绑定事件 start */
-	WCJ.event={add:add,remove:remove}
+	WCJ.event={add:add,remove:remove};
 	function add(element,events,func){
 		var self=this,id=zid(element),set=(handlers[id] || (handlers[id] = []));
 		events.split(/\s/).forEach(function(event){
 			var handler = parse(event);handler.fn = func;handler.i = set.length;
-			var proxyfn = function (event) {
-				var result = func.apply(element, [event].concat(event._data));
-				if (result === false) {
-				  event.preventDefault();
-				}
+			var proxyfn = handler.proxy = function (e) {
+				var result = func.apply(element,e._data == undefined ? [e] : [e].concat(e._data));
+				if (result === false) e.preventDefault(), e.stopPropagation();
 				return result;
 			};
         	set.push(handler)
-			if (element.addEventListener) element.addEventListener(handler.e, proxyfn, false);
+			if (element.addEventListener) element.addEventListener(handler.e,proxyfn, false);
 		})
 	}
 	function remove(element, events, func){
 		;(events || '').split(/\s/).forEach(function(event){
 			WCJ.event = parse(event)
 			findHandlers(element, event, func).forEach(function(handler){
-				if (element.removeEventListener) element.removeEventListener(handler.e, handler.fn, false);
+				delete handlers[zid(element)][handler.i]
+				if (element.removeEventListener) element.removeEventListener(handler.e, handler.proxy, false);
 			})
 		})
 	}
