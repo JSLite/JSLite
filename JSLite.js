@@ -428,7 +428,7 @@
 				setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
 			    serialize = function(obj, prefix) {
 			        var str = [];
-			        if(WCJ.type(obj) == "String") WCJ.type(obj);
+			        if(WCJ.type(obj) == "String") return obj;
 			        for(var p in obj) {
 			            var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
 			            str.push(typeof v == "object" ?serialize(v, k) :
