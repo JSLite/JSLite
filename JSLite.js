@@ -409,6 +409,7 @@
 			xhr: function () {
 			  return new window.XMLHttpRequest();
 			},
+			async:true,
 			// MIME类型的映射
 			accepts: {
 			  script: 'text/javascript, application/javascript',
@@ -491,7 +492,7 @@
 			if (data&&data instanceof Object&&settings.type=='GET'){
 				data?settings.url =(settings.url.indexOf('?')>-1?settings.url +'&'+ data:settings.url +'?'+ data) :null;
 			}
-			xhr.open(settings.type || 'GET', settings.url || window.location, true);
+			xhr.open(settings.type || 'GET', settings.url || window.location, settings.async);
 			if (mime) xhr.setRequestHeader('Accept', mime);
 			if (data instanceof Object && mime == 'application/json' ) data = JSON.stringify(data), content = content || 'application/json';
     		for (name in headers) nativeSetHeader.apply(xhr, headers[name]);
