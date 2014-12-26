@@ -133,7 +133,8 @@ $("#box").off("click",function(){alert('41');}) //⇒ 解除绑定事件
 ```
 
 
-## 异步请求Ajax
+## Ajax请求
+
 
 ## ajax
 执行Ajax请求。<br>
@@ -144,14 +145,29 @@ dataType：(`json`, `jsonp`, `xml`, `html`, or `text`)<br>
 contentType：一个额外的"{键:值}"对映射到请求一起发送<br>
 headers：(默认：{})： 一个额外的"{键:值}"对映射到请求一起发送<br>
 url：发送请求的地址<br>
+async：此参数不传默认为true(同步请求)，false异步请求<br>
 success(cdata)：请求成功之后调用。传入返回后的数据，以及包含成功代码的字符串。<br>
 error(status, statusText)：请求出错时调用。 (超时，解析错误，或者状态码不在HTTP 2xx)。
+
+
+###### ajax get
+
+```js
+$.get('http://127.0.0.1/api.php?wcj=123', 
+function(cdata) {
+    console.log('ok', cdata)
+})
+```
 
 ###### ajax GET请求
 
 ```js
-var data = { 'key': 'key', 'from': 'from'}
-$.ajax('GET', 'http://127.0.0.1/api.php', 
+$.ajax('GET', 'http://127.0.0.1/api.php', {"wcj":"123","ok":'11'},
+function(cdata) {
+    console.log('ok', cdata)
+})
+
+$.ajax('GET', 'http://127.0.0.1/api.php?wcj=abc', 
 function(cdata) {
     console.log('ok', cdata)
 })
@@ -170,6 +186,16 @@ $.ajax({
 })
 ```
 
+
+###### ajax post
+
+```js
+$.post('http://127.0.0.1/api.php', {'nike':0},
+function(cdata) {
+    console.log('ok', cdata)
+})
+```
+
 ###### ajax POST请求
 
 ```js
@@ -177,13 +203,37 @@ var data = { 'key': 'key', 'from': 'from'}
 $.ajax('POST', 'http://127.0.0.1/api.php', data,
 function(data) {
     console.log('ok', data)
-})
-
+},'json')
 
 $.ajax({
     type:'POST',
     dataType:'json',
-    data:{'nike':'a'},
+    data:{"nike":"123","kacper":{"go":34,"to":100}},
+    url:'http://127.0.0.1/api.php',
+    success:function(data){
+       console.log('success:',data)
+    },
+    error:function(d){
+       console.log('error:',d)
+    }
+})
+$.ajax({
+    type:'POST',
+    dataType:'json',
+    data:JSON.stringify('{"nike":"123","kacper":{"go":34,"to":100}}'),
+    url:'http://127.0.0.1/api.php',
+    success:function(data){
+       console.log('success:',data)
+    },
+    error:function(d){
+       console.log('error:',d)
+    }
+})
+
+$.ajax({
+    type:'POST',
+    dataType:'json',
+    data:JSON.stringify({'nike':'a'}),
     url:'http://127.0.0.1/api.php',
     success:function(data){
        console.log('success:',data)
