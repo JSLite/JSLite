@@ -76,10 +76,7 @@
 			return this
 		},
 	    each: function(callback){
-			emptyArray.every.call(this, function(el, idx){
-				return callback.call(el, idx, el) !== false
-			})
-			return this;
+	    	return WCJ.each(this,callback);
 	    },
 	    map: function(fn){
 	    	return WCJ(WCJ.map(this, function(el, i){ return fn.call(el, i, el) }));
