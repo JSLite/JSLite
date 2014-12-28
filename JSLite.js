@@ -438,8 +438,7 @@
 	            })();
 	            params.push(typeof v=="object"?this.param(v, k ,traditional):params.add(k,v));
 	        };
-	        var dd = params.join("&");
-	        return unescape(dd);
+	        return params.join("&");
 		},
 		get:function(url, success){ WCJ.ajax({type:'GET',url: url, success: success}) },
 		post:function(url, data, success, dataType){
