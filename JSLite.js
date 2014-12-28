@@ -413,15 +413,32 @@
 			  text:   'text/plain'
 			}
 		},
-		param:function(obj,traditional){
-	        var str = [];
+		param:function(obj,traditional,scope){
 	        if(WCJ.type(obj) == "String") return obj;
-	        for(var p in obj) {
-	            var k = traditional ? traditional + "[" + p + "]" : p, v = obj[p];
-	            str.push(typeof v == "object" ?this.param(v, k) :
-	                encodeURIComponent(k) + "=" + encodeURIComponent(v));
-	        }
-	        return str.join("&");
+	        var params = [];
+        	params.add=function(key, value){
+  				this.push(escape(key) + '=' + escape(value== null?"":value))
+        	};
+			if(scope==true&&WCJ.type(obj)=='Object') params.add(traditional,obj)
+	        else for(var p in obj) {
+	            var v = obj[p];
+	            var k = (function(){
+	            	if (traditional) {
+	            		if (traditional==true) {
+	            			return p
+	            		}else{
+		            		if(scope&&WCJ.type(obj)=='Array'){
+		            			return traditional
+		            		}
+		            		return traditional + "[" + (WCJ.type(obj)=='Array'?"":p) + "]";
+	            		};
+	            	};
+	            	return p
+	            })();
+	            params.push(typeof v=="object"?this.param(v, k ,traditional):params.add(k,v));
+	        };
+	        var dd = params.join("&");
+	        return unescape(dd);
 		},
 		get:function(url, success){ WCJ.ajax({type:'GET',url: url, success: success}) },
 		post:function(url, data, success, dataType){
