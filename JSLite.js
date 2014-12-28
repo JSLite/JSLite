@@ -224,6 +224,7 @@
 		    });
 		},
 		filter:function(selector){
+      		if (WCJ.isFunction(selector)) return this.not(this.not(selector))
 			return WCJ(filter.call(this, function(element){
         		return WCJ.matches(element, selector)
 		    }))
