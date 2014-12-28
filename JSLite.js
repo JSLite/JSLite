@@ -521,6 +521,12 @@
 				}
 		    })
 		    return result
+		},
+		serialize:function(result){
+			result = [],this.serializeArray().forEach(function(elm){
+			  result.push(encodeURIComponent(elm.name) + '=' + encodeURIComponent(elm.value))
+			})
+			return result.join('&')
 		}
 	})
 
