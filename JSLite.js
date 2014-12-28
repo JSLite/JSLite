@@ -510,9 +510,20 @@
     		for (name in headers) nativeSetHeader.apply(xhr, headers[name]);
 
 			xhr.send(data);
-
     	}
 	});
+	WCJ.fn.extend({
+		serializeArray:function(){
+		    var result = [], el,type
+		    $([].slice.call(this.get(0).elements)).each(function(){
+				el = $(this),type = el.attr('type')
+				if (this.nodeName.toLowerCase() != 'fieldset' && !this.disabled && type != 'submit' && type != 'reset' && type != 'button' && ((type != 'radio' && type != 'checkbox') || this.checked)) {
+					result.push({name: el.attr('name'), value: el.val() }) 
+				}
+		    })
+		    return result
+		}
+	})
 
 	//修复IE，增加方法getComputedStyle为对象的窗口和getPropertyValue方法的对象，它返回的getComputedStyle
 	if (!window.getComputedStyle) {
