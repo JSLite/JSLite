@@ -413,6 +413,16 @@
 			  text:   'text/plain'
 			}
 		},
+		param:function(obj,traditional){
+	        var str = [];
+	        if(WCJ.type(obj) == "String") return obj;
+	        for(var p in obj) {
+	            var k = traditional ? traditional + "[" + p + "]" : p, v = obj[p];
+	            str.push(typeof v == "object" ?this.param(v, k) :
+	                encodeURIComponent(k) + "=" + encodeURIComponent(v));
+	        }
+	        return str.join("&");
+		},
 		get:function(url, success){ WCJ.ajax({type:'GET',url: url, success: success}) },
 		post:function(url, data, success, dataType){
 			if (data instanceof Function) dataType = dataType || success, success = data, data = null;
@@ -420,17 +430,7 @@
 		},
     	ajax:function(options){
     		var key,settings,
-				setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
-			    serialize = function(obj, prefix) {
-			        var str = [];
-			        if(WCJ.type(obj) == "String") return obj;
-			        for(var p in obj) {
-			            var k = prefix ? prefix + "[" + p + "]" : p, v = obj[p];
-			            str.push(typeof v == "object" ?serialize(v, k) :
-			                encodeURIComponent(k) + "=" + encodeURIComponent(v));
-			        }
-			        return str.join("&");
-			    };
+				setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] };
 				options = options || {};
     			if (WCJ.isString(options)) {
     				if (arguments[0]=="GET") {
@@ -438,7 +438,7 @@
     					if (arguments[2]&&WCJ.isFunction(arguments[2])) {
     						WCJ.get(urls,arguments[2])
     					}else if(arguments[2]&&WCJ.isJson(arguments[2])){
-    						WCJ.get(urls.indexOf('?')>-1?urls+'&'+serialize(arguments[2]):urls+'?'+serialize(arguments[2]),arguments[3])
+    						WCJ.get(urls.indexOf('?')>-1?urls+'&'+this.param(arguments[2]):urls+'?'+this.param(arguments[2]),arguments[3])
     					};
     				}else if(arguments[0]=="POST"){
     					WCJ.post(arguments[1],arguments[2],arguments[3],arguments[4])
@@ -482,7 +482,7 @@
 					}
 				}
 			};
-			data=serialize(data);
+			data=this.param(data);
 			if (data&&data instanceof Object&&settings.type=='GET'){
 				data?settings.url =(settings.url.indexOf('?')>-1?settings.url +'&'+ data:settings.url +'?'+ data) :null;
 			}
