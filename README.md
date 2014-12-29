@@ -288,8 +288,8 @@ $("div").get(0)
 在当前获取的节点数组中获取一个元素在这个数组的位置。
 
 ```js
-$("div").get(0)
-//⇒ 返回节点 <div id="box" class="boxOne box2 box3" ></div>
+$("div").indexOf($("#box")[0])
+//⇒ 2
 ```
 
 ### length
