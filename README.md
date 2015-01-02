@@ -3,6 +3,8 @@ JSLite
 [官方网站](http://blog.pc175.com/JSLite/)
 [官方文档-更详细](http://blog.pc175.com/JSLite/doc/)
 
+----
+让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。
 
 ## 选择器$
 选择器使用的是浏览器自带的方法封装的 `querySelectorAll` ，没有使用jQuery作者John Resig开发的DOM选择器引擎(Dom Selector Engine) `Sizzle` 。目前 IE8/9及Firefox/Chrome/Safari/Opera 的最新版已经支持 `querySelectorAll` 。
@@ -92,15 +94,15 @@ $.param({
     ids:["a1","b2","c3"],
     c:{g:23,e:[567]},
     a:3
-},true) //⇒ ids=a1&&ids=b2&&ids=c3&&c=[object Object]&a=3
+},true) //⇒ ids=a1&ids=b2&ids=c3&c=[object Object]&a=3
 
 $.param({
     ids:["a1","b2","c3"],
     c:{g:23,e:[567]},
     a:3
-}) //⇒ ids[]=a1&&ids[]=b2&&ids[]=c3&&c[g]=23&&c[e]=567&&a=3
+}) //⇒ ids[]=a1&ids[]=b2&ids[]=c3&c[g]=23&c[e]=567&a=3
 
-$.param([1,2,3]) //⇒ 0=1&&1=2&&2=3
+$.param([1,2,3]) //⇒ 0=1&1=2&2=3
 
 $.param({
     ids:[1,2,3] 

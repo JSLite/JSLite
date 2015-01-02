@@ -416,29 +416,34 @@
 		},
 		param:function(obj,traditional,scope){
 	        if(WCJ.type(obj) == "String") return obj;
-	        var params = [];
+	        var params = [],str='';
         	params.add=function(key, value){
   				this.push(escape(key) + '=' + escape(value== null?"":value))
         	};
 			if(scope==true&&WCJ.type(obj)=='Object') params.add(traditional,obj)
-	        else for(var p in obj) {
-	            var v = obj[p];
-	            var k = (function(){
-	            	if (traditional) {
-	            		if (traditional==true) {
-	            			return p
-	            		}else{
-		            		if(scope&&WCJ.type(obj)=='Array'){
-		            			return traditional
-		            		}
-		            		return traditional + "[" + (WCJ.type(obj)=='Array'?"":p) + "]";
-	            		};
-	            	};
-	            	return p
-	            })();
-	            params.push(typeof v=="object"?this.param(v, k ,traditional):params.add(k,v));
-	        };
-	        return params.join("&");
+	        else {
+		        for(var p in obj) {
+		            var v = obj[p],str='',
+		            	k = (function(){
+			            	if (traditional) {
+			            		if (traditional==true) return p;
+			            		else{
+				            		if(scope&&WCJ.type(obj)=='Array'){
+				            			return traditional
+				            		}
+				            		return traditional + "[" + (WCJ.type(obj)=='Array'?"":p) + "]";
+			            		};
+			            	};
+			            	return p
+			            })();
+		            if (typeof v=="object") {
+		            	str=this.param(v, k ,traditional);
+		            }else str=params.add(k,v);
+
+		            if (str) params.push(str);
+		        };
+	    	}
+	        return params.join('&');
 		},
 		get:function(url, success){ WCJ.ajax({type:'GET',url: url, success: success}) },
 		post:function(url, data, success, dataType){
