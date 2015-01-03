@@ -229,6 +229,10 @@
         		return WCJ.matches(element, selector)
 		    }))
 		},
+	    is: function(selector){
+	    	if (this.length > 0 && WCJ.isObject(selector)) return this.indexOf(selector)>-1?true:false;
+	    	return this.length > 0 && WCJ.matches(this[0], selector);
+	    },
 	    not:function(selector){
 	    	var nodes = [];
 	    	if (WCJ.isFunction(selector)&& selector.call !== undefined){
