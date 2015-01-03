@@ -1,11 +1,11 @@
 JSLite
 ======
+让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。
+
 [官方网站](http://blog.pc175.com/JSLite/)
 [官方文档-更详细](http://blog.pc175.com/JSLite/doc/)
 
 ----
-让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。
-
 > 1. jQuery 的目标是兼容所有主流浏览器，这就意味着它的大量代码对移动端的浏览器是无用或者低效的。
 > 2. 而 JSLite 只针对移动端浏览器编写，使用js新方法实现jQuery API，因此体积更小、效率更高，更重要的是，JSLite 的 API 完全仿照 jQuery ，所以学习成本也很低。
 > 3. JSLite与jQuery有着类似的api，通用库只有5-10k，手机上每一kb都是钱。
@@ -13,7 +13,6 @@ JSLite
 
 ## 选择器$
 > 选择器使用的是浏览器自带的方法的 `document.querySelectorAll` 接口，支持标准的 CSS 选择器，没有使用jQuery作者John Resig开发的DOM选择器引擎(Dom Selector Engine) `Sizzle` 。目前 IE8/9及Firefox/Chrome/Safari/Opera 的最新版已经支持 `querySelectorAll` 。
-
 > $(selector)                 //⇒ 选择节点  
 > $("<DOM nodes>")            //⇒ 生成节点  
 > $("htmlString")             //⇒ 生成  
@@ -238,7 +237,8 @@ $.type("div") //⇒ String
 ```
 
 ### $.matches
-> 如果当前节点能被指定的css选择器查找到，则返回`true`，否则返回`false`。`$.matches(element, selector)`。
+> 如果当前节点能被指定的css选择器查找到，则返回`true`，否则返回`false`。`$.matches(element, selector)`。  
+> $.matches(element,selector)  ⇒ boolean
 
 ```js
 $.matches($("#box")[0], "#box")//⇒ true   
@@ -294,12 +294,22 @@ $("img").forEach(function(item,index,array){
 })
 ```
 
+### eq
+> 指定匹配元素的集合为的索引的哪一个元素。一个整数，指示元素的位置，以 `0` 为基数。
+> eq(index)  ⇒ collection
+> eq(-index) ⇒ collection
+
+```js
+$("div").eq(0)//⇒ 返回数组第一个节点数组 [div#box.boxOne.box2.box3, init: function…]
+$("div").eq(-1)//⇒ 倒数第一个节点数组
+$("div").eq(-2)//⇒ 倒数第二个节点数组
+```
+
 ### get
 > 当前对象集合中获取所有节点对象或单个节点对象。
 
 ```js
-$("div").get(0)
-//⇒ 返回节点 <div id="box" class="boxOne box2 box3" ></div>
+$("div").get(0)//⇒ 返回节点 <div id="box" class="boxOne box2 box3" ></div>
 ```
 
 ### indexOf
