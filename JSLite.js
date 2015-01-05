@@ -258,7 +258,7 @@
 			});
 			return WCJ(ancestors).filter(selector || '*');
 		},
-	    eq: function(idx){return idx === -1 ? this.slice(idx) : this.slice(idx, + idx + 1)},
+	    eq: function(idx){return idx === -1 ? WCJ(this.slice(idx)) : WCJ(this.slice(idx, + idx + 1))},
 		children:function(selector){
 			var arr=this.pluck('children'),e=[];
 			filter.call(arr, function(item, idx){ 
