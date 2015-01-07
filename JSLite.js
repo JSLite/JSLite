@@ -423,7 +423,7 @@
 	        if(WCJ.type(obj) == "String") return obj;
 	        var params = [],str='';
         	params.add=function(key, value){
-  				this.push(escape(key) + '=' + escape(value== null?"":value))
+  				this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value== null?"":value))
         	};
 			if(scope==true&&WCJ.type(obj)=='Object') params.add(traditional,obj)
 	        else {
