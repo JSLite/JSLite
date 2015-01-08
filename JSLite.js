@@ -729,7 +729,7 @@
 
 	;("blur focus focusin focusout load resize scroll unload click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
-	"change select submit keydown keypress keyup error paste").split(' ').forEach(function(event) {
+	"change select submit keydown keypress keyup error paste drop dragover").split(' ').forEach(function(event) {
 		WCJ.fn[event] = function(callback) {
 		  return callback ? this.bind(event, callback) : this.trigger(event);
 		}
