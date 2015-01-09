@@ -260,6 +260,7 @@
 			return WCJ(ancestors).filter(selector || '*');
 		},
 	    clone: function(){return this.map(function(){ return this.cloneNode(true)})},
+	    add: function(selector){return WCJ.unique(this.concat($(selector)));},
 	    eq: function(idx){return idx === -1 ? WCJ(this.slice(idx)) : WCJ(this.slice(idx, + idx + 1))},
 		children:function(selector){
 			var arr=this.pluck('children'),e=[];
