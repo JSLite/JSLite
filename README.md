@@ -1,7 +1,9 @@
 JSLite
 ======
-让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。
+让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。  
 
+QQ交流群：397463673  
+[社区](http://segmentfault.com/t/jslite/blogs)
 [官方网站](http://blog.pc175.com/JSLite/)
 [官方文档-更详细](http://blog.pc175.com/JSLite/doc/)
 
@@ -675,6 +677,15 @@ $("#box").before($('input')) //⇒ self
 ```js
 $('<p>test</p>').insertBefore('#box')
 ```
+
+### clone
+> clone()   ⇒ collection  
+> 通过深度克隆来复制集合中的所有元素。(通过原生 `cloneNode` 方法深度克隆来复制集合中的所有元素。此方法不会有数据和事件处理程序复制到新的元素。这点和jquery中利用一个参数来确定是否复制数据和事件处理不相同。)
+
+```js
+$('body').append($("#box").clone())
+```
+
 
 ----
 

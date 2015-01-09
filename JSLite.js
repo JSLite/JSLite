@@ -258,6 +258,7 @@
 			});
 			return WCJ(ancestors).filter(selector || '*');
 		},
+	    clone: function(){return this.map(function(){ return this.cloneNode(true)})},
 	    eq: function(idx){return idx === -1 ? WCJ(this.slice(idx)) : WCJ(this.slice(idx, + idx + 1))},
 		children:function(selector){
 			var arr=this.pluck('children'),e=[];
@@ -729,7 +730,7 @@
 
 	;("blur focus focusin focusout load resize scroll unload click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
-	"change select submit keydown keypress keyup error paste drop dragover").split(' ').forEach(function(event) {
+	"change select submit keydown keypress keyup error paste drop dragstart dragover").split(' ').forEach(function(event) {
 		WCJ.fn[event] = function(callback) {
 		  return callback ? this.bind(event, callback) : this.trigger(event);
 		}
