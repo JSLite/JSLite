@@ -374,6 +374,7 @@
 		                          element.oMatchesSelector || element.msMatchesSelector || element.matchesSelector;
 		    if (matchesSelector) return matchesSelector.call(element, selector);
 		},
+		unique:function(array){return filter.call(array, function(item, idx){ return array.indexOf(item) == idx })},
 		inArray:function(elem, array, i){
 			return emptyArray.indexOf.call(array, elem, i)
 		},
