@@ -263,8 +263,8 @@
 	    add: function(selector){return WCJ.unique(this.concat($(selector)));},
 	    eq: function(idx){return idx === -1 ? WCJ(this.slice(idx)) : WCJ(this.slice(idx, + idx + 1))},
 		children:function(selector){
-			var arr=this.pluck('children'),e=[];
-			filter.call(arr, function(item, idx){ 
+			var e=[];
+			filter.call(this.pluck('children'), function(item, idx){
 				WCJ.map(item,function(els){ if (els&&els.nodeType == 1) e.push(els) })
 			});
 			return WCJ(e).filter(selector || '*');
