@@ -85,6 +85,7 @@
 	      return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
 	    },
 	    empty: function(){ return this.each(function(){ this.innerHTML = '' }) },
+	    detach: function(){return this.remove();},
 	    remove: function(){
 			return this.each(function(){
 				if (this.parentNode != null) this.parentNode.removeChild(this)
