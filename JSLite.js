@@ -311,7 +311,6 @@
 		isPlainObject:function(obj){
 			return this.isObject(obj) && !this.isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype
 		},
-		isContainsNode:function(parent, node){return this.contains(parent, node)},
 	    isJson: function (obj) {
 			var isjson = typeof(obj) == "object" && 
 			Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
@@ -365,6 +364,9 @@
 				if (value != null) values.push(value)
 			}
 			return values.length > 0 ? WCJ.fn.concat.apply([], values) : values;
+		},
+		grep:function(elements, callback){
+			return filter.call(elements, callback)
 		},
 		matches:function(element, selector){
 			if (!selector || !element || element.nodeType !== 1) return false;
