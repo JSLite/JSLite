@@ -325,6 +325,7 @@
 			Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
 			return isjson;
         },
+        parseJSON:JSON.parse,
 		likeArray:function (obj) {return obj? typeof obj.length == 'number' :null },
         type: function (obj) {
         	if(!obj) return undefined;
