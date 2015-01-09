@@ -269,6 +269,9 @@
 			});
 			return WCJ(e).filter(selector || '*');
 		},
+	    contents: function() {
+	    	return this.map(function() { return this.contentDocument || slice.call(this.childNodes) })
+	    },
 		parent: function(selector){return WCJ(WCJ.unique(this.pluck('parentNode'))).filter(selector||'*')},
 		parents: function(selector){
 			var ancestors=WCJ.sibling(this,'parentNode');
