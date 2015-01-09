@@ -2,14 +2,26 @@ JSLite
 ======
 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。  
 
-QQ交流群：397463673  
-[社区](http://segmentfault.com/t/jslite/blogs)[官方网站](http://blog.pc175.com/JSLite/)[官方文档-更详细](http://blog.pc175.com/JSLite/doc/)
-
-----
 > 1. jQuery 的目标是兼容所有主流浏览器，这就意味着它的大量代码对移动端的浏览器是无用或者低效的。
-> 2. 而 JSLite 只针对移动端浏览器编写，使用js新方法实现jQuery API，因此体积更小、效率更高，更重要的是，JSLite 的 API 完全仿照 jQuery ，所以学习成本也很低。
-> 3. JSLite与jQuery有着类似的api，通用库只有5-10k，手机上每一kb都是钱。
-> 4. 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。
+> 2. 而 JSLite 只针对先进浏览器(支持HTML5,CSS3)、移动端浏览器编写，使用js新方法实现jQuery API，因此体积更小、效率更高.
+> 3. 更重要的是，JSLite 的 API 完全仿照 jQuery ，所以学习成本也很低。
+> 4. JSLite与jQuery有着绝大部分类似的api，通用库只有5-10k，手机上每一kb都是钱。
+> 5. 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。
+
+## 浏览器兼容
+此兼容，是根据我使用的一些js方法函数的支持情况来判断的。设备过少，部分是根据[developer.mozilla.org](https://developer.mozilla.org)的方法函数兼容数据来判断的，下面的我们的主要兼容目标
+
+> Safari 6+ (Mac)  
+> Chrome 30+ (Windows, Mac, Android, iOS, Linux, Chrome OS)  
+> Firefox 24+ (Windows, Mac, Android, Linux, Firefox OS)  
+> iOS 5+ Safari
+> Android 2.3+ Browser  
+> Internet Explorer 10+ (Windows, Windows Phone)  
+
+**如有疑问欢迎到这些地方交流：**  
+
+QQ交流群：397463673   
+[segmentfault社区](http://segmentfault.com/t/jslite/blogs) | [官方网站](http://blog.pc175.com/JSLite/) | [官方文档-更详细](http://blog.pc175.com/JSLite/doc/)  
 
 ## 选择器$
 > 选择器使用的是浏览器自带的方法的 `document.querySelectorAll` 接口，支持标准的 CSS 选择器，没有使用jQuery作者John Resig开发的DOM选择器引擎(Dom Selector Engine) `Sizzle` 。目前 IE8/9及Firefox/Chrome/Safari/Opera 的最新版已经支持 `querySelectorAll` 。
@@ -71,6 +83,23 @@ $("input[type=radio]").uncheck();   //取消选中
 ```js
 $.error("2222")
 //⇒ 输出错误 Uncaught 2222
+```
+
+----
+## 字符串处理
+
+### $.trim
+去掉字符串起始和结尾的空格。
+
+```js
+$.trim("  hello, how are you?  ");//⇒ "hello, how are you?"
+```
+
+### trim
+同上，去掉字符串起始和结尾的空格。
+
+```js
+"  hello, how are you?  ".trim()//⇒ "hello, how are you?"
 ```
 
 ----
@@ -163,6 +192,8 @@ $.each(['a', 'b', 'c'], function(index, item){
 })
 ```
 
+### $.parseJSON
+> 与JSON.parse 方法，接受一个标准格式的 JSON 字符串，并返回解析后的 JavaScript 对象。
 
 ----
 ## 测试操作
@@ -173,6 +204,9 @@ $.each(['a', 'b', 'c'], function(index, item){
 ```js
 $.isDocument(document) //⇒ true
 ```
+
+### $.isWindow
+> 确定参数是否为一个窗口（window对象），如果是则返回true。这在处理iframe时非常有用，因为每个iframe都有它们自己的window对象，使用常规方法obj==window校验这些objects的时候会失败。
 
 ### $.isFunction
 > 判断对象是否为函数【function】。
@@ -213,7 +247,11 @@ $.isArray([1,2,3])  //⇒ true
 $.isJson({})  //⇒ true
 ```
 
-### $.isContainsNode
+### $.isContainsNode !
+> isContainsNode 与 contains相同 遗留问题
+
+### $.contains
+> $.contains(parent, node)   ⇒ boolean  
 > parent是否包含node节点对象。
 
 ```js
@@ -237,7 +275,7 @@ $.type("div") //⇒ String
 ```
 
 ### $.matches
-> 如果当前节点能被指定的css选择器查找到，则返回`true`，否则返回`false`。`$.matches(element, selector)`。  
+> 如果当前节点能被指定的css选择器查找到，则返回`true`，否则返回`false`。  
 > $.matches(element,selector)  ⇒ boolean
 
 ```js
@@ -536,6 +574,17 @@ $("#box").remove()
 //⇒ self <div id="box" class="boxOne box2 box3" ></div>
 ```
 
+### detach !
+> 被遗弃的方法(不建议使用)，作用跟remove一样，所有绑定的事件、附加的数据等都会保留下来。
+
+```js
+$("#box").click(function(){
+    console.log("wcj")
+})
+var a = $('#box').detach();//删除的对象赋给a
+$('body').append(a)//将a添加到 body 中还是可以点击
+```
+
 ----
 ## 查找节点
 
@@ -684,7 +733,6 @@ $('<p>test</p>').insertBefore('#box')
 $('body').append($("#box").clone())
 ```
 
-
 ----
 
 ## 事件处理
@@ -718,7 +766,7 @@ $(function(){
 ```
 
 ### bind
-> 为每个匹配元素的特定事件绑定事件处理函数。可以绑定这些事件 `blur` `focus` `focusin` `focusout` `load` `resize` `scroll` `unload` `click` `dblclick` `mousedown` `mouseup` `mousemove` `mouseover` `mouseout` `mouseenter` `mouseleave` `change` `select` `submit` `keydown` `keypress` `keyup` `error`。
+> 为每个匹配元素的特定事件绑定事件处理函数。可以绑定这些事件 `blur` `focus` `focusin` `focusout` `load` `resize` `scroll` `unload` `click` `dblclick` `mousedown` `mouseup` `mousemove` `mouseover` `mouseout` `mouseenter` `mouseleave` `change` `select` `submit` `keydown` `keypress` `keyup` `error`  `paste` `drop` `dragover` 。
 
 ```js
 $("#box").bind("click", function(){
@@ -739,7 +787,7 @@ $("#box").unbind("click",function(){alert('41');}) //⇒ 解除绑定事件
 ```
 
 ### on
-> 为每个匹配元素的特定事件绑定事件处理函数。可以绑定这些事件 `blur` `focus` `focusin` `focusout` `load` `resize` `scroll` `unload` `click` `dblclick` `mousedown` `mouseup` `mousemove` `mouseover` `mouseout` `mouseenter` `mouseleave` `change` `select` `submit` `keydown` `keypress` `keyup` `error`。
+> 为每个匹配元素的特定事件绑定事件处理函数。可以绑定这些事件 `blur` `focus` `focusin` `focusout` `load` `resize` `scroll` `unload` `click` `dblclick` `mousedown` `mouseup` `mousemove` `mouseover` `mouseout` `mouseenter` `mouseleave` `change` `select` `submit` `keydown` `keypress` `keyup` `error`  `paste` `drop` `dragover` 。
 
 ```js
 $("#box").on("click", function(){
@@ -917,6 +965,13 @@ $.ajax({
 ## Form
 > 表单提交的一些方法
 
+### submit
+> submit() 方法把表单数据提交到 Web 服务器。这个是原生态提供的方法，还没有封装更改 *。
+
+```js
+$('form')[0].submit() //此处直接原生态提交表单，日后封装，直接在JSLite对象上就可以提交。
+```
+
 ### serializeArray
 > 将用作提交的表单元素的值组合成拥有name和value的键值对组成的数组。不能使用的表单元素，buttons，未选中的radio buttons/checkboxs 将会被跳过。结果不包含file inputs的数据。
 
@@ -932,3 +987,4 @@ $('form').serializeArray();
 $('form').serialize();
 //=> golang=456&name=&password=&sel=&kaikai=&w=asd&w2=asdf
 ```
+
