@@ -269,13 +269,7 @@
 			});
 			return WCJ(e).filter(selector || '*');
 		},
-		parent: function(selector){
-			var arr=this.pluck('parentNode'),e=[];
-			filter.call(arr, function(els, idx){ 
-				 if (els&&els.nodeType == 1) e.push(els)
-			});
-			return WCJ(e).filter(selector || '*');
-		},
+		parent: function(selector){return WCJ(WCJ.unique(this.pluck('parentNode'))).filter(selector||'*')},
 		parents: function(selector){
 			var ancestors=WCJ.sibling(this,'parentNode');
     		return selector == null ? WCJ(ancestors) : WCJ(ancestors).filter(selector);
