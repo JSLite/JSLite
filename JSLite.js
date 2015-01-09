@@ -334,6 +334,7 @@
 			})
 			return type;
         },
+        trim:function(str){if(str) return str.trim();},
         intersect:function(a,b){
             var array=[];
             a.forEach(function(item){
