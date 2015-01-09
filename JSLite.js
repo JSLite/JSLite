@@ -311,15 +311,7 @@
 		isPlainObject:function(obj){
 			return this.isObject(obj) && !this.isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype
 		},
-		isContainsNode:function(parent,node){
-	    	return document.documentElement.isContainsNode ?
-		    parent !== node && parent.isContainsNode(node):
-		    (function(){
-		    	while (node && (node = node.parentNode))
-		    	if (node === parent) return true
-		    	return false
-			})();
-	    },
+		isContainsNode:function(parent, node){return this.contains(parent, node)},
 	    isJson: function (obj) {
 			var isjson = typeof(obj) == "object" && 
 			Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
@@ -392,6 +384,10 @@
 					return node
 			});
 			return ancestors;
+	    },
+	    contains:function(parent, node){
+	    	if(parent&&!node) return document.documentElement.contains(parent)
+	    	return parent !== node && parent.contains(node)
 	    },
 		noConflict: function( deep ) {
 			if ( window.$$ === JSLite )
@@ -664,7 +660,7 @@
 		                 operatorIndex == 2 ? target :
 		                 null;
 
-    			var parentInDocument = WCJ.isContainsNode(document.documentElement, parent)
+    			var parentInDocument = WCJ.contains(document.documentElement, parent)
 
 		        nodes.forEach(function(node){
 		        	var txt
