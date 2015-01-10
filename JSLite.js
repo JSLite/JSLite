@@ -320,7 +320,7 @@
         	if(!obj) return undefined;
         	var type="";
 			WCJ.each("Boolean Number HTMLDivElement String Function Array Date RegExp Object Error".split(" "), function(i, name) {
-			  if(toString.call(obj).indexOf(name) > -1) type = name == "HTMLDivElement"?"Object":name;
+			  if(Object.prototype.toString.call(obj).indexOf(name) > -1) type = name == "HTMLDivElement"?"Object":name;
 			})
 			return type;
         },
@@ -558,7 +558,7 @@
 	        return this;
 	    }
 	}
-	//解决低版本浏览器对filter方法的支持
+	//IE浏览器对filter方法的支持
 	if (!Array.prototype.filter){
 		Array.prototype.filter = function(fun /*, thisArg */){
 			"use strict";
@@ -580,7 +580,7 @@
 			return res;
 		};
 	}
-	//低版本IE对indexOf方法的支持
+	//IE对indexOf方法的支持
 	if(!Array.indexOf){
 	    Array.prototype.indexOf = function(obj){              
 	        for(var i=0; i<this.length; i++){
@@ -591,7 +591,7 @@
 	        return -1;
 	    }
 	}
-	//低版本IE对forEach方法的支持
+	//IE对forEach方法的支持
 	if (!Array.prototype.forEach) {  
 	    Array.prototype.forEach = function(fun /*, thisp*/){  
 	        var len = this.length;  
