@@ -1,22 +1,22 @@
 ;(function(window, undefined) {
 	"use strict";
 	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],P={},handlers = {},_zid = 1,
-	WCJ = (function(){
-		var WCJ = function( selector ) {
-		    return new WCJ.fn.init(selector);
+	JSLite = (function(){
+		var JSLite = function( selector ) {
+		    return new JSLite.fn.init(selector);
 		};
-		WCJ.fn = WCJ.prototype = {
+		JSLite.fn = JSLite.prototype = {
 			init:function( selector ){
 				var dom ;
     			if (!selector) 
-    				dom = emptyArray,dom.selector = selector || '',dom.__proto__ = WCJ.fn.init.prototype;
+    				dom = emptyArray,dom.selector = selector || '',dom.__proto__ = JSLite.fn.init.prototype;
     			else if (typeof selector == 'string' && (selector = selector.trim()) && selector[0] == '<'  && /^\s*<(\w+|!)[^>]*>/.test(selector))
         			dom = P.fragment(selector),selector=null;
-    			else if (WCJ.isFunction(selector)) return WCJ(document).ready(selector)
+    			else if (JSLite.isFunction(selector)) return JSLite(document).ready(selector)
     			else {
-    				if (WCJ.isArray(selector))
+    				if (JSLite.isArray(selector))
     					dom = selector;
-				    else if (WCJ.isObject(selector))
+				    else if (JSLite.isObject(selector))
 				    	dom = [selector], selector = null
 	                else if (elementTypes.indexOf(selector.nodeType) >= 0 || selector === window)
 	                	dom = [selector], selector = null;
@@ -32,14 +32,14 @@
 					})();
     			}
 				dom = dom || emptyArray;
-				WCJ.extend(dom, WCJ.fn);
+				JSLite.extend(dom, JSLite.fn);
 				dom.selector = selector || '';
     			return dom;
 			},
 			size:function(){return this.length;}
 		}
-		WCJ.fn.init.prototype = WCJ.fn;
-        WCJ.extend = WCJ.fn.extend = function () {
+		JSLite.fn.init.prototype = JSLite.fn;
+        JSLite.extend = JSLite.fn.extend = function () {
             var options, name, src, copy,
 			target = arguments[0],i = 1,
 			length = arguments.length,
@@ -48,9 +48,9 @@
             if (typeof (target) === "boolean")
             	deep = target,target = arguments[1] || {},i = 2;
             //处理时，目标是一个字符串或（深拷贝可能的情况下）的东西
-            if (typeof (target) !== "object" && !WCJ.isFunction(target)) 
+            if (typeof (target) !== "object" && !JSLite.isFunction(target)) 
             	target = {};
-            //扩展WCJ的本身，如果只有一个参数传递
+            //扩展JSLite的本身，如果只有一个参数传递
             if (length === i) target = this,--i;
             for (; i < length; i++) {
                 if ((options = arguments[i]) != null) {
@@ -63,23 +63,23 @@
             }
             return target;
         };
-		return WCJ;
+		return JSLite;
 	})();
 
-	WCJ.fn.extend({
+	JSLite.fn.extend({
 		forEach: emptyArray.forEach,
 		concat: emptyArray.concat,
 		indexOf: emptyArray.indexOf,
 		ready: function(callback){
-			if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(WCJ)
-			else document.addEventListener('DOMContentLoaded', function(){callback(WCJ) }, false)
+			if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(JSLite)
+			else document.addEventListener('DOMContentLoaded', function(){callback(JSLite) }, false)
 			return this
 		},
 	    each: function(callback){
-	    	return WCJ.each(this,callback);
+	    	return JSLite.each(this,callback);
 	    },
 	    map: function(fn){
-	    	return WCJ(WCJ.map(this, function(el, i){ return fn.call(el, i, el) }));
+	    	return JSLite(JSLite.map(this, function(el, i){ return fn.call(el, i, el) }));
 	    },
 	    get: function(index){
 	      return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
@@ -98,14 +98,14 @@
 	    },
 	    html:function(html){
 			return 0 in arguments ? this.each(function(idx){
-				WCJ(this).empty().append(funcArg(this, html))
+				JSLite(this).empty().append(funcArg(this, html))
 			}) : (0 in this ? this[0].innerHTML : null)
 	    },
 	    val:function(value){
 			return 0 in arguments ?
 			this.each(function(idx){this.value = funcArg(this, value, idx, this.value)}) :
 			(this[0] && (this[0].multiple ? 
-				WCJ(this[0]).find('option').filter(function(){ return this.selected }).pluck('value') :
+				JSLite(this[0]).find('option').filter(function(){ return this.selected }).pluck('value') :
 				this[0].value))
 	    },
 	    css:function(property, value){
@@ -128,7 +128,7 @@
 			    }
 				function defaultDisplay(nodeName) {
 					var elm=document.createElement(nodeName),display
-					WCJ('body').append(WCJ(elm));
+					JSLite('body').append(JSLite(elm));
 					display = CurrentStyle(elm)['display'];
 					elm.parentNode.removeChild(elm)
 					return display
@@ -159,7 +159,7 @@
 		        (!this.length || this[0].nodeType !== 1 ? undefined :
 		          (!(result = this[0].getAttribute(name)) && name in this[0]) ? this[0][name] : result
 		        ) : this.each(function(n){
-		    		if (WCJ.isObject(name)) for(k in name) this.setAttribute(k, name[k]);
+		    		if (JSLite.isObject(name)) for(k in name) this.setAttribute(k, name[k]);
 		    		else this.setAttribute(name,funcArg(this, value));
 		    	});
 	    },
@@ -178,7 +178,7 @@
             return this.each(function(idx){
             	classList=[],cls = this.className,newName=funcArg(this, name).trim();
 				newName.split(/\s+/).forEach(function(k){
-					if (!WCJ(this).hasClass(k)) classList.push(k);
+					if (!JSLite(this).hasClass(k)) classList.push(k);
 				},this);
 				if (!newName) return this;
 				classList.length ? this.className = cls + (cls ? " " : "") + classList.join(" "):null;
@@ -198,7 +198,7 @@
 	    toggleClass:function(name){
 	    	if(!name) return this;
 	    	return this.each(function(idx){
-	    		var w=WCJ(this),names=funcArg(this, name);
+	    		var w=JSLite(this),names=funcArg(this, name);
 	    		names.split(/\s+/g).forEach(function(cls){
 	    			w.hasClass(cls)?w.removeClass(cls):w.addClass(cls);
 	    		})
@@ -225,69 +225,69 @@
 		    });
 		},
 		filter:function(selector){
-      		if (WCJ.isFunction(selector)) return this.not(this.not(selector))
-			return WCJ(filter.call(this, function(element){
-        		return WCJ.matches(element, selector)
+      		if (JSLite.isFunction(selector)) return this.not(this.not(selector))
+			return JSLite(filter.call(this, function(element){
+        		return JSLite.matches(element, selector)
 		    }))
 		},
 	    is: function(selector){
-	    	if (this.length > 0 && WCJ.isObject(selector)) return this.indexOf(selector)>-1?true:false;
-	    	return this.length > 0 && WCJ.matches(this[0], selector);
+	    	if (this.length > 0 && JSLite.isObject(selector)) return this.indexOf(selector)>-1?true:false;
+	    	return this.length > 0 && JSLite.matches(this[0], selector);
 	    },
 	    not:function(selector){
 	    	var nodes = [];
-	    	if (WCJ.isFunction(selector)&& selector.call !== undefined){
+	    	if (JSLite.isFunction(selector)&& selector.call !== undefined){
 	    		this.each(function(idx){
 	    			if (!selector.call(this,idx)) nodes.push(this);
 	    		});
 	    	}else {
 	    		var excludes = typeof selector == 'string' ? this.filter(selector):
-			    (WCJ.likeArray(selector) && WCJ.isFunction(selector.item)) ? slice.call(selector) : WCJ(selector)  		
+			    (JSLite.likeArray(selector) && JSLite.isFunction(selector.item)) ? slice.call(selector) : JSLite(selector)  		
 		        this.forEach(function(el){
 		        	if (excludes.indexOf(el) < 0) nodes.push(el)
 		        })
 	    	}
-	    	return WCJ(nodes)
+	    	return JSLite(nodes)
 	    },
-		pluck: function(property){ return WCJ.map(this, function(el){ return el[property] })},
+		pluck: function(property){ return JSLite.map(this, function(el){ return el[property] })},
 		find: function(selector){
 			var nodes = this.children(),ancestors=[];
 			while (nodes.length > 0)
-			nodes=WCJ.map(nodes, function(node,inx){
+			nodes=JSLite.map(nodes, function(node,inx){
 				if (ancestors.indexOf(node)<0) ancestors.push(node);
-				if ((nodes = WCJ(node).children())&&nodes.length>0 ) return nodes;
+				if ((nodes = JSLite(node).children())&&nodes.length>0 ) return nodes;
 			});
-			return WCJ(ancestors).filter(selector || '*');
+			return JSLite(ancestors).filter(selector || '*');
 		},
 	    clone: function(){return this.map(function(){ return this.cloneNode(true)})},
-	    add: function(selector){return WCJ.unique(this.concat($(selector)));},
-	    eq: function(idx){return idx === -1 ? WCJ(this.slice(idx)) : WCJ(this.slice(idx, + idx + 1))},
+	    add: function(selector){return JSLite.unique(this.concat($(selector)));},
+	    eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
 		children:function(selector){
 			var e=[];
 			filter.call(this.pluck('children'), function(item, idx){
-				WCJ.map(item,function(els){ if (els&&els.nodeType == 1) e.push(els) })
+				JSLite.map(item,function(els){ if (els&&els.nodeType == 1) e.push(els) })
 			});
-			return WCJ(e).filter(selector || '*');
+			return JSLite(e).filter(selector || '*');
 		},
 	    contents: function() {
 	    	return this.map(function() { return this.contentDocument || slice.call(this.childNodes) })
 	    },
-		parent: function(selector){return WCJ(WCJ.unique(this.pluck('parentNode'))).filter(selector||'*')},
+		parent: function(selector){return JSLite(JSLite.unique(this.pluck('parentNode'))).filter(selector||'*')},
 		parents: function(selector){
-			var ancestors=WCJ.sibling(this,'parentNode');
-    		return selector == null ? WCJ(ancestors) : WCJ(ancestors).filter(selector);
+			var ancestors=JSLite.sibling(this,'parentNode');
+    		return selector == null ? JSLite(ancestors) : JSLite(ancestors).filter(selector);
 		},
 		prev: function(selector){ 
-			return WCJ(this.pluck('previousElementSibling')).filter(selector || '*') 
+			return JSLite(this.pluck('previousElementSibling')).filter(selector || '*') 
 		},
 		next: function(selector){
-			return WCJ(this.pluck('nextElementSibling')).filter(selector || '*') 
+			return JSLite(this.pluck('nextElementSibling')).filter(selector || '*') 
 		},
         nextAll: function (selector) {
-      		return WCJ(WCJ.sibling(this,'nextElementSibling')).filter(selector || '*');
+      		return JSLite(JSLite.sibling(this,'nextElementSibling')).filter(selector || '*');
         },
 		prevAll: function (selector) {
-			return WCJ(WCJ.sibling(this,'previousElementSibling')).filter(selector || '*');
+			return JSLite(JSLite.sibling(this,'previousElementSibling')).filter(selector || '*');
 		},
 		siblings: function(selector){
 			var n=[];this.map(function(i,el){
@@ -295,11 +295,11 @@
 					 if (els&&els.nodeType == 1&&els!=el) n.push(els)
 				});
 			})
-			return WCJ(n).filter(selector || '*');
+			return JSLite(n).filter(selector || '*');
 		}
 	});
 
-	WCJ.extend({
+	JSLite.extend({
 		isDocument:function (obj) { return obj = obj ? obj != null && obj.nodeType ? obj.nodeType == obj.DOCUMENT_NODE : false : undefined;},
 		isFunction:function (value) { return ({}).toString.call(value) == "[object Function]" },
 		isObject:function (value) { return value instanceof Object },
@@ -319,7 +319,7 @@
         type: function (obj) {
         	if(!obj) return undefined;
         	var type="";
-			WCJ.each("Boolean Number HTMLDivElement String Function Array Date RegExp Object Error".split(" "), function(i, name) {
+			JSLite.each("Boolean Number HTMLDivElement String Function Array Date RegExp Object Error".split(" "), function(i, name) {
 			  if(Object.prototype.toString.call(obj).indexOf(name) > -1) type = name == "HTMLDivElement"?"Object":name;
 			})
 			return type;
@@ -361,7 +361,7 @@
 				value = callback(elements[key], key)
 				if (value != null) values.push(value)
 			}
-			return values.length > 0 ? WCJ.fn.concat.apply([], values) : values;
+			return values.length > 0 ? JSLite.fn.concat.apply([], values) : values;
 		},
 		grep:function(elements, callback){
 			return filter.call(elements, callback)
@@ -379,8 +379,8 @@
 	    sibling:function(nodes,ty){
 			var ancestors = [];
 			while (nodes.length > 0)
-			nodes = WCJ.map(nodes, function(node){
-				if ((node = node[ty]) && !WCJ.isDocument(node) && ancestors.indexOf(node) < 0) 
+			nodes = JSLite.map(nodes, function(node){
+				if ((node = node[ty]) && !JSLite.isDocument(node) && ancestors.indexOf(node) < 0) 
 					ancestors.push(node)
 					return node
 			});
@@ -399,7 +399,7 @@
 		}
 	});
 
-	WCJ.extend({
+	JSLite.extend({
 		ajaxSettings:{
 			// 默认请求类型
 			type: 'GET',
@@ -421,12 +421,12 @@
 			}
 		},
 		param:function(obj,traditional,scope){
-	        if(WCJ.type(obj) == "String") return obj;
+	        if(JSLite.type(obj) == "String") return obj;
 	        var params = [],str='';
         	params.add=function(key, value){
   				this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value== null?"":value))
         	};
-			if(scope==true&&WCJ.type(obj)=='Object') params.add(traditional,obj)
+			if(scope==true&&JSLite.type(obj)=='Object') params.add(traditional,obj)
 	        else {
 		        for(var p in obj) {
 		            var v = obj[p],str='',
@@ -434,10 +434,10 @@
 			            	if (traditional) {
 			            		if (traditional==true) return p;
 			            		else{
-				            		if(scope&&WCJ.type(obj)=='Array'){
+				            		if(scope&&JSLite.type(obj)=='Array'){
 				            			return traditional
 				            		}
-				            		return traditional + "[" + (WCJ.type(obj)=='Array'?"":p) + "]";
+				            		return traditional + "[" + (JSLite.type(obj)=='Array'?"":p) + "]";
 			            		};
 			            	};
 			            	return p
@@ -451,25 +451,25 @@
 	    	}
 	        return params.join('&');
 		},
-		get:function(url, success){ WCJ.ajax({type:'GET',url: url, success: success}) },
+		get:function(url, success){ JSLite.ajax({type:'GET',url: url, success: success}) },
 		post:function(url, data, success, dataType){
 			if (data instanceof Function) dataType = dataType || success, success = data, data = null;
-			WCJ.ajax({type: 'POST', url: url, data: data, success: success, dataType: dataType });
+			JSLite.ajax({type: 'POST', url: url, data: data, success: success, dataType: dataType });
 		},
     	ajax:function(options){
     		var key,settings,
 				setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] };
 				options = options || {};
-    			if (WCJ.isString(options)) {
+    			if (JSLite.isString(options)) {
     				if (arguments[0]=="GET") {
     					var  urls=arguments[1];
-    					if (arguments[2]&&WCJ.isFunction(arguments[2])) {
-    						WCJ.get(urls,arguments[2])
-    					}else if(arguments[2]&&WCJ.isJson(arguments[2])){
-    						WCJ.get(urls.indexOf('?')>-1?urls+'&'+this.param(arguments[2]):urls+'?'+this.param(arguments[2]),arguments[3])
+    					if (arguments[2]&&JSLite.isFunction(arguments[2])) {
+    						JSLite.get(urls,arguments[2])
+    					}else if(arguments[2]&&JSLite.isJson(arguments[2])){
+    						JSLite.get(urls.indexOf('?')>-1?urls+'&'+this.param(arguments[2]):urls+'?'+this.param(arguments[2]),arguments[3])
     					};
     				}else if(arguments[0]=="POST"){
-    					WCJ.post(arguments[1],arguments[2],arguments[3],arguments[4])
+    					JSLite.post(arguments[1],arguments[2],arguments[3],arguments[4])
     				};
     				return;
     			};
@@ -522,7 +522,7 @@
 			xhr.send(data);
     	}
 	});
-	WCJ.fn.extend({
+	JSLite.fn.extend({
 		serializeArray:function(){
 		    var result = [], el,type;
 		    0 in arguments?$([].slice.call(this.get(0).elements)).each(function(){
@@ -619,14 +619,14 @@
 		},
 		fragment:function(html,name){
     		var dom, container
-    		if (this.singleTagRE.test(html)) dom = WCJ(document.createElement(RegExp.$1));
+    		if (this.singleTagRE.test(html)) dom = JSLite(document.createElement(RegExp.$1));
     		if (!dom) {
 				if (html.replace) html = html.replace(this.tagExpanderRE, "<$1></$2>")
       			if (name === undefined) name = this.fragmentRE.test(html) && RegExp.$1
       			if (!(name in this.containers)) name = '*'
       			container = this.containers[name]
       			container.innerHTML = '' + html
-				dom = WCJ.each(slice.call(container.childNodes), function(){
+				dom = JSLite.each(slice.call(container.childNodes), function(){
 					container.removeChild(this)
 				});
     		}
@@ -635,10 +635,10 @@
 	};
 	;['width', 'height'].forEach(function(dimension){
 		var dimensionProperty = dimension.replace(/./,dimension[0].toUpperCase())
-		WCJ.fn[dimension]=function(value){
+		JSLite.fn[dimension]=function(value){
 			var offset, el = this[0]
-			if (value === undefined) return WCJ.isWindow(el) ? el['inner' + dimensionProperty] :
-			WCJ.isDocument(el) ? el.documentElement['scroll' + dimensionProperty] :
+			if (value === undefined) return JSLite.isWindow(el) ? el['inner' + dimensionProperty] :
+			JSLite.isDocument(el) ? el.documentElement['scroll' + dimensionProperty] :
 			(offset = this.offset()) && offset[dimension]
 			else return this.each(function(idx){
 				el = $(this)
@@ -648,9 +648,9 @@
 	})
 	;['after','prepend','before','append'].forEach(function(operator, operatorIndex) {
     	var inside = operatorIndex % 2;
-	    WCJ.fn[operator] = function(){
-	    	var argType, nodes = WCJ.map(arguments, function(arg) {
-	    	    	argType = WCJ.type(arg)
+	    JSLite.fn[operator] = function(){
+	    	var argType, nodes = JSLite.map(arguments, function(arg) {
+	    	    	argType = JSLite.type(arg)
 	    	    	return argType == "Object" || argType == "Array" || arg == null ? arg : P.fragment(arg)
 	    	    }),parent,script,copyByClone = this.length > 1
 	    	if (nodes.length < 1) return this
@@ -661,7 +661,7 @@
 		                 operatorIndex == 2 ? target :
 		                 null;
 
-    			var parentInDocument = WCJ.contains(document.documentElement, parent)
+    			var parentInDocument = JSLite.contains(document.documentElement, parent)
 
 		        nodes.forEach(function(node){
 		        	var txt
@@ -669,7 +669,7 @@
       				parent.insertBefore(node, target);
 		        	if(parentInDocument && node.nodeName != null && node.nodeName.toUpperCase() === 'SCRIPT' &&
               			(!node.type || node.type === 'text/javascript') && !node.src) txt=node.innerHTML;
-              		else if(parentInDocument &&node.children && node.children.length>0&&WCJ(node)&&(script=WCJ(node).find("script")))
+              		else if(parentInDocument &&node.children && node.children.length>0&&JSLite(node)&&(script=JSLite(node).find("script")))
               			if(script.length>0) script.each(function(_,item){
               				txt=item.innerHTML
           				});
@@ -677,18 +677,18 @@
 		        });
 	    	})
 	    }
-		WCJ.fn[inside ? operator+'To' : 'insert'+(operatorIndex ? 'Before' : 'After')] = function(html){
-			WCJ(html)[operator](this)
+		JSLite.fn[inside ? operator+'To' : 'insert'+(operatorIndex ? 'Before' : 'After')] = function(html){
+			JSLite(html)[operator](this)
 			return this
 	    }
 	});
 	
 	function funcArg(context, arg, idx, payload) {
-		return WCJ.isFunction(arg) ? arg.call(context, idx, payload) : arg;
+		return JSLite.isFunction(arg) ? arg.call(context, idx, payload) : arg;
 	}
 
 	/* 绑定事件 start */
-	WCJ.event={add:add,remove:remove};
+	JSLite.event={add:add,remove:remove};
 	function add(element,events,func){
 		var self=this,id=zid(element),set=(handlers[id] || (handlers[id] = []));
 		events.split(/\s/).forEach(function(event){
@@ -704,7 +704,7 @@
 	}
 	function remove(element, events, func){
 		;(events || '').split(/\s/).forEach(function(event){
-			WCJ.event = parse(event)
+			JSLite.event = parse(event)
 			findHandlers(element, event, func).forEach(function(handler){
 				delete handlers[zid(element)][handler.i]
 				if (element.removeEventListener) element.removeEventListener(handler.e, handler.proxy, false);
@@ -731,17 +731,17 @@
 	;("blur focus focusin focusout load resize scroll unload click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup error paste drop dragstart dragover").split(' ').forEach(function(event) {
-		WCJ.fn[event] = function(callback) {
+		JSLite.fn[event] = function(callback) {
 		  return callback ? this.bind(event, callback) : this.trigger(event);
 		}
 	});
 
 	//字符串处理
-    WCJ.extend(String.prototype,{
+    JSLite.extend(String.prototype,{
         trim: function () {return this.replace(/(^\s*)|(\s*$)/g, "");},
         leftTrim: function () {return this.replace(/(^\s*)/g, "");}
     })
-    window.JSLite = window.WCJ = WCJ
+    window.JSLite = JSLite
     window.$ === undefined && (window.$ = JSLite)
     window.$$ === undefined && (window.$$ = JSLite)
     window._$ === undefined && (window._$ = JSLite)
