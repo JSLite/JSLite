@@ -13,13 +13,10 @@
         var _JSLite = root.JSLite;
         var _$ = root.$;
         JSLite.noConflict = function(deep) {
-            if (root.JSLite === JSLite) {
+            if (deep && root.JSLite === JSLite) {
                 root.JSLite = _JSLite;
             }
-            if (deep && root.$ === JSLite) {
-				root.$ = _$;
-            }
-
+            if (root.$ === JSLite) root.$ = _$;
             return JSLite;
         };
         root.JSLite = root.$ = JSLite;
