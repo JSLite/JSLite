@@ -107,6 +107,9 @@
 	    get: function(index){
 	      return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
 	    },
+	    index: function(element){
+      		return element ? this.indexOf(JSLite(element)[0]) : this.parent().children().indexOf(this[0])
+    	},
 	    empty: function(){ return this.each(function(){ this.innerHTML = '' }) },
 	    detach: function(){return this.remove();},
 	    remove: function(){
