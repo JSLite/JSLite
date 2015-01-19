@@ -280,6 +280,13 @@
 			var ancestors=JSLite.sibling(this,'parentNode');
     		return selector == null ? JSLite(ancestors) : JSLite(ancestors).filter(selector);
 		},
+		closest: function(selector, context){
+			var node = this[0], collection = false
+			if (typeof selector == 'object') collection = JSLite(selector)
+			while (node && !(collection ? collection.indexOf(node) >= 0 : JSLite.matches(node, selector)))
+				node = node !== context && !JSLite.isDocument(node) && node.parentNode
+			return JSLite(node)
+		},
 		prev: function(selector){ 
 			return JSLite(this.pluck('previousElementSibling')).filter(selector || '*') 
 		},
