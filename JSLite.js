@@ -696,12 +696,41 @@
 	JSLite.fn.extend({
         bind: function(event, func) {return this.each(function(){add(this, event, func)})},
 		unbind:function(event, func) {return this.each(function(){remove(this, event, func)})},
-		on:function(event, func){
-			return this.each(function(){ add(this, event,func) })
+		on:function(event, selector, data, callback){
+			var self = this
+		    if (event && !JSLite.isString(event)) {
+				JSLite.each(event, function(type, fn){
+					self.on(type, selector, data, fn)
+				})
+				return self
+		    }
+			if (!JSLite.isString(selector) && !JSLite.isFunction(callback) && callback !== false)
+				callback = data, data = selector, selector = undefined
+			if (JSLite.isFunction(data) || data === false)
+				callback = data, data = undefined
+			if (callback === false) callback = function(){return false;}
+			return this.each(function(){ 
+				add(this, event, callback, data, selector) 
+			})
 		},
-		off:function(event, func){
-		    return this.each(function(){ remove(this, event, func) })
+		off:function(event, selector, func){
+			var self = this
+			if (event && !JSLite.isString(event)) {
+				JSLite.each(event, function(type, fn){
+					self.off(type, selector, fn)
+				})
+				return self
+			}
+		    if (!JSLite.isString(selector) && !JSLite.isFunction(callback) && callback !== false)
+		      callback = selector, selector = undefined
+		    if (callback === false) callback =  function(){return false;}
+		    return self.each(function(){
+		    	remove(this, event, callback, selector)
+		    })
 		},
+		delegate: function(selector, event, callback){
+    		return this.on(event, selector, callback)
+  		},
 		trigger:function(event, data){
 			var type = event,specialEvents={}
         	specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents';
@@ -716,11 +745,12 @@
 		}
 	});
 	JSLite.event={add:add,remove:remove};
-	function add(element,events,func,selector){
+	function add(element, events, func, data, selector){
 		var self=this,id=jid(element),set=(handlers[id] || (handlers[id] = []));
 		events.split(/\s/).forEach(function(event){
       		var handler = JSLite.extend(parse(event), {fn: func,sel: selector, i: set.length});
 			var proxyfn = handler.proxy = function (e) {
+				e.data = data;
 				var result = func.apply(element,e._data == undefined ? [e] : [e].concat(e._data));
 				if (result === false) e.preventDefault(), e.stopPropagation();
 				return result;
