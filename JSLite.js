@@ -23,7 +23,7 @@
     }
 }(this, function(root, undefined) {
 	"use strict";
-	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],P={},handlers = {},_zid = 1,
+	var ess,emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],P={},handlers = {},_jid = 1,
 	JSLite = (function(){
 		var JSLite = function( selector ) {
 		    return new JSLite.fn.init(selector);
@@ -227,26 +227,6 @@
 	    		})
 	    	})
 	    },
-        bind: function(event, func) {return this.on(event,func)},
-		unbind:function(event, func) {return this.off(event,func)},
-		on:function(event, func){
-			return this.each(function(){ add(this, event,func) })
-		},
-		off:function(event, func){
-		    return this.each(function(){ remove(this, event, func) })
-		},
-		trigger:function(event, data){
-			var type = event,specialEvents={}
-        	specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents';
-		    if (typeof type == 'string') {
-				event = document.createEvent(specialEvents[type] || 'Events');
-				event.initEvent(type,true, true);
-		    }else return;
-		    event._data = data;
-		    return this.each(function(){
-      			if('dispatchEvent' in this) this.dispatchEvent(event);
-		    });
-		},
 		filter:function(selector){
       		if (JSLite.isFunction(selector)) return this.not(this.not(selector))
 			return JSLite(filter.call(this, function(element){
@@ -414,7 +394,7 @@
 	    	return parent !== node && parent.contains(node)
 	    }
 	});
-
+	//Ajax start
 	JSLite.extend({
 		ajaxSettings:{
 			// 默认请求类型
@@ -538,6 +518,7 @@
 			xhr.send(data);
     	}
 	});
+	//Ajax end
 	JSLite.fn.extend({
 		serializeArray:function(){
 		    var result = [], el,type;
@@ -705,11 +686,33 @@
 	}
 
 	/* 绑定事件 start */
+	JSLite.fn.extend({
+        bind: function(event, func) {return this.each(function(){add(this, event, func)})},
+		unbind:function(event, func) {return this.each(function(){remove(this, event, func)})},
+		on:function(event, func){
+			return this.each(function(){ add(this, event,func) })
+		},
+		off:function(event, func){
+		    return this.each(function(){ remove(this, event, func) })
+		},
+		trigger:function(event, data){
+			var type = event,specialEvents={}
+        	specialEvents.click = specialEvents.mousedown = specialEvents.mouseup = specialEvents.mousemove = 'MouseEvents';
+		    if (typeof type == 'string') {
+				event = document.createEvent(specialEvents[type] || 'Events');
+				event.initEvent(type,true, true);
+		    }else return;
+		    event._data = data;
+		    return this.each(function(){
+      			if('dispatchEvent' in this) this.dispatchEvent(event);
+		    });
+		}
+	});
 	JSLite.event={add:add,remove:remove};
-	function add(element,events,func){
-		var self=this,id=zid(element),set=(handlers[id] || (handlers[id] = []));
+	function add(element,events,func,selector){
+		var self=this,id=jid(element),set=(handlers[id] || (handlers[id] = []));
 		events.split(/\s/).forEach(function(event){
-			var handler = parse(event);handler.fn = func;handler.i = set.length;
+      		var handler = JSLite.extend(parse(event), {fn: func,sel: selector, i: set.length});
 			var proxyfn = handler.proxy = function (e) {
 				var result = func.apply(element,e._data == undefined ? [e] : [e].concat(e._data));
 				if (result === false) e.preventDefault(), e.stopPropagation();
@@ -719,32 +722,29 @@
 			if (element.addEventListener) element.addEventListener(handler.e,proxyfn, false);
 		})
 	}
-	function remove(element, events, func){
+	function remove(element, events, func, selector){
 		;(events || '').split(/\s/).forEach(function(event){
 			JSLite.event = parse(event)
-			findHandlers(element, event, func).forEach(function(handler){
-				delete handlers[zid(element)][handler.i]
+			findHandlers(element, event, func, selector).forEach(function(handler){
+				delete handlers[jid(element)][handler.i]
 				if (element.removeEventListener) element.removeEventListener(handler.e, handler.proxy, false);
 			})
 		})
 	}
-	function zid(element) {
-		return element._zid || (element._zid = _zid++)
-	}
+	function jid(element) {return element._jid || (element._jid = _jid++)}
 	function parse(event) {
 		var parts = ('' + event).split('.');
 		return {e: parts[0], ns: parts.slice(1).sort().join(' ')};
 	}
-	function findHandlers(element, event, func){
-		var self=this,event = parse(event),id = zid(element);
-		return (handlers[zid(element)] || []).filter(function(handler) {
+	function findHandlers(element, event, func, selector){
+		var self=this,event = parse(event),id = jid(element);
+		return (handlers[jid(element)] || []).filter(function(handler) {
 			return handler 
 			&& (!event.e  || handler.e == event.e) 
 			&& (!func || handler.fn.toString()===func.toString())
+        	&& (!selector || handler.sel == selector);
 		})
 	}
-	/* 绑定事件 start */
-
 	;("blur focus focusin focusout load resize scroll unload click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
 	"change select submit keydown keypress keyup error paste drop dragstart dragover").split(' ').forEach(function(event) {
@@ -752,6 +752,7 @@
 		  return callback ? this.bind(event, callback) : this.trigger(event);
 		}
 	});
+	/* 绑定事件 end */
 
 	//字符串处理
     JSLite.extend(String.prototype,{
