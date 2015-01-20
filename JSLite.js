@@ -716,7 +716,7 @@
 				add(this, event, callback, data, selector) 
 			})
 		},
-		off:function(event, selector, func){
+		off:function(event, selector, callback){
 			var self = this
 			if (event && !JSLite.isString(event)) {
 				JSLite.each(event, function(type, fn){
