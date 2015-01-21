@@ -1,5 +1,6 @@
 JSLite
 ======
+A lite jQuery for modern browsers, only 10k.
 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。  
 
 **如有疑问欢迎到这些地方交流：**  
@@ -13,7 +14,7 @@ QQ交流群：397463673
 > 4. JSLite与jQuery有着绝大部分类似的api，通用库只有5-10k，手机上每一kb都是钱。
 > 5. 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。
 
-## Browser support Primary (100% support) - 主要兼容的浏览器(100% 的兼容)
+## 100% compatibility with common browsers - 主要兼容的浏览器(100% 的兼容)
 此兼容，是根据我使用的一些js方法函数的支持情况来判断的。设备过少，部分是根据[developer.mozilla.org](https://developer.mozilla.org)的方法函数兼容数据来判断的，下面的我们的主要兼容目标
 
 > Safari 6+ (Mac)  
