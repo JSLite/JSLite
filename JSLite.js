@@ -657,6 +657,7 @@
 		JSLite.fn[operator] = function(){
 			var argType, nodes = JSLite.map(arguments, function(arg) {
 					argType = JSLite.type(arg)
+	    	    	if(argType=="Function") arg = funcArg(this, arg)
 					return argType == "Object" || argType == "Array" || arg == null ? arg : P.fragment(arg)
 				}),parent,script,copyByClone = this.length > 1
 			if (nodes.length < 1) return this
