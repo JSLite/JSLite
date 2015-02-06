@@ -1,0 +1,3 @@
+language: javascript
+node_js:
+  - "0.10"
