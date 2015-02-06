@@ -26,8 +26,23 @@ QQ交流群：397463673
 
 
 ## Installation - 安装
+
+### npm 
+
+```shell
+$ npm install jslite
+```
+
+### bower 
+
+```shell
+$ bower install jslite
+```
+
+### 传统方法
 1. 去[官网下载](http://jslite.io)JSLite  
 2. 页面Head标签内引用 JSLite.js  
+
 ```html
 <script type="text/javascript" src="JSLite.js"></script>
 ```
