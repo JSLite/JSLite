@@ -3,7 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>JSLite</title>
-	<script type="text/javascript" src="JSLite.js"></script>
+	<script type="text/javascript" src="../lib/ie.js"></script>
+	<script type="text/javascript" src="../lib/JSLite.js"></script>
 
 <style type="text/css">
 body{/*background-image: url(http://dengo.org/demo/bg.jpg);*/}
@@ -21,7 +22,7 @@ console.log($("#box"))
 <body>
 <div id="log">
 	log
-<hr/>	
+<hr/>
 
 </div>
 <div class="boxGoP" style="background-color:yellow">
@@ -29,7 +30,7 @@ console.log($("#box"))
 
 		<div>这是一个段落。</div>
 		<button class="boxGo">在本按钮后面插入一个新的 p 元素</button>
-</div>    
+</div>
 
 <ul>
 	<li><b>Click me!</b></li>
@@ -37,13 +38,13 @@ console.log($("#box"))
 </ul>
 
 <form name="input" id="wcj" action="http://127.0.0.1/api.php" method="get">
-First name: 
+First name:
 <input type="text" name="FirstName" value="Mickey" size="20">
-<br />Last name: 
+<br />Last name:
 <input type="text" name="LastName" value="Mouse" size="20">
 <br />
 <input type="submit" value="Submit">
-</form> 
+</form>
 <div id="box" draggable="true" ondrop="evee(event)" class="boxOne box2 box3" style="color:red;margin-top:10px;">
 	boxOne
 	<div class="box">6</div>
