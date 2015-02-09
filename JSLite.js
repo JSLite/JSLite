@@ -416,6 +416,7 @@
 			xhr:function () {
 			  return new window.XMLHttpRequest();
 			},
+			processData: true,
 			async:true,
 			// MIME类型的映射
 			accepts:{
@@ -464,7 +465,13 @@
 		},
 		ajax:function(options){
 			var key,settings,
-				setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] };
+				setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
+				serializeData = function(options){
+					if (options.processData && options.data && JSLite.type(options.data) != "string")
+						options.data = JSLite.param(options.data, options.traditional)
+					if (options.data && (!options.type || options.type.toUpperCase() == 'GET'))
+						options.url = appendQuery(options.url, options.data), options.data = undefined
+				};
 				options = options || {};
 				if (JSLite.isString(options)) {
 					if (arguments[0]=="GET") {
@@ -482,6 +489,7 @@
 				settings=$.extend({}, options || {});
 				for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key];
 				//{ type, url, data, success, dataType, contentType }
+			serializeData(settings)
 			var data = settings.data,
 				callback = settings.success || function(){},
 				errback = settings.error || function(){},
