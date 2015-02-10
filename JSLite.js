@@ -466,6 +466,10 @@
 		ajax:function(options){
 			var key,settings,
 				setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
+				appendQuery = function(url, query) {
+					if (query == '') return url
+					return (url + '&' + query).replace(/[&?]{1,2}/, '?')
+				},
 				serializeData = function(options){
 					if (options.processData && options.data && JSLite.type(options.data) != "string")
 						options.data = JSLite.param(options.data, options.traditional)
