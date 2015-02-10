@@ -528,11 +528,10 @@
 					}
 				}
 			};
-			data=this.param(data);
 			if (data&&data instanceof Object&&settings.type=='GET'){
 				data?settings.url =(settings.url.indexOf('?')>-1?settings.url +'&'+ data:settings.url +'?'+ data) :null;
 			}
-			xhr.open(settings.type || 'GET', settings.url || window.location, settings.async);
+			xhr.open(settings.type, settings.url, true);
 			if (mime) xhr.setRequestHeader('Accept', mime);
 			if (data instanceof Object && mime == 'application/json' ) data = JSON.stringify(data), content = content || 'application/json';
 			for (name in headers) nativeSetHeader.apply(xhr, headers[name]);
