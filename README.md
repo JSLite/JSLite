@@ -33,6 +33,8 @@ QQ交流群：397463673
 $ npm install jslite
 ```
 
+[![NPM](https://nodei.co/npm-dl/jslite.png)](https://nodei.co/npm-dl/jslite/)
+
 ### bower 
 
 ```shell
