@@ -17,7 +17,7 @@ module.exports = function(grunt) {
         // watch插件的配置信息
         watch: {
             another: {
-                files: ['src/*.js'],
+                files: ['src/*.js','build/*.js'],
                 tasks: ['uglify'],
                 options: {
                     // Start another live reload server on port 1337
