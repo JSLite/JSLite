@@ -195,8 +195,8 @@
 		hasClass:function(name){
 			if (!name) return false
 			return emptyArray.some.call(this, function(el){
-				return !((' ' + el.className + ' ').search(' ' + name + ' ') < 0);
-			});
+				return this.test(el.className)
+			}, new RegExp('(^|\\s)' + name + '(\\s|$)'));
 		},
 		addClass:function(name){
 			if (!name) return this;
