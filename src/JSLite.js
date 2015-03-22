@@ -363,7 +363,16 @@
 			return elements
 		},
 		map:function(elements, callback){
-			return filter.map(elements, callback)
+			var value, values = [], i, key
+			if (this.likeArray(elements)) for (i = 0; i < elements.length; i++) {
+				value = callback(elements[i], i)
+				if (value != null) values.push(value)
+			}
+			else for (key in elements) {
+				value = callback(elements[key], key)
+				if (value != null) values.push(value)
+ 			}
+			return values.length > 0 ? JSLite.fn.concat.apply([], values) : values;
 		},
 		grep:function(elements, callback){
 			return filter.call(elements, callback)
