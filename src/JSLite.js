@@ -403,6 +403,16 @@
 		}
 	});
 	//Ajax start
+	function parseArguments(url, data, success, dataType){
+		JSLite.isFunction(data) && (dataType = success, success = data, data = undefined),
+		JSLite.isFunction(success) || (dataType = success, success = undefined)
+		return {
+			url: url, 
+			data: data, 
+			success: success, 
+			dataType: dataType
+		}
+	}
 	JSLite.extend({
 		ajaxSettings:{
 			// 默认请求类型
@@ -414,8 +424,9 @@
 			xhr:function () {
 			  return new window.XMLHttpRequest();
 			},
-			processData: true,
-			async:true,
+			processData: !0,
+			async:!0,
+			complete:function(){},//要求执行回调完整（包括：错误和成功）
 			// MIME类型的映射
 			accepts:{
 				script:'text/javascript, application/javascript',
@@ -456,10 +467,10 @@
 			}
 			return params.join('&');
 		},
-		get:function(url, success){ JSLite.ajax({type:'GET',url: url, success: success}) },
+		get:function(url, success){return JSLite.ajax(parseArguments.apply(null, arguments))},
 		post:function(url, data, success, dataType){
-			if (data instanceof Function) dataType = dataType || success, success = data, data = null;
-			JSLite.ajax({type: 'POST', url: url, data: data, success: success, dataType: dataType });
+			var options = parseArguments.apply(null, arguments);
+			return options.type = "POST", $.ajax(options);
 		},
 		ajax:function(options){
 			var key,settings,
@@ -522,7 +533,7 @@
 							callback(xhr.responseText, 'success', xhr)
 						};
 					} else {
-						errback(xhr, 'error');
+						settings.complete(xhr, error ? 'error' : 'success')
 					}
 				}
 			};
