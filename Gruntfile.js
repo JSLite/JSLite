@@ -7,6 +7,9 @@ module.exports = function(grunt) {
         uglify: {
             options: {
                 banner: '/*! http://JSLite.io - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */'
+                // beautify: true,
+                // mangle: false, //不混淆变量名
+                // compress:true,//打开或关闭使用默认选项源压缩。
             },
             app_task: {
                 files: {
@@ -17,7 +20,7 @@ module.exports = function(grunt) {
         // watch插件的配置信息
         watch: {
             another: {
-                files: ['src/*.js'],
+                files: ['src/*.js','build/*.js'],
                 tasks: ['uglify'],
                 options: {
                     // Start another live reload server on port 1337
