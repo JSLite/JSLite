@@ -1,6 +1,5 @@
-JSLite
-======
-A lite jQuery for modern browsers, only 10k.
+#[JSLite](https://github.com/JSLite/JSLite) [![license](http://img.shields.io/npm/l/express.svg)](http://jslite.io/license/) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+
 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。  
 
 **如有疑问欢迎到这些地方交流：**  
