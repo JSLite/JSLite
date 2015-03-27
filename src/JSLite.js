@@ -551,8 +551,8 @@
 	//Ajax end
 	JSLite.fn.extend({
 		serializeArray:function(){
-			var result = [], el,type;
-			if(!this.get(0)) return result
+			var result = [], el,type,elm=this.get(0);
+			if(!elm || ! elm.elements) return result
 			$([].slice.call(this.get(0).elements)).each(function(){
 				el = $(this),type = el.attr('type')
 				if (this.nodeName.toLowerCase() != 'fieldset' && !this.disabled && type != 'submit' && type != 'reset' && type != 'button' && ((type != 'radio' && type != 'checkbox') || this.checked)) {
