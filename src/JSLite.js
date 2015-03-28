@@ -734,7 +734,7 @@
 		return {e: parts[0], ns: parts.slice(1).sort().join(' ')};
 	}
 	function findHandlers(element, event, func, selector){
-		var self=this,event = parse(event),id = jid(element);
+		var self=this,id = jid(element);event = parse(event)
 		return (handlers[jid(element)] || []).filter(function(handler) {
 			return handler 
 			&& (!event.e  || handler.e == event.e) 
