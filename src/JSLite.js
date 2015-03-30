@@ -23,7 +23,7 @@
 	}
 }(this, function(root, undefined) {
 	"use strict";
-	var emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,elementTypes = [1, 9, 11],P={},handlers = {},_jid = 1,
+	var emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,some = emptyArray.some,elementTypes = [1, 9, 11],P={},handlers = {},_jid = 1,
 	JSLite = (function(){
 		var JSLite = function( selector ) {
 		    return new JSLite.fn.init(selector);
@@ -710,6 +710,17 @@
 		events.split(/\s/).forEach(function(event){
 			var handler = JSLite.extend(parse(event), {fn: func,sel: selector, i: set.length});
 			var proxyfn = handler.proxy = function (e) {
+				//处理事件代理
+				if (selector) {
+				    var $temp = JSLite(element).find(selector);
+				    var res = some.call($temp, function(val) {
+				        return val === e.target || JSLite.contains(val, e.target);
+				    });
+				    //不包含
+				    if (!res) {
+				        return false;
+				    }
+				}
 				e.data = data;
 				var result = func.apply(element,e._data == undefined ? [e] : [e].concat(e._data));
 				if (result === false) e.preventDefault(), e.stopPropagation();
