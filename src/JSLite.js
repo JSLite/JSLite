@@ -755,7 +755,8 @@
 	}
 	;("blur focus focusin focusout load resize scroll unload click dblclick " +
 	"mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave " +
-	"change select submit keydown keypress keyup error paste drop dragstart dragover").split(' ').forEach(function(event) {
+	"change select submit keydown keypress keyup error paste drop dragstart dragover " +
+	"beforeunload").split(' ').forEach(function(event) {
 		JSLite.fn[event] = function(callback) {
 			return callback ? this.bind(event, callback) : this.trigger(event);
 		}
