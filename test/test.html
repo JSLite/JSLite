@@ -3,7 +3,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>JSLite</title>
-	<script type="text/javascript" src="../build/JSLite.min.js"></script>
+	<!-- <script type="text/javascript" src="../build/JSLite.min.js"></script> -->
+	<script type="text/javascript" src="../src/JSLite.js"></script>
 
 <style type="text/css">
 body{/*background-image: url(http://dengo.org/demo/bg.jpg);*/}
@@ -16,6 +17,18 @@ $(document).ready(function(){
 // alert()
 console.log($("#box"))
 });
+
+$('.boxGo').off("beforeunload")
+
+// window.onbeforeunload = function(){
+// 	return "刷新或者离开"
+// }
+
+// $(window).on('beforeunload',function(){
+// 	console.log("test")
+// 	var warning ="刷新或离开?"
+// 	return warning;
+// }) 
 </script>
 </head>
 <body>
