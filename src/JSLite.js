@@ -545,7 +545,7 @@
 			if (data instanceof Object && mime == 'application/json' ) data = JSON.stringify(data), content = content || 'application/json';
 			for (name in headers) nativeSetHeader.apply(xhr, headers[name]);
 
-			xhr.send(data);
+			xhr.send(data?data:null);
 		}
 	});
 	//Ajax end
