@@ -5,7 +5,7 @@
 **如有疑问欢迎到这些地方交流：**  
 
 QQ交流群：397463673   
-[segmentfault社区](http://segmentfault.com/t/jslite/blogs) | [官方网站](http://jslite.io) | [官方文档-更详细](http://jslite.io/JSLite/doc/)  | [Github文档](https://github.com/jaywcjlove/jaywcjlove.github.io/blob/master/JSLite/doc/index.md)
+[segmentfault社区](http://segmentfault.com/t/jslite/blogs) | [官方网站](http://jslite.io) | [官方文档-更详细](http://jslite.io/API/)  | [Github文档](https://github.com/jaywcjlove/jaywcjlove.github.io/blob/master/JSLite/doc/index.md)
 
 github.io 貌似被封了 如果你能科学上网你可以继续使用 JSLite.io 域名方便，如果不能可以使用[Github文档](https://github.com/jaywcjlove/jaywcjlove.github.io/blob/master/JSLite/doc/index.md)   
 
