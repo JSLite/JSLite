@@ -1,13 +1,13 @@
-#[JSLite](https://github.com/JSLite/JSLite) [![license](http://img.shields.io/npm/l/express.svg)](http://jslite.io/license/) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+#[JSLite](https://github.com/JSLite/JSLite) [![license](http://img.shields.io/npm/l/express.svg)](http://jslite.io/license/) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/) [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JSLite/JSLite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。  
 
 **如有疑问欢迎到这些地方交流：**  
 
 QQ交流群：397463673   
-[segmentfault社区](http://segmentfault.com/t/jslite/blogs) | [官方网站](http://jslite.io) | [官方文档-更详细](http://jslite.io/API/)  | [Github文档](https://github.com/jaywcjlove/jaywcjlove.github.io/blob/master/JSLite/doc/index.md)
+[segmentfault社区](http://segmentfault.com/t/jslite/blogs) | [官方网站](http://jslite.io) | [官方文档-更详细](http://jslite.io/API/)  | [Github文档](https://github.com/jaywcjlove/jaywcjlove.github.io/blob/master/JSLite/doc/index.md) 
 
-github.io 貌似被封了 如果你能科学上网你可以继续使用 JSLite.io 域名方便，如果不能可以使用[Github文档](https://github.com/jaywcjlove/jaywcjlove.github.io/blob/master/JSLite/doc/index.md)   
+github.io 貌似被封了 如果你能科学上网你可以继续使用 JSLite.io 域名方便，如果不能可以使用[Github文档](https://github.com/jaywcjlove/jaywcjlove.github.io/blob/master/JSLite/doc/index.md)  
 
 > 1. jQuery 的目标是兼容所有主流浏览器，这就意味着它的大量代码对移动端的浏览器是无用或者低效的。
 > 2. 而 JSLite 只针对先进浏览器(支持HTML5,CSS3)、移动端浏览器编写，使用js新方法实现jQuery API，因此体积更小、效率更高.
