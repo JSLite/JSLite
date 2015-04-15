@@ -290,6 +290,7 @@
 				node = node !== context && !JSLite.isDocument(node) && node.parentNode
 			return JSLite(node)
 		},
+		slice:function(argument) { return JSLite(slice.apply(this, arguments))},
 		prev: function(selector){ 
 			return JSLite(this.pluck('previousElementSibling')).filter(selector || '*') 
 		},
