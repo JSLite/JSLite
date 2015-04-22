@@ -13,7 +13,13 @@ module.exports = function(grunt) {
             },
             app_task: {
                 files: {
-                    'build/JSLite.min.js': ['src/ie.js', 'src/JSLite.js']
+                    'build/JSLite.min.js': [
+                        'src/polyfill.js', 
+                        'src/JSLite.js', 
+                        'src/form.js', 
+                        'src/event.js', 
+                        'src/ajax.js'
+                    ]
                 }
             }
         },
