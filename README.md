@@ -6,6 +6,8 @@
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JSLite/JSLite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge) 
 [![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
 
+[![Join the chat at https://gitter.im/JSLite/JSLite](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/JSLite/JSLite?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。  
 
 **如有疑问欢迎到这些地方交流：**  
