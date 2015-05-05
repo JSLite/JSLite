@@ -59,3 +59,10 @@ if (!Array.prototype.forEach) {
         }  
     }
 }
+//删除数组 元素
+if (!Array.prototype.remove){
+    Array.prototype.remove = function(val) {
+        var index = this.indexOf(val);
+        return index > -1 && this.splice(index, 1), this;
+    } 
+}
