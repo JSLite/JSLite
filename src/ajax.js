@@ -78,7 +78,7 @@
             originalCallback = window[callbackName],
             responseData,xhr={};
 
-            $(script).on('load', function(e, errorType){
+            $(script).on('load error', function(e, errorType){
                 $(script).off().remove()
                 if (e.type == 'error' || !responseData) {
                     options.error(e, errorType || 'error',options)
@@ -91,14 +91,11 @@
                 originalCallback = responseData = undefined
             })
 
-            $(script).on('error',function(e){
-                console.log("test",e)
-            })
             //插入script 获取返回的数据
             window[callbackName] = function(){responseData = arguments}
             script.src = options.url.replace(/\?(.+)=\?/, '?$1=' + callbackName)
             document.head.appendChild(script)
-            return xhr
+            return options.xhr()
         },
         ajax:function(options){
             var key,settings,
