@@ -1,0 +1,26 @@
+{
+  "name": "jslite",
+  "version": "1.1.2",
+  "description": "JSLite is a minimalist JavaScript library for modern browsers with a largely jQuery-compatible API. If you use jQuery, you already know how to use JSLite.",
+  "homepage": "https://github.com/JSLite/JSLite",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JSLite/JSLite.git"
+  },
+  "keywords": [
+    "JSLite"
+  ],
+  "author": "kenny wang <398188662@qq.com> (http://JSLite.io)",
+  "license": {
+    "type": "MIT",
+    "url": "http://jslite.io/license/"
+  },
+  "bugs": {
+    "url": "https://github.com/JSLite/JSLite/issues"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-uglify": "^0.8.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}
