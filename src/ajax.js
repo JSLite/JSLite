@@ -1,4 +1,5 @@
 ;(function($){
+    var jsonpID = 0
     function parseArguments(url, data, success, dataType){
         $.isFunction(data) && (dataType = success, success = data, data = undefined),
         $.isFunction(success) || (dataType = success, success = undefined)
@@ -20,8 +21,8 @@
             xhr:function () {
               return new window.XMLHttpRequest();
             },
-            processData: !0,
-            async:!0,
+            processData:true,
+            async:true,
             complete:function(){},//要求执行回调完整（包括：错误和成功）
             // MIME类型的映射
             accepts:{
@@ -30,7 +31,9 @@
                 xml:   'application/xml, text/xml',
                 html:  'text/html',
                 text:  'text/plain'
-            }
+            },
+            // 应该被允许缓存GET响应
+            cache: true
         },
         param:function(obj,traditional,scope){
             if($.type(obj) == "String") return obj;
@@ -68,6 +71,35 @@
             var options = parseArguments.apply(null, arguments);
             return options.type = "POST", $.ajax(options);
         },
+        ajaxJSONP:function (options) {
+            var _callbackName = options.jsonpCallback,
+            callbackName = ($.isFunction(_callbackName) ? _callbackName() : _callbackName) || ('jsonp' + (++jsonpID)),
+            script = document.createElement('script'),
+            originalCallback = window[callbackName],
+            responseData,xhr={};
+
+            $(script).on('load', function(e, errorType){
+                $(script).off().remove()
+                if (e.type == 'error' || !responseData) {
+                    options.error(e, errorType || 'error',options)
+                } else {
+                    options.success(responseData[0], xhr, options)
+                }
+                window[callbackName] = originalCallback
+                if (responseData && $.isFunction(originalCallback))
+                originalCallback(responseData[0])
+                originalCallback = responseData = undefined
+            })
+
+            $(script).on('error',function(e){
+                console.log("test",e)
+            })
+            //插入script 获取返回的数据
+            window[callbackName] = function(){responseData = arguments}
+            script.src = options.url.replace(/\?(.+)=\?/, '?$1=' + callbackName)
+            document.head.appendChild(script)
+            return xhr
+        },
         ajax:function(options){
             var key,settings,
                 setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
@@ -99,6 +131,23 @@
                 for (key in $.ajaxSettings) if (settings[key] === undefined) settings[key] = $.ajaxSettings[key];
                 //{ type, url, data, success, dataType, contentType }
             serializeData(settings)
+
+            //jsonp
+            var dataType = settings.dataType, hasPlaceholder = /\?.+=\?/.test(settings.url)
+            if (hasPlaceholder) dataType = 'jsonp';
+            //给URL后面加上时间戳
+            if (settings.cache === false || (
+                (!options || options.cache !== true) &&
+                ('script' == dataType || 'jsonp' == dataType)
+            )) {
+                settings.url = appendQuery(settings.url, '_=' + Date.now())
+            }
+            //判断是否为jsonp
+            if ('jsonp' == dataType) {
+                if (!hasPlaceholder) settings.url = appendQuery(settings.url,settings.jsonp ? (settings.jsonp + '=?') : settings.jsonp === false ? '' : 'callback=?')
+                return $.ajaxJSONP(settings)
+            }
+
             var data = settings.data,
                 callback = settings.success || function(){},
                 errback = settings.error || function(){},
