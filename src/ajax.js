@@ -72,8 +72,10 @@
             return options.type = "POST", $.ajax(options);
         },
         getJSON:function(/* url, data, success */){
-            var options = parseArguments.apply(null, arguments);
-            options.dataType = 'json';
+            var options = parseArguments.apply(null, arguments),
+                url = arguments[0];
+            if(url&&url == document.location.host) options.dataType = 'json';
+            else options.dataType = 'jsonp';
             return this.ajax(options);
         },
         ajaxJSONP:function (options) {
