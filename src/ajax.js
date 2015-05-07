@@ -71,6 +71,11 @@
             var options = parseArguments.apply(null, arguments);
             return options.type = "POST", $.ajax(options);
         },
+        getJSON:function(/* url, data, success */){
+            var options = parseArguments.apply(null, arguments);
+            options.dataType = 'json';
+            return this.ajax(options);
+        },
         ajaxJSONP:function (options) {
             var _callbackName = options.jsonpCallback,
             callbackName = ($.isFunction(_callbackName) ? _callbackName() : _callbackName) || ('jsonp' + (++jsonpID)),
