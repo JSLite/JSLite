@@ -1,4 +1,5 @@
-#[JSLite](https://github.com/JSLite/JSLite) 
+# [JSLite](https://github.com/JSLite/JSLite) 
+
 [![GitHub issues](https://img.shields.io/github/issues/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/issues)
 [![GitHub forks](https://img.shields.io/github/forks/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/network)
 [![GitHub stars](https://img.shields.io/github/stars/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/stargazers)
@@ -39,8 +40,6 @@ github.io 貌似被封了 如果你能科学上网你可以继续使用 JSLite.i
 ```shell
 $ npm install jslite
 ```
-
-[![NPM](https://nodei.co/npm-dl/jslite.png)](https://nodei.co/npm-dl/jslite/)
 
 ### bower 
 
