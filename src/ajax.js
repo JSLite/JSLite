@@ -197,4 +197,22 @@
             xhr.send(data?data:null);
         }
     });
+    $.fn.extend({
+        load:function (/*url, data, success*/) {
+            if (!this.length || arguments.length === 0) return this
+            var self = this, parts = arguments[0].split(/\s/), selector,
+                options = parseArguments.apply(null, arguments)
+                callback = options.success
+            if (parts.length > 1){
+                options.url = parts[0], selector = parts[1]
+            }
+            options.success = function(response){
+                response = response.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,'')
+                self.html(selector ? $('<div>').html(response).find(selector) : response)
+                callback && callback.apply(self, arguments)
+            }
+            $.ajax(options)
+            return this
+        }
+    });
 })(JSLite);
