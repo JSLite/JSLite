@@ -1,6 +1,4 @@
-title: "JSLite.io"
-date: 2015-04-05 05:37:40
-type: "API"
+JSLite
 ---
 
 **如有疑问欢迎到这些地方交流，欢迎加入JSLite.io组织团伙共同开发！**   
@@ -603,6 +601,28 @@ $("#box").removeAttr("class") //⇒ self 移除class
     });
     //=> 0|taiyang
     //=> 1|yaotaiyang
+</script>
+```
+
+### removeProp
+
+> 为集合中匹配的元素删除一个属性（property）。`removeProp()` 方法用来删除由`.prop()`方法设置的属性集。
+
+**注意**: 不要使用此方法来删除原生的属性（ property ），比如checked, disabled, 或者 selected。这将完全移除该属性，一旦移除，不能再次被添加到元素上。使用.prop()来设置这些属性设置为false代替。
+
+```html
+<p id="n2" class="demo test" data-key="UUID" data_value="1235456465">CodePlayer</p>
+<script>
+var $n2 = $("#n2");
+$n2.prop("prop_a", "CodePlayer");
+$n2.prop("prop_b", { name: "CodePlayer", age: 20 } );
+
+console.log($n2.prop("prop_a")) //⇒ CodePlayer
+console.log($n2.prop("prop_b")) //⇒ Object {name: "CodePlayer", age: 20}
+
+$n2.removeProp("data-key");
+$n2.prop("data-key") //⇒ undefined
+$n2.attr("data-key") //⇒ "UUID"
 </script>
 ```
 
