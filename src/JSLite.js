@@ -199,6 +199,16 @@
               this[name] = funcArg(this, value, idx, this[name])
             }) :(this[0] && this[0][name])
         },
+        removeProp: function(name) {
+            name = propMap[name] || name;
+            return this.each(function() {
+                // 在IE中处理window属性可能报错
+                try {
+                    this[name] = undefined;
+                    delete this[name];
+                } catch(e) {}
+            });
+        },
         attr: function(name,value){
             var result,k;
             return (typeof name == 'string' && !(1 in arguments)) ?
