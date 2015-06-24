@@ -24,6 +24,20 @@
 }(this, function(root, undefined) {
     "use strict";
     var emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,some = emptyArray.some,elementTypes = [1, 9, 11],P={},
+    propMap = {
+      'tabindex': 'tabIndex',
+      'readonly': 'readOnly',
+      'for': 'htmlFor',
+      'class': 'className',
+      'maxlength': 'maxLength',
+      'cellspacing': 'cellSpacing',
+      'cellpadding': 'cellPadding',
+      'rowspan': 'rowSpan',
+      'colspan': 'colSpan',
+      'usemap': 'useMap',
+      'frameborder': 'frameBorder',
+      'contenteditable': 'contentEditable'
+    },
     JSLite = (function(){
         var JSLite = function( selector ) {
             return new JSLite.fn.init(selector);
@@ -178,6 +192,12 @@
                 width: obj.width,
                 height: obj.height
             };
+        },
+        prop: function(name, value){
+            name = propMap[name] || name
+            return (1 in arguments) ? this.each(function(idx){
+              this[name] = funcArg(this, value, idx, this[name])
+            }) :(this[0] && this[0][name])
         },
         attr: function(name,value){
             var result,k;
