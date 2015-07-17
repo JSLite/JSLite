@@ -1,27 +1,4 @@
-;(function(root, factory) {
-    var JSLite = factory(root);
-    if (typeof define === 'function' && define.amd) {
-        // AMD
-        define('JSLite', function() {
-            return JSLite;
-        });
-    } else if (typeof exports === 'object') {
-        // Node.js
-        module.exports = JSLite;
-    } else {
-        // Browser globals
-        var _JSLite = root.JSLite;
-        var _$ = root.$;
-        JSLite.noConflict = function(deep) {
-            if (deep && root.JSLite === JSLite) {
-                root.JSLite = _JSLite;
-            }
-            if (root.$ === JSLite) root.$ = _$;
-            return JSLite;
-        };
-        root.JSLite = root.$ = JSLite;
-    }
-}(this, function(root, undefined) {
+;(function(window, undefined) {
     "use strict";
     var emptyArray = [],slice = emptyArray.slice,filter = emptyArray.filter,some = emptyArray.some,elementTypes = [1, 9, 11],P={},
     propMap = {
@@ -545,5 +522,15 @@
         trim: function () {return this.replace(/(^\s*)|(\s*$)/g, "");},
         leftTrim: function () {return this.replace(/(^\s*)/g, "");}
     });
-    return JSLite;
-}));
+    
+    var _JSLite = window.JSLite;
+    var _$ = window.$;
+    JSLite.noConflict = function(deep) {
+        if (deep && window.JSLite === JSLite) {
+            window.JSLite = _JSLite;
+        }
+        if (window.$ === JSLite) window.$ = _$;
+        return JSLite;
+    };
+    window.JSLite = window.$ = JSLite;
+})(window);
