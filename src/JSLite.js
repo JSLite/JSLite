@@ -25,7 +25,7 @@
                 if (!selector) 
                     dom = emptyArray,dom.selector = selector || '',dom.__proto__ = JSLite.fn.init.prototype;
                 else if (typeof selector == 'string' && (selector = selector.trim()) && selector[0] == '<'  && /^\s*<(\w+|!)[^>]*>/.test(selector))
-                    dom = P.fragment(selector),selector=null;
+                    dom = fragment(selector),selector=null;
                 else if (JSLite.isFunction(selector)) return JSLite(document).ready(selector)
                 else {
                     if (JSLite.isArray(selector))
@@ -446,23 +446,30 @@
             'tr': document.createElement('tbody'),
             'tbody': P.table,'thead': P.table,'tfoot': P.table,
             'td': P.tableRow,'th': P.tableRow
-        },
-        fragment:function(html,name){
-            var dom, container
-            if (this.singleTagRE.test(html)) dom = JSLite(document.createElement(RegExp.$1));
-            if (!dom) {
-                if (html.replace) html = html.replace(this.tagExpanderRE, "<$1></$2>")
-                if (name === undefined) name = this.fragmentRE.test(html) && RegExp.$1
-                if (!(name in this.containers)) name = '*'
-                container = this.containers[name]
-                container.innerHTML = '' + html
-                dom = JSLite.each(slice.call(container.childNodes), function(){
-                    container.removeChild(this)
-                });
-            }
-            return dom;
         }
     };
+    
+    /**
+     * fragment
+     * 需要一个HTML字符串和一个可选的标签名
+     * 生成DOM节点从给定的HTML字符串节点。
+     * 生成的DOM节点作为一个数组返回。
+     */
+    function fragment(html,name){
+        var dom, container
+        if (P.singleTagRE.test(html)) dom = JSLite(document.createElement(RegExp.$1));
+        if (!dom) {
+            if (html.replace) html = html.replace(P.tagExpanderRE, "<$1></$2>")
+            if (name === undefined) name = P.fragmentRE.test(html) && RegExp.$1
+            if (!(name in P.containers)) name = '*'
+            container = P.containers[name]
+            container.innerHTML = '' + html
+            dom = JSLite.each(slice.call(container.childNodes), function(){
+                container.removeChild(this)
+            });
+        }
+        return dom;
+    }
     ;['width', 'height'].forEach(function(dimension){
         var dimensionProperty = dimension.replace(/./,dimension[0].toUpperCase())
         JSLite.fn[dimension]=function(value){
@@ -482,7 +489,7 @@
             var argType, nodes = JSLite.map(arguments, function(arg) {
                     argType = JSLite.type(arg)
                     if(argType=="Function") arg = funcArg(this, arg)
-                    return argType == "Object" || argType == "Array" || arg == null ? arg : P.fragment(arg)
+                    return argType == "Object" || argType == "Array" || arg == null ? arg : fragment(arg)
                 }),parent,script,copyByClone = this.length > 1
             if (nodes.length < 1) return this
             return this.each(function(_, target){
