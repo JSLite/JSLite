@@ -125,6 +125,19 @@
                 JSLite(this[0]).find('option').filter(function(){ return this.selected }).pluck('value') :
                 this[0].value))
         },
+        data: function(name, value){
+            var attrName = 'data-' + name,data,a
+            if(!name) return this[0].dataset;
+            if(name&&$.isJson(name)){
+                for(a in name) this.attr('data-' + a, name[a])
+                return this  
+            }
+            if(value&&($.isArray(value) || $.isJson(value))) value = JSON.stringify(value);
+
+            data = (1 in arguments) ? this.attr(attrName, value) : this.attr(attrName);
+            try{data = JSON.parse(data);}catch(e){}
+            return data;
+        },
         css:function(property, value){
             if (!this[0]) return [];
             var computedStyle = getComputedStyle(this[0], '')
@@ -448,7 +461,7 @@
             'td': P.tableRow,'th': P.tableRow
         }
     };
-    
+
     /**
      * fragment
      * 需要一个HTML字符串和一个可选的标签名
