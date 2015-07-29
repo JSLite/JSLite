@@ -550,6 +550,19 @@ $('#input').val(function(index,oldvalue){
 }) //⇒ self 
 ```
 
+### data
+> 读取或写入dom的 data-* 属性。
+> data(name)   ⇒ value
+> data(name, value)   ⇒ self
+
+```js
+$('#test').eq(0).data('name',{"sss":1}) //⇒ self
+$('#test').eq(0).data('name',[1,2,3,4]) //⇒ self 
+$('#test').eq(0).data('name') //⇒ [1,2,3,4]  或者 {"sss":1} 对象
+$('#test').data({"aa":1,"www":334343}) //⇒ 设置节点属性 data-aa="1" | data-www="334343"
+$('#test').data() //⇒  {"aa":1,"www":334343}
+```
+
 ----
 ## 节点属性
 
