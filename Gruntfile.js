@@ -6,7 +6,7 @@ module.exports = function(grunt) {
         // uglify插件的配置信息
         uglify: {
             options: {
-                banner: '/*! http://JSLite.io - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */'
+                // banner: '/*! http://JSLite.io - ' + '<%= grunt.template.today("yyyy-mm-dd") %> */'
                 // beautify: true,
                 // mangle: false, //不混淆变量名
                 // compress:true,//打开或关闭使用默认选项源压缩。
