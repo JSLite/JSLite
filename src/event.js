@@ -61,7 +61,7 @@
                 //处理事件代理
                 if (selector) {
                     var $temp = $(element).find(selector);
-                    var res = some.call($temp, function(val) {
+                    var res = [].some.call($temp, function(val) {
                         return val === e.target || $.contains(val, e.target);
                     });
                     //不包含
