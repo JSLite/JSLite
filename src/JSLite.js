@@ -108,6 +108,9 @@
                 if (this.parentNode != null) this.parentNode.removeChild(this)
             })
         },
+        replaceWith: function(newContent){
+            return this.before(newContent).remove()
+        },
         text: function(text){
             return text === undefined ?
                 (this.length > 0 ? this[0].textContent : null) :
