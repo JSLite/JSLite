@@ -277,7 +277,7 @@
                 });
             }else {
                 var excludes = typeof selector == 'string' ? this.filter(selector):
-                (JSLite.likeArray(selector) && isFunction(selector.item)) ? slice.call(selector) : JSLite(selector)          
+                (likeArray(selector) && isFunction(selector.item)) ? slice.call(selector) : JSLite(selector)          
                 this.forEach(function(el){
                     if (excludes.indexOf(el) < 0) nodes.push(el)
                 })
@@ -381,7 +381,7 @@
         isJson:isJson,
         parseJSON:JSON.parse,
         type:type,
-        likeArray:function (obj) {return obj? typeof obj.length == 'number' :null },
+        likeArray:likeArray,
         trim:function(str){if(str) return str.trim();},
         intersect:function(a,b){
             var array=[];
@@ -398,7 +398,7 @@
         },
         each:function(elements, callback){
             var i, key
-            if (this.likeArray(elements)) {
+            if (likeArray(elements)) {
                 for (i = 0; i < elements.length; i++)
                     if (callback.call(elements[i], i, elements[i]) === false) return elements
                 } else {
@@ -409,7 +409,7 @@
         },
         map:function(elements, callback){
             var value, values = [], i, key
-            if (this.likeArray(elements)) for (i = 0; i < elements.length; i++) {
+            if (likeArray(elements)) for (i = 0; i < elements.length; i++) {
                 value = callback(elements[i], i)
                 if (value != null) values.push(value)
             }
@@ -470,6 +470,7 @@
         })
         return type;
     }
+    function likeArray(obj) {return obj? typeof obj.length == 'number' :null }
 
     P = {
         singleTagRE:/^<(\w+)\s*\/?>(?:<\/\1>|)$/,
