@@ -3,7 +3,9 @@ JSLite
 
 **如有疑问欢迎到这些地方交流，欢迎加入JSLite.io组织团伙共同开发！**   
 
-[![](https://img.shields.io/github/issues/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/issues)  [![](https://img.shields.io/github/forks/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/network) [![](https://img.shields.io/github/stars/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/stargazers) [![](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/JSLite/JSLite/master/MIT-LICENSE) [![](https://travis-ci.org/JSLite/JSLite.svg?branch=master)](https://travis-ci.org/JSLite/JSLite)
+[![](https://img.shields.io/github/forks/JSLite/JSLite.svg?style=social)](https://img.shields.io/github/forks/JSLite/JSLite.svg) [![](https://img.shields.io/github/stars/JSLite/JSLite.svg?style=social)](https://github.com/JSLite/JSLite/stargazers) [![](https://img.shields.io/github/followers/jaywcjlove.svg?style=social)](https://github.com/jaywcjlove/followers)
+
+[![](https://img.shields.io/github/issues/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/issues) [![](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/JSLite/JSLite/master/MIT-LICENSE) [![](https://img.shields.io/github/release/jaywcjlove/cookie.js.svg)](https://github.com/jaywcjlove/cookie.js/releases) [![](https://travis-ci.org/JSLite/JSLite.svg?branch=master)](https://travis-ci.org/JSLite/JSLite)
 
 
 QQ交流群：397463673   
@@ -32,9 +34,9 @@ QQ交流群：397463673
 
 ```
 $ npm install jslite
+$ bower install jslite
 ```
 
-[![](https://nodei.co/npm/jslite.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/jslite/)
 
 ### 传统方法
 1. 去[官网下载](http://jslite.io)JSLite，[github download](https://github.com/JSLite/JSLite)  
@@ -482,6 +484,14 @@ $("div").eq(-1)//⇒ 倒数第一个节点数组
 $("div").eq(-2)//⇒ 倒数第二个节点数组
 ```
 
+### first
+> 获取当前对象集合中的第一个元素。
+> first()   ⇒ collection
+
+```js
+$('form').first()
+```
+
 ### get
 > 当前对象集合中获取所有节点对象或单个节点对象。
 
@@ -525,8 +535,10 @@ $("img").length;
 > 取得所有匹配节点对象的文本内容。
 
 ```js
-$("#box").text()
-//⇒ string 返回文本
+$("#box").text() //⇒ string 返回文本
+$("#box").text(function(){
+    return "这里干点儿什么？"
+}) //⇒ string 返回"#box"中的文本
 ```
 
 ### html
@@ -763,10 +775,19 @@ $('body').scrollTop(400);
 ## 过滤
 
 ### filter
-> 筛选出与指定表达式匹配的元素集合。`filter(selector) `。
+> 筛选出与指定表达式匹配的元素集合。  
+> `filter(selector) `  
+> `filter(function(index){ ... })` 筛选出与 `非` 指定表达式匹配的元素集合。
 
 ```js
 $("div").filter("#box") //⇒ self 在所有的div对象中选择器为 #box 的过滤出来。
+
+
+$("#select option").filter(function(idx){
+    console.log(this.selected)
+    return this.selected
+})
+//上面这种方法跟 not(function(index){ ... })  是一样的
 ```
 
 ### not
@@ -1018,6 +1039,49 @@ $("#box").before(function(){
 $('<p>test</p>').insertBefore('#box')
 ```
 
+
+### unwrap
+> 移除集合中每个元素的直接父节点，并把他们的子元素保留在原来的位置。 基本上，这种方法删除上一的祖先元素，同时保持DOM中的当前元素。
+> `replaceWith(content|fn)`   
+
+```js
+$("p").unwrap() // ⇒ self
+```
+
+
+### replaceWith
+> 将所有匹配的元素替换成指定的HTML或DOM元素。  
+> `replaceWith(content|fn)`   
+
+```js
+$("p").replaceWith("<b>段落。</b>");
+
+```
+
+
+用第一段替换第三段，你可以发现他是移动到目标位置来替换，而不是复制一份来替换。  
+
+```html
+<div class="container">
+  <div class="inner first">Hello</div>
+  <div class="inner second">And</div>
+  <div class="inner third">Goodbye</div>
+</div>
+<script type="text/javascript">
+    $('.third').replaceWith($('.first'));  // ⇒ 返回 “.third” 节点
+</script>
+
+```
+
+上面的结果
+
+```html
+<div class="container">
+  <div class="inner second">And</div>
+  <div class="inner first">Hello</div>
+</div>
+```
+
 ### clone
 > clone()   ⇒ collection  
 > 通过深度克隆来复制集合中的所有元素。(通过原生 `cloneNode` 方法深度克隆来复制集合中的所有元素。此方法不会有数据和事件处理程序复制到新的元素。这点和jquery中利用一个参数来确定是否复制数据和事件处理不相同。)
@@ -1092,6 +1156,10 @@ $("#box").on("click", function(){
 $("#box").on('click mouseover',function(evn){
     console.log('2'+evn)
 }) //⇒ self  绑定两个事件
+
+$("#box").on('click','p',function(){
+    console.log("被点击了")
+})//⇒ self  返回“#box”节点
 
 $("#box").on("click",{val:1},function(){//传参数
     console.log("dddd","event.data.val = " + event.data.val)
