@@ -297,6 +297,10 @@
         clone: function(){return this.map(function(){ return this.cloneNode(true)})},
         add: function(selector){return JSLite.unique(this.concat($(selector)));},
         eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
+        first: function(){
+            var el = this[0]
+            return el && !$.isObject(el) ? el : $(el)
+        },
         children:function(selector){
             var e=[];
             filter.call(this.pluck('children'), function(item, idx){
