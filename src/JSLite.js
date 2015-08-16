@@ -113,7 +113,7 @@
         },
         unwrap: function(){
             this.parent().each(function(){
-                $(this).replaceWith($(this).children())
+                JSLite(this).replaceWith(JSLite(this).children())
             })
             return this
         },
@@ -137,11 +137,11 @@
         data: function(name, value){
             var attrName = 'data-' + name,data,a
             if(!name) return this[0].dataset;
-            if(name&&$.isJson(name)){
+            if(name&&JSLite.isJson(name)){
                 for(a in name) this.attr('data-' + a, name[a])
                 return this  
             }
-            if(value&&($.isArray(value) || $.isJson(value))) value = JSON.stringify(value);
+            if(value&&(JSLite.isArray(value) || JSLite.isJson(value))) value = JSON.stringify(value);
 
             data = (1 in arguments) ? this.attr(attrName, value) : this.attr(attrName);
             try{data = JSON.parse(data);}catch(e){}
@@ -179,7 +179,7 @@
         },
         toggle:function(setting){
             return this.each(function(){
-                var el = $(this);(setting === undefined ? el.css("display") == "none" : setting) ? el.show() : el.hide()
+                var el = JSLite(this);(setting === undefined ? el.css("display") == "none" : setting) ? el.show() : el.hide()
             })
         },
         offset:function(){
@@ -295,11 +295,11 @@
             return JSLite(ancestors).filter(selector || '*');
         },
         clone: function(){return this.map(function(){ return this.cloneNode(true)})},
-        add: function(selector){return JSLite.unique(this.concat($(selector)));},
+        add: function(selector){return JSLite.unique(this.concat(JSLite(selector)));},
         eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
         first: function(){
             var el = this[0]
-            return el && !$.isObject(el) ? el : $(el)
+            return el && !JSLite.isObject(el) ? el : JSLite(el)
         },
         children:function(selector){
             var e=[];
