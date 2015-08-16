@@ -111,6 +111,12 @@
         replaceWith: function(newContent){
             return this.before(newContent).remove()
         },
+        unwrap: function(){
+            this.parent().each(function(){
+                $(this).replaceWith($(this).children())
+            })
+            return this
+        },
         text: function(text){
             return text === undefined ?
                 (this.length > 0 ? this[0].textContent : null) :
