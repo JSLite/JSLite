@@ -26,11 +26,11 @@
                     dom = emptyArray,dom.selector = selector || '',dom.__proto__ = JSLite.fn.init.prototype;
                 else if (typeof selector == 'string' && (selector = selector.trim()) && selector[0] == '<'  && /^\s*<(\w+|!)[^>]*>/.test(selector))
                     dom = fragment(selector),selector=null;
-                else if (JSLite.isFunction(selector)) return JSLite(document).ready(selector)
+                else if (isFunction(selector)) return JSLite(document).ready(selector)
                 else {
-                    if (JSLite.isArray(selector))
+                    if (isArray(selector))
                         dom = selector;
-                    else if (JSLite.isObject(selector))
+                    else if (isObject(selector))
                         dom = [selector], selector = null
                     else if (elementTypes.indexOf(selector.nodeType) >= 0 || selector === window)
                         dom = [selector], selector = null;
@@ -62,7 +62,7 @@
             if (typeof (target) === "boolean")
                 deep = target,target = arguments[1] || {},i = 2;
             //处理时，目标是一个字符串或（深拷贝可能的情况下）的东西
-            if (typeof (target) !== "object" && !JSLite.isFunction(target)) 
+            if (typeof (target) !== "object" && !isFunction(target)) 
                 target = {};
             //扩展JSLite的本身，如果只有一个参数传递
             if (length === i) target = this,--i;
@@ -137,11 +137,11 @@
         data: function(name, value){
             var attrName = 'data-' + name,data,a
             if(!name) return this[0].dataset;
-            if(name&&JSLite.isJson(name)){
+            if(name&&isJson(name)){
                 for(a in name) this.attr('data-' + a, name[a])
                 return this  
             }
-            if(value&&(JSLite.isArray(value) || JSLite.isJson(value))) value = JSON.stringify(value);
+            if(value&&(isArray(value) || isJson(value))) value = JSON.stringify(value);
 
             data = (1 in arguments) ? this.attr(attrName, value) : this.attr(attrName);
             try{data = JSON.parse(data);}catch(e){}
@@ -214,7 +214,7 @@
                 (!this.length || this[0].nodeType !== 1 ? undefined :
                     (!(result = this[0].getAttribute(name)) && name in this[0]) ? this[0][name] : result
                 ) : this.each(function(n){
-                    if (JSLite.isObject(name)) for(k in name) this.setAttribute(k, name[k]);
+                    if (isObject(name)) for(k in name) this.setAttribute(k, name[k]);
                     else this.setAttribute(name,funcArg(this, value));
                 });
         },
@@ -260,24 +260,24 @@
             })
         },
         filter:function(selector){
-            if (JSLite.isFunction(selector)) return this.not(this.not(selector))
+            if (isFunction(selector)) return this.not(this.not(selector))
             return JSLite(filter.call(this, function(element){
                 return JSLite.matches(element, selector)
             }))
         },
         is: function(selector){
-            if (this.length > 0 && JSLite.isObject(selector)) return this.indexOf(selector)>-1?true:false;
+            if (this.length > 0 && isObject(selector)) return this.indexOf(selector)>-1?true:false;
             return this.length > 0 && JSLite.matches(this[0], selector);
         },
         not:function(selector){
             var nodes = [];
-            if (JSLite.isFunction(selector)&& selector.call !== undefined){
+            if (isFunction(selector)&& selector.call !== undefined){
                 this.each(function(idx){
                     if (!selector.call(this,idx)) nodes.push(this);
                 });
             }else {
                 var excludes = typeof selector == 'string' ? this.filter(selector):
-                (JSLite.likeArray(selector) && JSLite.isFunction(selector.item)) ? slice.call(selector) : JSLite(selector)          
+                (JSLite.likeArray(selector) && isFunction(selector.item)) ? slice.call(selector) : JSLite(selector)          
                 this.forEach(function(el){
                     if (excludes.indexOf(el) < 0) nodes.push(el)
                 })
@@ -299,7 +299,7 @@
         eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
         first: function(){
             var el = this[0]
-            return el && !JSLite.isObject(el) ? el : JSLite(el)
+            return el && !isObject(el) ? el : JSLite(el)
         },
         children:function(selector){
             var e=[];
@@ -320,7 +320,7 @@
             var node = this[0], collection = false
             if (typeof selector == 'object') collection = JSLite(selector)
             while (node && !(collection ? collection.indexOf(node) >= 0 : JSLite.matches(node, selector)))
-                node = node !== context && !JSLite.isDocument(node) && node.parentNode
+                node = node !== context && !isDocument(node) && node.parentNode
             return JSLite(node)
         },
         slice:function(argument) { return JSLite(slice.apply(this, arguments))},
@@ -371,30 +371,17 @@
     });
 
     JSLite.extend({
-        isDocument:function (obj) { return obj = obj ? obj != null && obj.nodeType ? obj.nodeType == obj.DOCUMENT_NODE : false : undefined;},
-        isFunction:function (value) { return ({}).toString.call(value) == "[object Function]" },
-        isObject:function (value) { return value instanceof Object },
-        isArray:function (value) { return value instanceof Array },
-        isString:function(obj){ return typeof obj == 'string' },
-        isWindow:function(obj){ return obj != null && obj == obj.window },
-        isPlainObject:function(obj){
-            return this.isObject(obj) && !this.isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype
-        },
-        isJson: function (obj) {
-            var isjson = typeof(obj) == "object" && 
-            Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
-            return isjson;
-        },
+        isDocument:isDocument,
+        isFunction:isFunction,
+        isObject:isObject,
+        isArray:isArray,
+        isString:isString,
+        isWindow:isWindow,
+        isPlainObject:isPlainObject,
+        isJson:isJson,
         parseJSON:JSON.parse,
+        type:type,
         likeArray:function (obj) {return obj? typeof obj.length == 'number' :null },
-        type: function (obj) {
-            if(!obj) return undefined;
-            var type="";
-            JSLite.each("Boolean Number HTMLDivElement String Function Array Date RegExp Object Error".split(" "), function(i, name) {
-                if(Object.prototype.toString.call(obj).indexOf(name) > -1) type = name == "HTMLDivElement"?"Object":name;
-            })
-            return type;
-        },
         trim:function(str){if(str) return str.trim();},
         intersect:function(a,b){
             var array=[];
@@ -449,7 +436,7 @@
             var ancestors = [];
             while (nodes.length > 0)
             nodes = JSLite.map(nodes, function(node){
-                if ((node = node[ty]) && !JSLite.isDocument(node) && ancestors.indexOf(node) < 0) 
+                if ((node = node[ty]) && !isDocument(node) && ancestors.indexOf(node) < 0) 
                     ancestors.push(node)
                     return node
             });
@@ -460,6 +447,29 @@
             return parent !== node && parent.contains(node)
         }
     });
+
+    function isDocument(obj) { return obj = obj ? obj != null && obj.nodeType ? obj.nodeType == obj.DOCUMENT_NODE : false : undefined;}
+    function isFunction(value) { return ({}).toString.call(value) == "[object Function]" }
+    function isObject(value) { return value instanceof Object }
+    function isArray(value) { return value instanceof Array }
+    function isString(obj){ return typeof obj == 'string' }
+    function isWindow(obj){ return obj != null && obj == obj.window }
+    function isPlainObject(obj){
+        return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype
+    }
+    function isJson(obj) {
+        var isjson = typeof(obj) == "object" && 
+        Object.prototype.toString.call(obj).toLowerCase() == "[object object]" && !obj.length;
+        return isjson;
+    }
+    function type(obj) {
+        if(!obj) return undefined;
+        var type="";
+        JSLite.each("Boolean Number HTMLDivElement String Function Array Date RegExp Object Error".split(" "), function(i, name) {
+            if(Object.prototype.toString.call(obj).indexOf(name) > -1) type = name == "HTMLDivElement"?"Object":name;
+        })
+        return type;
+    }
 
     P = {
         singleTagRE:/^<(\w+)\s*\/?>(?:<\/\1>|)$/,
@@ -500,8 +510,8 @@
         var dimensionProperty = dimension.replace(/./,dimension[0].toUpperCase())
         JSLite.fn[dimension]=function(value){
             var offset, el = this[0]
-            if (value === undefined) return JSLite.isWindow(el) ? el['inner' + dimensionProperty] :
-            JSLite.isDocument(el) ? el.documentElement['scroll' + dimensionProperty] :
+            if (value === undefined) return isWindow(el) ? el['inner' + dimensionProperty] :
+            isDocument(el) ? el.documentElement['scroll' + dimensionProperty] :
             (offset = this.offset()) && offset[dimension]
             else return this.each(function(idx){
                 el = $(this)
@@ -513,7 +523,7 @@
         var inside = operatorIndex % 2;
         JSLite.fn[operator] = function(){
             var argType, nodes = JSLite.map(arguments, function(arg) {
-                    argType = JSLite.type(arg)
+                    argType = type(arg)
                     if(argType=="Function") arg = funcArg(this, arg)
                     return argType == "Object" || argType == "Array" || arg == null ? arg : fragment(arg)
                 }),parent,script,copyByClone = this.length > 1
@@ -548,7 +558,7 @@
     });
     
     function funcArg(context, arg, idx, payload) {
-        return JSLite.isFunction(arg) ? arg.call(context, idx, payload) : arg;
+        return isFunction(arg) ? arg.call(context, idx, payload) : arg;
     }
     //字符串处理
     JSLite.extend(String.prototype,{
