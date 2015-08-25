@@ -1214,7 +1214,7 @@ $("#box").trigger('abc:click',['wwww']) //⇒ self 触发并传一个参数进�
 > contentType：一个额外的"{键:值}"对映射到请求一起发送  
 > headers：(默认：{})： 一个额外的"{键:值}"对映射到请求一起发送  
 > url：发送请求的地址  
-> async：此参数不传默认为true(同步请求)，false异步请求  
+> async：此参数不传默认为true(异步请求)，false同步请求  
 > success(cdata)：请求成功之后调用。传入返回后的数据，以及包含成功代码的字符串。  
 > error(status, statusText)：请求出错时调用。 (超时，解析错误，或者状态码不在HTTP 2xx)。  
 
