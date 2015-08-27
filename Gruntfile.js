@@ -17,11 +17,13 @@ module.exports = function(grunt) {
             },
             js: {
                 src: [
+                    'src/start.js',
                     'src/polyfill.js',
                     'src/JSLite.js',
                     'src/form.js',
                     'src/event.js',
-                    'src/ajax.js'
+                    'src/ajax.js',
+                    'src/end.js'
                 ],
                 dest: 'build/JSLite.js'
             }
