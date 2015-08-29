@@ -1,4 +1,8 @@
-/*! http://JSLite.io - 2015-08-27 */
+/*!
+* JSLite v1.1.6 (http://JSLite.io)
+* Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)
+* build time 2015-08-29
+*/
 ;(function (root, factory) {
     var JSLite = factory(root);
     if ( typeof define === 'function' && define.amd) {
