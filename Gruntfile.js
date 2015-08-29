@@ -12,8 +12,11 @@ module.exports = function(grunt) {
         },
         concat: {
             options: {
-                banner: '/*! http://JSLite.io - ' +
-                '<%= grunt.template.today("yyyy-mm-dd") %> */\n'
+                banner: '/*!\n' +
+                '* JSLite v<%= pkg.version %> (http://JSLite.io)\n' +
+                '* Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)\n' +
+                '* build time <%= grunt.template.today("yyyy-mm-dd") %>\n' +
+                '*/\n'
             },
             js: {
                 src: [
