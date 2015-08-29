@@ -2,6 +2,11 @@
     var handlers = {},_jid = 1
     /* 绑定事件 start */
     $.fn.extend({
+        ready: function(callback){
+            if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(JSLite)
+            else document.addEventListener('DOMContentLoaded', function(){callback(JSLite) }, false)
+            return this
+        },
         bind: function(event, func) {return this.each(function(){add(this, event, func)})},
         unbind:function(event, func) {return this.each(function(){remove(this, event, func)})},
         on:function(event, selector, data, callback){
@@ -17,8 +22,8 @@
             if ($.isFunction(data) || data === false)
                 callback = data, data = undefined
             if (callback === false) callback = function(){return false;}
-            return this.each(function(){ 
-                add(this, event, callback, data, selector) 
+            return this.each(function(){
+                add(this, event, callback, data, selector)
             })
         },
         off:function(event, selector, callback){
@@ -95,8 +100,8 @@
     function findHandlers(element, event, func, selector){
         var self=this,id = jid(element);event = parse(event)
         return (handlers[jid(element)] || []).filter(function(handler) {
-            return handler 
-            && (!event.e  || handler.e == event.e) 
+            return handler
+            && (!event.e  || handler.e == event.e)
             && (!func || handler.fn.toString()===func.toString())
             && (!selector || handler.sel == selector);
         })

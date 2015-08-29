@@ -39,7 +39,7 @@ if (!Array.prototype.filter){
 }
 //IE对indexOf方法的支持
 if(!Array.indexOf){
-    Array.prototype.indexOf = function(obj){              
+    Array.prototype.indexOf = function(obj){
         for(var i=0; i<this.length; i++){
             if(this[i]==obj) return i;
         }
@@ -47,16 +47,16 @@ if(!Array.indexOf){
     }
 }
 //IE对forEach方法的支持
-if (!Array.prototype.forEach) {  
-    Array.prototype.forEach = function(fun /*, thisp*/){  
-        var len = this.length;  
-        if (typeof fun != "function")  
-            throw new TypeError();  
-        var thisp = arguments[1];  
-        for (var i = 0; i < len; i++){  
-            if (i in this)  
-                fun.call(thisp, this[i], i, this);  
-        }  
+if (!Array.prototype.forEach) {
+    Array.prototype.forEach = function(fun /*, thisp*/){
+        var len = this.length;
+        if (typeof fun != "function")
+            throw new TypeError();
+        var thisp = arguments[1];
+        for (var i = 0; i < len; i++){
+            if (i in this)
+                fun.call(thisp, this[i], i, this);
+        }
     }
 }
 //删除数组 元素
@@ -64,5 +64,14 @@ if (!Array.prototype.remove){
     Array.prototype.remove = function(val) {
         var index = this.indexOf(val);
         return index > -1 && this.splice(index, 1), this;
-    } 
+    }
+}
+
+// 扩展字符串方法
+if (!String.prototype.trim) {
+    String.prototype.trim = function () {return this.replace(/(^\s*)|(\s*$)/g, "");}
+}
+
+if (!String.prototype.leftTrim) {
+    String.prototype.leftTrim = function () {return this.replace(/(^\s*)/g, "");}
 }
