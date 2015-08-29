@@ -27,3 +27,4 @@
         root.$ = JSLite;
     }
 }(this, function (root, undefined) {
+    "use strict";
