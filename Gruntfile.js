@@ -22,6 +22,8 @@ module.exports = function(grunt) {
                 src: [
                     'src/start.js',
                     'src/polyfill.js',
+                    'src/var.js',
+                    'src/function.js',
                     'src/JSLite.js',
                     'src/form.js',
                     'src/event.js',
