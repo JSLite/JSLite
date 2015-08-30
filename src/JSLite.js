@@ -1,40 +1,44 @@
 JSLite = (function(){
-    var JSLite = function( selector ) {
+    var JSLite = function(selector) {
         return new JSLite.fn.init(selector);
     };
+
     JSLite.fn = JSLite.prototype = {
-        init:function( selector ){
+        init: function(selector) {
             var dom ;
-            if (!selector)
+            if (!selector) {
                 dom = emptyArray,dom.selector = selector || '',dom.__proto__ = JSLite.fn.init.prototype;
-            else if (typeof selector == 'string' && (selector = selector.trim()) && selector[0] == '<'  && /^\s*<(\w+|!)[^>]*>/.test(selector))
+            } else if (typeof selector == 'string' && (selector = selector.trim()) && selector[0] == '<'  && /^\s*<(\w+|!)[^>]*>/.test(selector)) {
                 dom = fragment(selector),selector=null;
-            else if (isFunction(selector)) return JSLite(document).ready(selector)
-            else {
-                if (isArray(selector))
+            } else if (isFunction(selector)) {
+                return JSLite(document).ready(selector);
+            } else {
+                if (isArray(selector)) {
                     dom = selector;
-                else if (isObject(selector))
+                } else if (isObject(selector)) {
                     dom = [selector], selector = null
-                else if (elementTypes.indexOf(selector.nodeType) >= 0 || selector === window)
+                } else if (elementTypes.indexOf(selector.nodeType) >= 0 || selector === window) {
                     dom = [selector], selector = null;
-                else dom = (function(){
-                    var found;
-                    return (document && /^#([\w-]+)$/.test(selector))?
-                    ((found = document.getElementById(RegExp.$1)) ? [found] : [] ):
-                    slice.call(
-                        /^\.([\w-]+)$/.test(selector) ? document.getElementsByClassName(RegExp.$1) :
-                        /^[\w-]+$/.test(selector) ? document.getElementsByTagName(selector) :
-                        document.querySelectorAll(selector)
-                    );
-                })();
+                } else {
+                    dom = (function(){
+                        var found;
+                        return (document && /^#([\w-]+)$/.test(selector))?
+                        ((found = document.getElementById(RegExp.$1)) ? [found] : [] ):
+                        slice.call(
+                            /^\.([\w-]+)$/.test(selector) ? document.getElementsByClassName(RegExp.$1) :
+                            /^[\w-]+$/.test(selector) ? document.getElementsByTagName(selector) :
+                            document.querySelectorAll(selector)
+                        );
+                    })();
+                }
             }
             dom = dom || emptyArray;
             JSLite.extend(dom, JSLite.fn);
             dom.selector = selector || '';
             return dom;
-        },
-        size:function(){return this.length;}
-    }
+        }
+    };
+
     JSLite.fn.init.prototype = JSLite.fn;
 
     return JSLite;
@@ -65,35 +69,6 @@ JSLite.extend = JSLite.fn.extend = function () {
     return target;
 };
 
-JSLite.fn.extend({
-    forEach: emptyArray.forEach,
-    concat: emptyArray.concat,
-    indexOf: emptyArray.indexOf,
-    each: function(callback){
-        return JSLite.each(this,callback);
-    },
-    map: function(fn){
-        return JSLite(JSLite.map(this, function(el, i){ return fn.call(el, i, el) }));
-    },
-    get: function(index){
-        return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
-    },
-    index: function(element){
-        return element ? this.indexOf(JSLite(element)[0]) : this.parent().children().indexOf(this[0])
-    },
-    is: function(selector){
-        if (this.length > 0 && isObject(selector)) return this.indexOf(selector)>-1?true:false;
-        return this.length > 0 && JSLite.matches(this[0], selector);
-    },
-    add: function(selector){return JSLite.unique(this.concat(JSLite(selector)));},
-    eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
-    first: function(){
-        var el = this[0]
-        return el && !isObject(el) ? el : JSLite(el)
-    },
-    slice:function(argument) { return JSLite(slice.apply(this, arguments))}
-});
-
 JSLite.extend({
     isDocument:isDocument,
     isFunction:isFunction,
@@ -121,15 +96,7 @@ JSLite.extend({
         if (r != null) return unescape(r[2]); return null;
     },
     each:function(elements, callback){
-        var i, key
-        if (likeArray(elements)) {
-            for (i = 0; i < elements.length; i++)
-                if (callback.call(elements[i], i, elements[i]) === false) return elements
-            } else {
-            for (key in elements)
-                if (callback.call(elements[key], key, elements[key]) === false) return elements
-        }
-        return elements
+        each.apply(arguments);
     },
     map:function(elements, callback){
         var value, values = [], i, key
@@ -170,4 +137,34 @@ JSLite.extend({
         if(parent&&!node) return document.documentElement.contains(parent)
         return parent !== node && parent.contains(node)
     }
+});
+
+JSLite.fn.extend({
+    forEach: emptyArray.forEach,
+    concat: emptyArray.concat,
+    indexOf: emptyArray.indexOf,
+    each: function(callback){
+        return JSLite.each(this,callback);
+    },
+    map: function(fn){
+        return JSLite(JSLite.map(this, function(el, i){ return fn.call(el, i, el) }));
+    },
+    get: function(index){
+        return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
+    },
+    index: function(element){
+        return element ? this.indexOf(JSLite(element)[0]) : this.parent().children().indexOf(this[0])
+    },
+    is: function(selector){
+        if (this.length > 0 && isObject(selector)) return this.indexOf(selector)>-1?true:false;
+        return this.length > 0 && JSLite.matches(this[0], selector);
+    },
+    add: function(selector){return JSLite.unique(this.concat(JSLite(selector)));},
+    eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
+    first: function(){
+        var el = this[0]
+        return el && !isObject(el) ? el : JSLite(el)
+    },
+    slice:function(argument) { return JSLite(slice.apply(this, arguments));},
+    size:function(){return this.length;}
 });
