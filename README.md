@@ -44,17 +44,22 @@ QQ交流群：397463673
 
 ## Installation - 安装
 
-### npm 
+您需要在系统上安装 `Node.js`的。 
 
 ```shell
+#npm 下载到 node_modules
 $ npm install jslite
-```
 
-### bower 
-
-```shell
+#bower 下载到 bower_components
 $ bower install jslite
+
+#安装grunt依赖
+$ npm install
+
+#启动grunt压缩合并
+$ grunt
 ```
+
 
 ### 传统方法
 1. 去[官网下载](http://jslite.io)JSLite  
