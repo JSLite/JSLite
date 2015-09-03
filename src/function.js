@@ -64,13 +64,10 @@ function isDocument(doc) {
     return doc && doc.nodeType == doc.DOCUMENT_NODE;
 }
 
-
-/**
- * fragment
- * 需要一个HTML字符串和一个可选的标签名
- * 生成DOM节点从给定的HTML字符串节点。
- * 生成的DOM节点作为一个数组返回。
- */
+// fragment
+// 需要一个HTML字符串和一个可选的标签名
+// 生成DOM节点从给定的HTML字符串节点。
+// 生成的DOM节点作为一个数组返回。
 function fragment(html, name) {
     var dom, container;
     if (P.singleTagRE.test(html)) dom = JSLite(document.createElement(RegExp.$1));
