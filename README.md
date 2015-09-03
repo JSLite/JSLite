@@ -1,22 +1,15 @@
 # JSLite
 
-```
-       ___         ___           ___                   ___           ___     
-      /\  \       /\  \         /\__\      ___        /\  \         /\  \    
-      \:\  \     /::\  \       /:/  /     /\  \       \:\  \       /::\  \   
-  ___ /::\__\   /:/\ \  \     /:/  /      \:\  \       \:\  \     /:/\:\  \  
- /\  /:/\/__/  _\:\~\ \  \   /:/  /       /::\__\      /::\  \   /::\~\:\  \ 
- \:\/:/  /    /\ \:\ \ \__\ /:/__/     __/:/\/__/     /:/\:\__\ /:/\:\ \:\__\
-  \::/  /     \:\ \:\ \/__/ \:\  \    /\/:/  /       /:/  \/__/ \:\~\:\ \/__/
-   \/__/       \:\ \:\__\    \:\  \   \::/__/       /:/  /       \:\ \:\__\  
-                \:\/:/  /     \:\  \   \:\__\       \/__/         \:\ \/__/  
-                 \::/  /       \:\__\   \/__/                      \:\__\    
-                  \/__/         \/__/                               \/__/    
-
-```
-
 [![](https://img.shields.io/github/issues/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/issues)  [![](https://img.shields.io/github/forks/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/network) [![](https://img.shields.io/github/stars/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/stargazers) [![](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/JSLite/JSLite/master/MIT-LICENSE) [![](https://travis-ci.org/JSLite/JSLite.svg?branch=master)](https://travis-ci.org/JSLite/JSLite) [![](https://img.shields.io/github/release/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/releases)
 
+```
+   __     ______     __         __     ______   ______    
+  /\ \   /\  ___\   /\ \       /\ \   /\__  _\ /\  ___\   
+ _\_\ \  \ \___  \  \ \ \____  \ \ \  \/_/\ \/ \ \  __\   
+/\_____\  \/\_____\  \ \_____\  \ \_\    \ \_\  \ \_____\ 
+\/_____/   \/_____/   \/_____/   \/_/     \/_/   \/_____/ 
+
+```
 
 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。  
 
@@ -57,9 +50,36 @@ $ bower install jslite
 $ npm install
 
 #启动grunt压缩合并
-$ grunt
+$ grunt watch
 ```
 
+## JSLite模块
+JSLite 模块中的 `src/` 目录的各个文件。
+
+模块 | 默认加载 | 描述
+--- | ------- | -----
+JSLite | ✔ | 核心模块，包含大多数方法。
+var | ✔ | 核心模块，全部变量声明。
+function | ✔ | 内部函数调用
+start | ✔ | UMD开始。
+end | ✔ | UMD结束。
+polyfill | - | 支持桌面浏览器IE和移动端 Windows Phone 8。
+traversing | - | 对页面节点各种查找。
+manipulation | - | 此部分中所有的方法是一些操作DOM的方式。
+attribute | - | 获取和设置页面元素的 DOM 属性。
+css | - | 样式的操作。
+effect | - | 动画设置
+dimensions | - | 获取并设置各种 CSS 属性所代表的尺寸。
+form | - | 表单方法。
+event | - | 事件处理。
+ajax | - | 异步请求的方法，发起任意Ajax请求。
+
+默认合并 `start` `polyfill` `var` `function` `JSLite` `end` 。上面打 `✔` 都为默认加载的核心模块。其它均可选择性加载。
+
+```shell
+#模块选择合并
+$ MODULES="polyfill event css" npm run-script make dist
+```
 
 ### 传统方法
 1. 去[官网下载](http://jslite.io)JSLite  
