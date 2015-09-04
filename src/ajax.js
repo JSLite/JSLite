@@ -197,12 +197,16 @@
             xhr.send(data?data:null);
         }
     });
+    var _load = $.fn.load;
     $.fn.extend({
-        load:function (/*url, data, success*/) {
+        load:function (url, data, success) {
+            //兼容 onload 事件
+            if (arguments[0] && typeof arguments[0] !== "string" && _load ) return _load.apply( this, arguments );
+            console.log("test")
             if (!this.length || arguments.length === 0) return this
             var self = this, parts = arguments[0].split(/\s/), selector,
-                options = parseArguments.apply(null, arguments)
-                callback = options.success
+                options = parseArguments(url, data, success),
+                callback = options.success;
             if (parts.length > 1){
                 options.url = parts[0], selector = parts[1]
             }
