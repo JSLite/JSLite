@@ -95,9 +95,7 @@ JSLite.extend({
         r = window.location.search.substr(1).match(reg);
         if (r != null) return unescape(r[2]); return null;
     },
-    each:function(elements, callback){
-        each.apply(arguments);
-    },
+    each:function(elements, callback){each.apply(this,arguments,callback);},
     map:function(elements, callback){
         var value, values = [], i, key
         if (likeArray(elements)) for (i = 0; i < elements.length; i++) {
