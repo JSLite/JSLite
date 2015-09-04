@@ -1413,8 +1413,12 @@ $(selector).load(URL,data,callback);
 ```js
 // 把文件 "demo.txt" 的内容加载到指定的 <div> 元素中
 $("#div1").load("demo.txt");
-//把 "demo.txt" 文件中 id="div1" 的元素的内容，加载到指定的 <div> 元素中：
-$("#div1").load("demo.txt #p1");
+//把 "demo.txt" 文件中 p 的元素的内容，加载到指定的 <div> 元素中：
+$("#div1").load("demo.txt p");
+//把 "demo.txt" 文件中 p 的元素的内容，加载到指定的 <div> 元素中 callback 
+$("#div1").load("demo.txt p",function(str){
+    console.log("输出demo.txt中的内容：",str)
+});
 ```
 
 
