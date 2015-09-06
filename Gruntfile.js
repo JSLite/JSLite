@@ -3,6 +3,7 @@ module.exports = function(grunt) {
     // 任务配置,所有插件的配置信息
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        //删除文件
         clean: {
             js: {
                 files: [{
@@ -10,6 +11,7 @@ module.exports = function(grunt) {
                 }]
             }
         },
+        //合并代码
         concat: {
             options: {
                 banner: '/*!\n' +
@@ -36,17 +38,41 @@ module.exports = function(grunt) {
                     'src/ajax.js',
                     'src/end.js'
                 ],
-                dest: 'build/JSLite.js'
+                dest: 'dist/JSLite.js'
             }
         },
         // uglify插件的配置信息
         uglify: {
-            options: {
-                preserveComments: 'some'
+            //输出JSLite.min
+            all: {
+                options: {
+                    preserveComments: 'some'
+                },
+                files: {
+                    'dist/JSLite.min.js': ['<%= concat.js.dest %>']
+                }
             },
-            js: {
-                src: '<%= concat.js.dest %>',
-                dest: 'build/JSLite.min.js'
+            //JSLite map
+            js_map: {
+                files: {
+                    "dist/JSLite.min.js": [ "dist/JSLite.js" ]
+                },
+                options: {
+                    preserveComments: false,
+                    sourceMap: true,
+                    sourceMapName: "dist/JSLite.min.map",
+                    report: "min",
+                    beautify: {
+                        "ascii_only": true
+                    },
+                    banner: "/*! JSLite v<%= pkg.version %> | " +
+                        "Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE) */",
+                    compress: {
+                        "hoist_funs": false,
+                        loops: false,
+                        unused: false
+                    }
+                }
             }
         },
         // watch插件的配置信息
@@ -64,6 +90,8 @@ module.exports = function(grunt) {
     });
 
     // 告诉grunt当我们在终端中输入grunt时需要做些什么
-    grunt.registerTask('default', ['clean', 'concat', 'uglify']);
+    grunt.registerTask('default', ['clean', 'concat', 'uglify:all']);
+
+    
 
 };
