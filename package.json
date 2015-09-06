@@ -19,7 +19,8 @@
     "url": "https://github.com/JSLite/JSLite/issues"
   },
   "scripts": {
-    "make": "node .bin/make"
+    "make": "node .bin/make",
+    "start": "grunt watch"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
