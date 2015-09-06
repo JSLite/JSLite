@@ -8,7 +8,11 @@
     "url": "https://github.com/JSLite/JSLite.git"
   },
   "keywords": [
-    "JSLite"
+    "JSLite",
+    "jslite",
+    "library",
+    "browser",
+    "javascript"
   ],
   "author": "kenny wang <398188662@qq.com> (http://JSLite.io)",
   "license": {
@@ -28,11 +32,10 @@
     "grunt-contrib-concat": "^0.4.0",
     "grunt-contrib-uglify": "^0.8.0",
     "grunt-contrib-watch": "^0.6.1",
+    "grunt-dist": "0.0.2",
     "load-grunt-tasks": "^0.4.0"
   },
   "dependencies": {
-    "cli-color": "^1.0.0",
-    "shelljs": "^0.5.3",
-    "uglify-js": "^2.4.24"
+    "cli-color": "^1.0.0"
   }
 }

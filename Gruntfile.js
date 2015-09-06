@@ -1,15 +1,33 @@
 // 包装函数
 module.exports = function(grunt) {
+
+    var clc = require('cli-color');
+
+    //要合并的模块
+    var modules = (process.env['MODULES'] ? 
+        'start polyfill var function JSLite ' + process.env['MODULES'] + ' end' : 
+        'start polyfill var function JSLite traversing manipulation attribute css effect dimensions form event ajax end').split(' ');
+    //输出要合并的所有文件的路径 返回数组
+    var module_files = (function() {
+        var _i, _len, _results = [];
+        for (_i = 0, _len = modules.length; _i < _len; _i++) {
+          module = modules[_i];
+          _results.push("src/" + module + ".js");
+        }
+        return _results;
+    })();
+
     // 任务配置,所有插件的配置信息
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         //删除文件
         clean: {
-            js: {
+            build: {
                 files: [{
                     src: ['build/*']
                 }]
-            }
+            },
+            dist:['dist/*']
         },
         //合并代码
         concat: {
@@ -20,58 +38,31 @@ module.exports = function(grunt) {
                 '* build time <%= grunt.template.today("yyyy-mm-dd") %>\n' +
                 '*/\n'
             },
-            js: {
-                src: [
-                    'src/start.js',
-                    'src/polyfill.js',
-                    'src/var.js',
-                    'src/function.js',
-                    'src/JSLite.js',
-                    'src/traversing.js',
-                    'src/manipulation.js',
-                    'src/attribute.js',
-                    'src/css.js',
-                    'src/effect.js',
-                    'src/dimensions.js',
-                    'src/form.js',
-                    'src/event.js',
-                    'src/ajax.js',
-                    'src/end.js'
-                ],
+            build: {
+                src: module_files,
+                dest: 'build/JSLite.js'
+            },
+            dist:{
+                src: module_files,
                 dest: 'dist/JSLite.js'
+            }
+        },
+        dist: {
+            default_options: {
+                files: {
+                    "dist":['dist/JSLite.js']
+                }
             }
         },
         // uglify插件的配置信息
         uglify: {
             //输出JSLite.min
-            all: {
+            build: {
                 options: {
                     preserveComments: 'some'
                 },
                 files: {
-                    'dist/JSLite.min.js': ['<%= concat.js.dest %>']
-                }
-            },
-            //JSLite map
-            js_map: {
-                files: {
-                    "dist/JSLite.min.js": [ "dist/JSLite.js" ]
-                },
-                options: {
-                    preserveComments: false,
-                    sourceMap: true,
-                    sourceMapName: "dist/JSLite.min.map",
-                    report: "min",
-                    beautify: {
-                        "ascii_only": true
-                    },
-                    banner: "/*! JSLite v<%= pkg.version %> | " +
-                        "Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE) */",
-                    compress: {
-                        "hoist_funs": false,
-                        loops: false,
-                        unused: false
-                    }
+                    'build/JSLite.min.js': ['<%= concat.build.dest %>']
                 }
             }
         },
@@ -89,9 +80,15 @@ module.exports = function(grunt) {
         scope: 'devDependencies'
     });
 
+
     // 告诉grunt当我们在终端中输入grunt时需要做些什么
-    grunt.registerTask('default', ['clean', 'concat', 'uglify:all']);
+    grunt.registerTask('default', ['clean:build', 'concat:build', 'uglify:build']);
 
-    
+    grunt.registerTask('dist_task', ['clean:dist', 'concat:dist', 'dist']);
 
+    grunt.registerTask('make', '选择合并JSLite模块',function(){
+        grunt.log.writeln(clc.xterm(46)("\n合并的js模块：\n"));
+        grunt.log.writeln(" " + module_files.join('\n ') + '\n');
+        grunt.task.run('dist_task');
+    });
 };

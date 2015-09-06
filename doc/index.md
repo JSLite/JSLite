@@ -1404,7 +1404,7 @@ $(selector).load(URL,data,callback);
 
 这是示例文件（"demo.txt"）的内容：
 
-```js
+```html
 <h2>JSLite中AJAX的一个方法！</h2>
 <p id="demo">这是一个文本文件</p>
 ```
