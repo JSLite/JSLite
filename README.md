@@ -49,8 +49,9 @@ $ bower install jslite
 #安装grunt依赖
 $ npm install
 
-#启动grunt自动压缩合并，进入开发模式.... 默认合并所有模块生成到一个build目录中
-$ grunt watch
+#启动grunt自动压缩合并，进入开发模式.... 
+#默认合并所有模块生成到一个build目录中
+$ npm start
 ```
 
 ## JSLite模块
@@ -78,7 +79,7 @@ ajax | - | 异步请求的方法，发起任意Ajax请求。
 
 ```shell
 #模块选择合并，做一个自定义生成
-$ MODULES="polyfill event css" npm run-script make dist
+$ MODULES="polyfill event css" grunt make
 ```
 
 ### 传统方法
