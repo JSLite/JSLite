@@ -20,7 +20,7 @@
     "url": "http://jslite.io/license/"
   },
   "bugs": {
-    "url": "https://github.com/JSLite/JSLite/issues"
+    "url": "https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE"
   },
   "scripts": {
     "make": "node .bin/make",
