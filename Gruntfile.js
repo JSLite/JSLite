@@ -4,9 +4,12 @@ module.exports = function(grunt) {
     var clc = require('cli-color');
 
     //要合并的模块
+    var env = process.env['MODULES']
+    var polyfill = env.indexOf('polyfill') > -1 ? true : false;
     var modules = (process.env['MODULES'] ? 
-        'start polyfill var function JSLite ' + process.env['MODULES'] + ' end' : 
-        'start polyfill var function JSLite traversing manipulation attribute css effect dimensions form event ajax end').split(' ');
+        'start'+ (polyfill? ' polyfill' : '') + ' function JSLite ' + (polyfill? env.replace('polyfill','') : '') + ' end' : 
+        'start polyfill function JSLite form event ajax end').replace('  ',' ').split(' ');
+
     //输出要合并的所有文件的路径 返回数组
     var module_files = (function() {
         var _i, _len, _results = [];
