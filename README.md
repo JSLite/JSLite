@@ -60,26 +60,20 @@ JSLite 模块中的 `src/` 目录的各个文件。
 模块 | 默认加载 | 描述
 --- | ------- | -----
 JSLite | ✔ | 核心模块，包含大多数方法。
-var | ✔ | 核心模块，全部变量声明。
 function | ✔ | 内部函数调用
 start | ✔ | UMD开始。
 end | ✔ | UMD结束。
 polyfill | - | 支持桌面浏览器IE和移动端 Windows Phone 8。
-traversing | - | 对页面节点各种查找。
-manipulation | - | 此部分中所有的方法是一些操作DOM的方式。
-attribute | - | 获取和设置页面元素的 DOM 属性。
-css | - | 样式的操作。
-effect | - | 动画设置
-dimensions | - | 获取并设置各种 CSS 属性所代表的尺寸。
 form | - | 表单方法。
 event | - | 事件处理。
 ajax | - | 异步请求的方法，发起任意Ajax请求。
 
-默认合并 `start` `polyfill` `var` `function` `JSLite` `end` 。上面打 `✔` 都为默认加载的核心模块。其它均可选择性加载。
+默认合并 `start` `polyfill` `function` `JSLite` `end` 。上面打 `✔` 都为默认加载的核心模块。其它均可选择性加载。
 
 ```shell
-#模块选择合并，做一个自定义生成
-$ MODULES="polyfill event css" grunt make
+# 模块选择合并，做一个自定义生成
+# 默认不传环境变量全部合并
+$ MODULES="polyfill event" grunt make
 ```
 
 ### 传统方法

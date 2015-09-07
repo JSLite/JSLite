@@ -66,12 +66,3 @@ if (!Array.prototype.remove){
         return index > -1 && this.splice(index, 1), this;
     }
 }
-
-// 扩展字符串方法
-if (!String.prototype.trim) {
-    String.prototype.trim = function () {return this.replace(/(^\s*)|(\s*$)/g, "");}
-}
-
-if (!String.prototype.leftTrim) {
-    String.prototype.leftTrim = function () {return this.replace(/(^\s*)/g, "");}
-}
