@@ -1,4 +1,0 @@
-JSLite
-======
-
-JQuery lite
