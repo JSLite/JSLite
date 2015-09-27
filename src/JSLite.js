@@ -522,10 +522,3 @@ JSLite.fn.extend({
         })
     }
 });
-
-
-//字符串处理
-JSLite.extend(String.prototype,{
-    trim: function () {return this.replace(/(^\s*)|(\s*$)/g, "");},
-    leftTrim: function () {return this.replace(/(^\s*)/g, "");}
-});
