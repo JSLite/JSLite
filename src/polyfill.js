@@ -66,3 +66,11 @@ if (!Array.prototype.remove){
         return index > -1 && this.splice(index, 1), this;
     }
 }
+
+// trim 对于原型没有，进行扩展
+// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim
+if (!String.prototype.trim) {
+    String.prototype.trim = function () {
+        return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+    };
+}
