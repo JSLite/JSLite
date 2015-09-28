@@ -1,5 +1,5 @@
 {
-    "name": "JSLite",
+    "name": "JSLite.io",
     "version": "0.0.1",
     "description": "JSLite is a minimalist JavaScript library for modern browsers with a largely jQuery-compatible API. If you use jQuery, you already know how to use JSLite.",
     "keywords": [
@@ -20,7 +20,8 @@
         "todir": "/Applications/XAMPP/xamppfiles/htdocs/git/github.com/JSLite/",
         "theme": "default",
         "md": [
-            "index.md"
+            "首页.md",
+            "接口文档.md"
         ]
     }
 }
