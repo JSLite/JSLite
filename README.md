@@ -74,6 +74,10 @@ ajax | - | 异步请求的方法，发起任意Ajax请求。
 # 模块选择合并，做一个自定义生成
 # 默认不传环境变量全部合并
 $ MODULES="polyfill event" grunt make
+
+# on Windows
+c:\JSLite> SET MODULES=polyfill event
+c:\JSLite> grunt make
 ```
 
 ### 传统方法
