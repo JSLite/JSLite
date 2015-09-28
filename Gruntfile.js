@@ -5,7 +5,7 @@ module.exports = function(grunt) {
 
     //要合并的模块
     var env = process.env['MODULES']
-    var polyfill = env.indexOf('polyfill') > -1 ? true : false;
+    var polyfill = env && env.indexOf('polyfill') > -1 ? true : false;
     var modules = (process.env['MODULES'] ? 
         'start'+ (polyfill? ' polyfill' : '') + ' function JSLite ' + (polyfill? env.replace('polyfill','') : '') + ' end' : 
         'start polyfill function JSLite form event ajax end').replace('  ',' ').split(' ');
