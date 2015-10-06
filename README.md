@@ -71,6 +71,7 @@ ajax | - | 异步请求的方法，发起任意Ajax请求。
 默认合并 `start` `polyfill` `function` `JSLite` `end` 。上面打 `✔` 都为默认加载的核心模块。其它均可选择性加载。
 
 ```shell
+# 运行下面任务请确认依赖是否安装 安装方法 `npm install`
 # 模块选择合并，做一个自定义生成
 # 默认不传环境变量全部合并
 $ MODULES="polyfill event" grunt make
