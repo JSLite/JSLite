@@ -63,7 +63,23 @@ function isWindow(win) {
 function isDocument(doc) {
     return doc && doc.nodeType == doc.DOCUMENT_NODE;
 }
-
+var P = {};
+P = {
+    singleTagRE: /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
+    fragmentRE: /^\s*<(\w+|!)[^>]*>/,
+    tagExpanderRE: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
+    table: document.createElement('table'),
+    tableRow: document.createElement('tr'),
+    containers: {
+        '*': document.createElement('div'),
+        'tr': document.createElement('tbody'),
+        'tbody': P.table,
+        'thead': P.table,
+        'tfoot': P.table,
+        'td': P.tableRow,
+        'th': P.tableRow
+    }
+}
 // fragment
 // 需要一个HTML字符串和一个可选的标签名
 // 生成DOM节点从给定的HTML字符串节点。

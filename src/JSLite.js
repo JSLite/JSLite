@@ -4,23 +4,7 @@ var emptyArray = [],
     some = emptyArray.some,
     emptyObject = {},
     toString = emptyObject.toString,
-    elementTypes = [1, 9, 11],
-    P = {
-        singleTagRE: /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
-        fragmentRE: /^\s*<(\w+|!)[^>]*>/,
-        tagExpanderRE: /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/ig,
-        table: document.createElement('table'),
-        tableRow: document.createElement('tr'),
-        containers: {
-            '*': document.createElement('div'),
-            'tr': document.createElement('tbody'),
-            'tbody': P.table,
-            'thead': P.table,
-            'tfoot': P.table,
-            'td': P.tableRow,
-            'th': P.tableRow
-        }
-    },
+    elementTypes = [1, 9, 11],,
     propMap = {
         'tabindex': 'tabIndex',
         'readonly': 'readOnly',
