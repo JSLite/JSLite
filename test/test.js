@@ -2,17 +2,9 @@ var jsdom = require('mocha-jsdom')
 var expect = require('chai').expect
 var  fs =require('fs')
 
-var $
-// jsdom({
-//     src: fs.readFileSync('./dist/JSLite.js', 'utf-8')
-// })
-
-jsdom()
-
-before(function () {
-    $ = require('../dist/JSLite')
+jsdom({
+    src: fs.readFileSync('./dist/JSLite.js', 'utf-8')
 })
-
 
 describe('DOM Insertion, Inside', function () {
 
