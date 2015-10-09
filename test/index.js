@@ -1,2 +1,1 @@
-require('./unit/basic');
-require('./unit/attributes');
+require('./unit/manipulation.js');
