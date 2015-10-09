@@ -75,17 +75,35 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
 
     it('.append() - 根据参数设定在每个匹配元素里面的末尾处插入内容。', function () {
         
+        document.body.innerHTML = '<div class="jslite">Goodbye</div>';
+        expect($("div").append("dd").text()).to.equal('Goodbyedd');
+        expect($("div").append(function(){return "wcj";}).text()).to.equal('Goodbyeddwcj');
+
     })
 
     it('.after() - 插入到标签结束标记后。（兄弟节点的下面）', function () {
+
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect( $('div').after("dd") ).to.have.length.above(0);
+        expect(document.body.innerHTML).to.equal('<div>Goodbye</div>dd');
         
     })
 
     it('.appendTo() - 将匹配的元素插入到目标元素的最后面（内部插入）。', function () {
         
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect( $('<div>test</div>').appendTo('div') ).to.have.length.above(0);
+        expect(document.body.innerHTML).to.equal('<div>Goodbye<div>test</div></div>');
+        expect( $("div").after(function(){return "wcj"}) ).to.have.length.above(1);
+        expect(document.body.innerHTML).to.equal('<div>Goodbye<div>test</div>wcj</div>wcj');
+
     })
 
     it('.before() - 插入到标签开始前。', function () {
+        
+        document.body.innerHTML = '<input /><div class="jslite"><div>Goodbye</div></div>';
+        expect( $(".jslite div").before($('input')) ).to.have.length.above(0);  
+        expect(document.body.innerHTML).to.equal('<div class="jslite"><input><div>Goodbye</div></div>');
         
     })
 
@@ -127,7 +145,7 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
         document.body.innerHTML = '<div>Goodbye</div>';
         expect($("div").text()).eql("Goodbye");
         expect($("div").text("test").text()).eql("test");
-        
+
     })
 
     it('.height() - 获取对象象集合中第一个元素的高，或设置对象集合所有元素的高。', function () {
