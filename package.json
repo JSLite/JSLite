@@ -23,7 +23,7 @@
     "url": "https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE"
   },
   "scripts": {
-    "test": "mocha test/test.js",
+    "test": "mocha",
     "make": "node .bin/make",
     "start": "grunt watch"
   },
