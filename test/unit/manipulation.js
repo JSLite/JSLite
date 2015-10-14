@@ -148,7 +148,8 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
 
     })
 
-    it('.height() - 获取对象象集合中第一个元素的高，或设置对象集合所有元素的高。', function () {
+    it('.height() - 获取对象集合中第一个元素的高，或设置对象集合所有元素的高。', function () {
+
         
     })
 
@@ -193,7 +194,8 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     })
 
     it('.val() - 获取设置input的 value 。', function () {
-        
+        document.body.innerHTML = '<input type="text" value="jslite">';
+        expect($("input").val()).to.equal('jslite');
     })
 
     it('.width() - 获取对象象集合中第一个元素的宽，或设置对象集合所有元素的宽。', function () {
