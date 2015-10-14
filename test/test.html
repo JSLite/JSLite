@@ -21,10 +21,12 @@ body{/*background-image: url(http://dengo.org/demo/bg.jpg);*/}
 <script type="text/javascript">
 $(document).ready(function(){
 // alert()
-console.log($("#box"))
+// console.log($("#box"))
+sss = $("input").val();
+        console.log(sss)
 });
 
-$('.boxGo').off("beforeunload")
+// $('.boxGo').off("beforeunload")
 
 // window.onbeforeunload = function(){
 // 	return "刷新或者离开"
@@ -43,6 +45,8 @@ $('.boxGo').off("beforeunload")
 <hr/>
 
 </div>
+<input type="text" value="x">
+
 <div id="test" class=" boxGoP test" style="background-color:yellow">
 		<p>请点击任意一个 p 元素，它会消失。包括本段落。</p>
 
