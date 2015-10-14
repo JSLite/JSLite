@@ -54,6 +54,14 @@ $ npm install
 $ npm start
 ```
 
+## Test - 测试
+
+> 测试需要在系统上安装 `Node.js`的 `4.x` 以上版本。 
+
+```shell
+$ npm test
+```
+
 ## JSLite模块
 JSLite 模块中的 `src/` 目录的各个文件。
 
