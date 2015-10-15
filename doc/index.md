@@ -674,6 +674,8 @@ $n2.attr("data-key") //⇒ "UUID"
 ```js
 $("#box").css('color','yellow')     //⇒ self 返回Array 节点内容
 $("#box").css({'color':'yellow'})   //⇒ self 返回Array 节点内容
+$('div').eq(0).css(['color','font-size']) //⇒ Object {color: "rgb(0, 0, 0)", font-size: "14px"}
+$("div").css('color','') //⇒ self 返回Array 节点内容  删除属性
 ```
 
 ### hasClass
