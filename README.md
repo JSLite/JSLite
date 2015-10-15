@@ -59,7 +59,8 @@ $ npm start
 > 测试需要在系统上安装 `Node.js`的 `4.x` 以上版本。 
 
 ```shell
-$ npm test
+$ grunt make # 先生成新的 压缩版本的JSLite
+$ npm test # 进行单元测试
 ```
 
 ## JSLite模块
