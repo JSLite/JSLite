@@ -2,7 +2,7 @@ var jsdom = require('../setup.js');
 var fs = require('fs');
 
 jsdom({
-    src: fs.readFileSync('./build/JSLite.js', 'utf-8')
+    src: fs.readFileSync('./dist/JSLite.js', 'utf-8')
 })
 
 describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。', function () {

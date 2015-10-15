@@ -1,7 +1,7 @@
 /*!
 * JSLite v1.1.6 (http://JSLite.io)
 * Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)
-* build time 2015-10-06
+* build time 2015-10-16
 */
 ;(function (root, factory) {
     var JSLite = factory(root);
@@ -174,7 +174,7 @@ function isWindow(win) {
 function isDocument(doc) {
     return doc && doc.nodeType == doc.DOCUMENT_NODE;
 }
-var P = {}
+var P = {};
 P = {
     singleTagRE: /^<(\w+)\s*\/?>(?:<\/\1>|)$/,
     fragmentRE: /^\s*<(\w+|!)[^>]*>/,
@@ -221,6 +221,22 @@ function funcArg(context, arg, idx, payload) {
     return isFunction(arg) ? arg.call(context, idx, payload) : arg;
 }
 
+//将样式属性字符转换成驼峰。
+function camelCase(string){ 
+    // Support: IE9-11+
+    return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z])/g, function( all, letter ) {
+        return letter.toUpperCase();
+    });
+}
+
+//将字符串格式化成 如border-width 样式上使用
+function dasherize(str) {
+    return str.replace(/::/g, '/')
+           .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+           .replace(/([a-z\d])([A-Z])/g, '$1_$2')
+           .replace(/_/g, '-')
+           .toLowerCase()
+}
 var emptyArray = [],
     slice = emptyArray.slice,
     filter = emptyArray.filter,
@@ -380,6 +396,12 @@ JSLite.extend({
     contains:function(parent, node){
         if(parent&&!node) return document.documentElement.contains(parent)
         return parent !== node && parent.contains(node)
+    },
+    camelCase:function(string){
+        // Support: IE9-11+
+        return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z])/g, function( all, letter ) {
+            return letter.toUpperCase();
+        });
     }
 });
 
@@ -574,15 +596,35 @@ JSLite.fn.extend({
     },
     //操控CSS
     css:function(property, value){
-        if (!this[0]) return [];
-        var computedStyle = getComputedStyle(this[0], '')
-        if(value === undefined && typeof property == 'string') return computedStyle.getPropertyValue(property);
-        var css="",k;
-        for(k in property) css += k+':'+property[k]+';';
-        if(typeof property == 'string') css = property+":"+value;
-        return this.each(function(el){
-            css ? this.style.cssText += ';' + css :"";
-        });
+        var elem = this[0];
+        if(arguments.length < 2){
+            if (!elem) return [];
+            if(!value && typeof property == 'string') return elem.style[property];
+            if(isArray(property)){
+                var props = {}
+                $.each(property, function(_, prop){
+                    props[prop] = elem.style[camelCase(prop)]
+                })
+                return props
+            }
+        }
+
+        var css={},k;
+        if (typeof property == 'string') {
+            //当value的值为非零的 空不存在，删掉property样式
+            if (!value && value !== 0) this.each(function(){ this.style.removeProperty(dasherize(property)) });
+            else css[dasherize(property)] = value
+        } else {
+            for(k in property){
+                if(!property[k] && property[k] !== 0){
+                    this.each(function(){ this.style.removeProperty(dasherize(k)) });
+                }else{
+                    css[dasherize(k)] = property[k];
+                }
+            } 
+        }
+        // 设置样式
+        return this.each(function(){ for(var a in css) this.style[a] = css[a];});
     },
     hasClass:function(name){
         if (!name) return false
