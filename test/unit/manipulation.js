@@ -9,17 +9,19 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
 
     it('.addClass() - 为每个匹配的元素添加指定的样式类名。', function () {
 
-        document.body.innerHTML = '<div>Goodbye</div>';
-        expect($("div").addClass('jslite').attr("class")).to.equal('jslite');
-        expect($("div").addClass(function(){return 'wcj'}).attr("class")).to.equal('jslite wcj');
-        expect($("div").addClass(function(){return 'wcjto'}).attr("class")).to.contain('wcjto');
+        document.body.innerHTML = '<div id="foo">Goodbye</div>';
+        expect($("div")).to.have.property('addClass');
+        expect($("div").addClass('jslite')[0]).to.have.property('className','jslite');
+        expect($("div").addClass(function(){return "wcj"})[0]).to.have.property('className','jslite wcj');
 
     })
 
     it('.attr() - 获取匹配的元素集合中的第一个元素的属性的值 或 设置每一个匹配元素的一个或多个属性。', function () {
 
         document.body.innerHTML = '<div class="jslite">Goodbye</div><input class="yaotaiyang" id="check2" type="checkbox"><input class="taiyang" id="check1" type="checkbox" checked="checked">';
-        expect($(".jslite").attr({"style":"background:red"}).attr('style')).to.equal("background:red");
+        
+        expect($(".jslite")).to.have.property('attr');
+        expect($(".jslite").attr({"style":"background:red"})[0]).to.have.deep.property('style.backgroundColor','red');
         expect($("#check1").attr("checked")).to.equal('checked');
         expect($("#check2").attr("checked")).to.be.false;
         expect($("div").attr('class')).to.equal('jslite');
@@ -29,6 +31,7 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.hasClass() - 确定任何一个匹配元素是否有被分配给定的（样式）类。', function () {
 
         document.body.innerHTML = '<div class="jslite">Goodbye</div>';
+        expect($("div")).to.have.property('hasClass');
         expect($("div").hasClass('jslite')).to.be.true;
 
     })
@@ -36,22 +39,28 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.prop() - 获取匹配的元素集中的第一个元素的属性（property）值或设置每一个匹配元素的一个或多个属性。', function () {
 
         document.body.innerHTML = '<div class="jslite">Goodbye</div><input class="yaotaiyang" id="check2" type="checkbox"><input class="taiyang" id="check1" type="checkbox" checked="checked">';
+        expect($("div")).to.have.property('prop');
         expect($("#check1").prop("checked")).to.be.true;
         expect($("#check2").prop("checked")).to.be.false;
-
+        expect($("div").prop("className",function(index,oldvalue){return "222"})[0]).to.have.property('className','222');
+        expect($("div").prop("jslites",'www')[0]).to.have.property('jslites','www');
     })
 
     it('.removeAttr() - 为匹配的元素集合中的每个元素中移除一个属性。', function () {
 
         document.body.innerHTML = '<div class="jslite">Goodbye</div>';
-        expect($("div").removeAttr("class").attr('class')).to.be.null;
+        expect($("div")).to.have.property('removeAttr');
+        expect($("div").removeAttr("class")).to.be.have.length.above(0);
+        expect($("div").attr('class')).to.be.null;
 
     })
 
     it('.removeClass() - 移除集合中每个匹配元素上一个，多个或全部样式。', function () {
 
         document.body.innerHTML = '<div class=" jslite classname">Goodbye</div>';
-        expect($("div").removeClass("classname").attr('class')).to.equal('jslite');
+        expect($("div")).to.have.property('removeClass');
+        expect($("div").removeClass("jslite") ).to.be.have.length.above(0);
+        expect($("div").attr('class')).to.equal('classname');
         expect($("div").removeClass().attr('class')).to.empty;
 
     })
@@ -59,6 +68,7 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.removeProp() - 为集合中匹配的元素删除一个属性（property）。', function () {
 
         document.body.innerHTML = '<div class="jslite">Goodbye</div>';
+        expect($("div")).to.have.property('removeProp');
         expect($('div').prop("prop_a", "CodePlayer").removeProp('prop_a').prop("prop_a")).to.be.undefined;
 
     })
@@ -66,9 +76,10 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.toggleClass() - 在匹配的节点对象集合中的每个节点对象上添加或删除一个或多个样式类。', function () {
         
         document.body.innerHTML = '<div class="jslite">Goodbye</div>';
-        expect($("div").toggleClass('box1 box2').attr('class')).to.equal('jslite box1 box2');
-        expect($("div").toggleClass('box1 box2').attr('class')).to.equal('jslite');
-        expect($("div").toggleClass(function(){return "wcj"}).attr('class')).to.equal('jslite wcj');
+        expect($("div")).to.have.property('toggleClass');
+        expect($("div").toggleClass('box1 box2')[0]).to.have.property('className','jslite box1 box2');
+        expect($("div").toggleClass('box1 box2')[0]).to.have.property('className','jslite');
+        expect($("div").toggleClass(function(){return "wcj"})[0]).to.have.property('className','jslite wcj');
 
     })
 
@@ -76,6 +87,7 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.append() - 根据参数设定在每个匹配元素里面的末尾处插入内容。', function () {
         
         document.body.innerHTML = '<div class="jslite">Goodbye</div>';
+        expect($("div")).to.have.property('append');
         expect($("div").append("dd").text()).to.equal('Goodbyedd');
         expect($("div").append(function(){return "wcj";}).text()).to.equal('Goodbyeddwcj');
 
@@ -84,6 +96,7 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.after() - 插入到标签结束标记后。（兄弟节点的下面）', function () {
 
         document.body.innerHTML = '<div>Goodbye</div>';
+        expect($("div")).to.have.property('after');
         expect( $('div').after("dd") ).to.have.length.above(0);
         expect(document.body.innerHTML).to.equal('<div>Goodbye</div>dd');
         
@@ -92,6 +105,7 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.appendTo() - 将匹配的元素插入到目标元素的最后面（内部插入）。', function () {
         
         document.body.innerHTML = '<div>Goodbye</div>';
+        expect($("div")).to.have.property('appendTo');
         expect( $('<div>test</div>').appendTo('div') ).to.have.length.above(0);
         expect(document.body.innerHTML).to.equal('<div>Goodbye<div>test</div></div>');
         expect( $("div").after(function(){return "wcj"}) ).to.have.length.above(1);
@@ -102,13 +116,17 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.before() - 插入到标签开始前。', function () {
         
         document.body.innerHTML = '<input /><div class="jslite"><div>Goodbye</div></div>';
+        expect($("div")).to.have.property('before');
         expect( $(".jslite div").before($('input')) ).to.have.length.above(0);  
         expect(document.body.innerHTML).to.equal('<div class="jslite"><input><div>Goodbye</div></div>');
         
     })
 
     it('.clone() - 通过深度克隆来复制集合中的所有元素。', function () {
-        
+        expect($("div")).to.have.property('clone');
+        document.body.innerHTML = '<div class="jslite">Goodbye</div>';
+        // $(".jslite").clone().append('wcj')
+        // $('body').append($(".jslite").clone())
     })
 
     it('.css() - 获取或设置节点对象的style样式内容。', function () {
