@@ -109,3 +109,20 @@ function fragment(html, name) {
 function funcArg(context, arg, idx, payload) {
     return isFunction(arg) ? arg.call(context, idx, payload) : arg;
 }
+
+//将样式属性字符转换成驼峰。
+function camelCase(string){ 
+    // Support: IE9-11+
+    return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z])/g, function( all, letter ) {
+        return letter.toUpperCase();
+    });
+}
+
+//将字符串格式化成 如border-width 样式上使用
+function dasherize(str) {
+    return str.replace(/::/g, '/')
+           .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+           .replace(/([a-z\d])([A-Z])/g, '$1_$2')
+           .replace(/_/g, '-')
+           .toLowerCase()
+}

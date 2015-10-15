@@ -358,15 +358,35 @@ JSLite.fn.extend({
     },
     //操控CSS
     css:function(property, value){
-        if (!this[0]) return [];
-        var computedStyle = getComputedStyle(this[0], '')
-        if(value === undefined && typeof property == 'string') return computedStyle.getPropertyValue(property);
+        var elem = this[0];
+        if(arguments.length < 2){
+            if (!elem) return [];
+            if(!value && typeof property == 'string') return elem.style[property];
+            if(isArray(property)){
+                var props = {}
+                $.each(property, function(_, prop){
+                    props[prop] = elem.style[camelCase(prop)]
+                })
+                return props
+            }
+        }
+
         var css="",k;
-        for(k in property) css += k+':'+property[k]+';';
-        if(typeof property == 'string') css = property+":"+value;
-        return this.each(function(el){
-            css ? this.style.cssText += ';' + css :"";
-        });
+        if (typeof property == 'string') {
+            //当value的值为非零的 空不存在，删掉property样式
+            if (!value && value !== 0) this.each(function(){ this.style.removeProperty(dasherize(property)) });
+            else css = dasherize(property) + ":" + value
+        } else {
+            for(k in property){
+                if(!property[k] && property[k] !== 0){
+                    this.each(function(){ this.style.removeProperty(dasherize(k)) });
+                }else{
+                    css += dasherize(k)+':'+property[k]+';';
+                }
+            } 
+        }
+        // 设置样式
+        return this.each(function(){ css ? this.style.cssText += ';' + css :""; });
     },
     hasClass:function(name){
         if (!name) return false
