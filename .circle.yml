@@ -1,6 +1,6 @@
 machine:
   node:
-    version: 4
+    version: 4.1.2
 test:
   override:
     - npm test
