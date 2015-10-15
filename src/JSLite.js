@@ -371,22 +371,22 @@ JSLite.fn.extend({
             }
         }
 
-        var css="",k;
+        var css={},k;
         if (typeof property == 'string') {
             //当value的值为非零的 空不存在，删掉property样式
             if (!value && value !== 0) this.each(function(){ this.style.removeProperty(dasherize(property)) });
-            else css = dasherize(property) + ":" + value
+            else css[dasherize(property)] = value
         } else {
             for(k in property){
                 if(!property[k] && property[k] !== 0){
                     this.each(function(){ this.style.removeProperty(dasherize(k)) });
                 }else{
-                    css += dasherize(k)+':'+property[k]+';';
+                    css[dasherize(k)] = property[k];
                 }
             } 
         }
         // 设置样式
-        return this.each(function(){ css ? this.style.cssText += ';' + css :""; });
+        return this.each(function(){ for(var a in css) this.style[a] = css[a];});
     },
     hasClass:function(name){
         if (!name) return false
