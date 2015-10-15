@@ -4,7 +4,7 @@ var emptyArray = [],
     some = emptyArray.some,
     emptyObject = {},
     toString = emptyObject.toString,
-    elementTypes = [1, 9, 11],,
+    elementTypes = [1, 9, 11],
     propMap = {
         'tabindex': 'tabIndex',
         'readonly': 'readOnly',
