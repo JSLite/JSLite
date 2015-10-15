@@ -130,7 +130,10 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     })
 
     it('.css() - 获取或设置节点对象的style样式内容。', function () {
-        
+        expect($("div")).to.have.property('css');
+        document.body.innerHTML = '<div style="height:333px;">Goodbye</div>';
+        expect($("div").css('height')).to.equal('333px');
+        expect($("div").css({'color':'yellow'})).to.have.length.above(0); 
     })
 
     it('.detach() - 被遗弃的方法(不建议使用)，作用跟remove一样，所有绑定的事件、附加的数据等都会保留下来。', function () {
@@ -167,7 +170,6 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     })
 
     it('.height() - 获取对象集合中第一个元素的高，或设置对象集合所有元素的高。', function () {
-
         
     })
 
