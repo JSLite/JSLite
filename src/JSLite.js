@@ -158,6 +158,12 @@ JSLite.extend({
     contains:function(parent, node){
         if(parent&&!node) return document.documentElement.contains(parent)
         return parent !== node && parent.contains(node)
+    },
+    camelCase:function(string){
+        // Support: IE9-11+
+        return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z])/g, function( all, letter ) {
+            return letter.toUpperCase();
+        });
     }
 });
 

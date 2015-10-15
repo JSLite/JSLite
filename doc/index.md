@@ -192,6 +192,19 @@ $.error("2222")
 ----
 ## 字符串处理
 
+### $.camelCase
+将样式属性字符转换成驼峰。
+
+```js
+$.camelCase('webkit-background-clip') //⇒ "webkitBackgroundClip"
+$.camelCase('-webkit-background-clip') //⇒ "WebkitBackgroundClip"
+$.camelCase('-webkitBackgroundClip') //⇒ "WebkitBackgroundClip"
+
+// Support: IE9-11+
+// 对IE做处理
+$.camelCase('-ms-background-clip') //⇒ "msBackgroundClip"
+```
+
 ### $.trim
 去掉字符串起始和结尾的空格。
 
