@@ -2,7 +2,7 @@ var jsdom = require('../setup.js');
 var fs = require('fs');
 
 jsdom({
-    src: fs.readFileSync('./dist/JSLite.js', 'utf-8')
+    src: fs.readFileSync('./build/JSLite.js', 'utf-8')
 })
 
 describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。', function () {
@@ -132,8 +132,12 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.css() - 获取或设置节点对象的style样式内容。', function () {
         expect($("div")).to.have.property('css');
         document.body.innerHTML = '<div style="height:333px;">Goodbye</div>';
+        expect($("div").css(['color','background','height'])).to.eql({ color: '', background: '' ,"height": "333px"}); 
         expect($("div").css('height')).to.equal('333px');
-        expect($("div").css({'color':'yellow'})).to.have.length.above(0); 
+        expect($("div").css({'color':'#fff','background':'red'})).to.have.length.above(0); 
+        expect($("div").css('color')).to.equal('rgb(255, 255, 255)');
+        expect($("div").css('color','')).to.have.length.above(0); 
+        expect($("div").css('color')).to.be.empty; 
     })
 
     it('.detach() - 被遗弃的方法(不建议使用)，作用跟remove一样，所有绑定的事件、附加的数据等都会保留下来。', function () {
