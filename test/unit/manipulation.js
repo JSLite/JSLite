@@ -19,7 +19,6 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.attr() - 获取匹配的元素集合中的第一个元素的属性的值 或 设置每一个匹配元素的一个或多个属性。', function () {
 
         document.body.innerHTML = '<div class="jslite">Goodbye</div><input class="yaotaiyang" id="check2" type="checkbox"><input class="taiyang" id="check1" type="checkbox" checked="checked">';
-        
         expect($(".jslite")).to.have.property('attr');
         expect($(".jslite").attr({"style":"background:red"})[0]).to.have.deep.property('style.backgroundColor','red');
         expect($("#check1").attr("checked")).to.equal('checked');
@@ -30,9 +29,10 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
 
     it('.hasClass() - 确定任何一个匹配元素是否有被分配给定的（样式）类。', function () {
 
-        document.body.innerHTML = '<div class="jslite">Goodbye</div>';
         expect($("div")).to.have.property('hasClass');
+        document.body.innerHTML = '<div class="jslite">Goodbye</div>';
         expect($("div").hasClass('jslite')).to.be.true;
+        expect($("div").hasClass('jslite-s')).to.be.false;
 
     })
 
@@ -125,8 +125,8 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     it('.clone() - 通过深度克隆来复制集合中的所有元素。', function () {
         expect($("div")).to.have.property('clone');
         document.body.innerHTML = '<div class="jslite">Goodbye</div>';
-        // $(".jslite").clone().append('wcj')
-        // $('body').append($(".jslite").clone())
+        expect($('body').append($(".jslite").clone())).to.have.length.above(0);
+        expect($('body').html()).to.equal('<div class="jslite">Goodbye</div><div class="jslite">Goodbye</div>');
     })
 
     it('.css() - 获取或设置节点对象的style样式内容。', function () {
@@ -141,12 +141,19 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     })
 
     it('.detach() - 被遗弃的方法(不建议使用)，作用跟remove一样，所有绑定的事件、附加的数据等都会保留下来。', function () {
-        
+        expect($("div")).to.have.property('detach');
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect($('div').detach()).to.have.length.above(0);
+        expect($('div')).to.be.length.below(1);
+        expect($('body').html() ).to.be.empty;
     })
 
 
     it('.empty() - 所有匹配节点对象集合中移除所有的dom子节点，不包括自己，清空内容。', function () {
-        
+        expect($("div")).to.have.property('empty');
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect($("div").empty()).to.have.length.above(0);
+        expect($("div").html()).to.be.empty;
     })
 
     it('.html() - 从集合的第一个匹配元素中获取HTML内容 或 设置每一个匹配元素的html内容。', function () {
@@ -154,11 +161,18 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
         document.body.innerHTML = '<div>Goodbye</div>';
         expect($("div").html()).eql('Goodbye');
         expect($("div").html("string").html()).eql("string");
+        expect($("body").html(function(){return '<div>test</div>'; })).to.have.length.below(2);
+        expect($("body").html()).to.equal('<div>test</div>')
 
     })
 
     it('.prepend() - 将参数内容插入到每个匹配元素的前面（元素内部）。', function () {
-        
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect($("div").prepend("dd")).to.have.length.below(2);
+        expect($("div").html()).to.equal('ddGoodbye')
+        expect($("div").prepend(function(){return "asdfasdf"})).to.have.length.below(2);
+        expect($("div").html()).to.equal('asdfasdfddGoodbye');
+
     })
 
     it('.prependTo() - 将所有元素插入到目标前面（元素内）。', function () {
