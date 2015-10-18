@@ -1,7 +1,7 @@
 /*!
 * JSLite v1.1.6 (http://JSLite.io)
 * Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)
-* build time 2015-10-16
+* build time 2015-10-18
 */
 ;(function (root, factory) {
     var JSLite = factory(root);
@@ -512,12 +512,13 @@ JSLite.fn.extend({
     },
     unwrap: function(){
         this.parent().each(function(){
-            JSLite(this).replaceWith(JSLite(this).children())
+            JSLite(this).replaceWith(JSLite(this).html());
         })
         return this
     },
-    remove: function(){
-        return this.each(function(){
+    remove: function(selector){
+        var elm = selector?JSLite(funcArg(this, selector)):this;
+        return elm.each(function(){
             if (this.parentNode != null) this.parentNode.removeChild(this)
         })
     },
