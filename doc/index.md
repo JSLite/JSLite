@@ -842,6 +842,10 @@ $("#box").empty()
 ```js
 $("#box").remove()
 //⇒ self <div id="box" class="boxOne box2 box3" ></div>
+$("#box").remove('span')  //⇒ "span" <span>sss</span>
+$('div').remove(function(){
+    return 'span'
+});//⇒ "span" <span>sss</span>
 ```
 
 ### detach !
