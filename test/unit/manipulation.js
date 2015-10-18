@@ -214,6 +214,9 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     })
 
     it('.unwrap() - 移除集合中每个元素的直接父节点，并把他们的子元素保留在原来的位置。', function () {
+        document.body.innerHTML = '<div style="background:red"><p>jslite</p></div><button>移除</button>';
+        // console.log($("button").click(function(){$("p").unwrap()}))
+        expect($("button").click(function(){$("p").unwrap()}))
         
     })
 
@@ -223,6 +226,8 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     })
 
     it('.width() - 获取对象象集合中第一个元素的宽，或设置对象集合所有元素的宽。', function () {
+        document.body.innerHTML = '<div class="jslite" ><div style="width:100px;height:500px;display:block;">1</div><div>2</div></div>';
+        expect($(".jslite div").eq(0).width()).to.equal(0);
         
     })
 
