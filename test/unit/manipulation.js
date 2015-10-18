@@ -236,7 +236,9 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
 
     it('.val() - 获取设置input的 value 。', function () {
         document.body.innerHTML = '<input type="text" value="jslite">';
-        expect($("input").val()).to.equal('jslite');
+        expect($("input").val()).equal('jslite');
+        expect($("input").val('jslite').val()).to.equal('jslite');
+
     })
 
     it('.width() - 获取对象象集合中第一个元素的宽，或设置对象集合所有元素的宽。', function () {
