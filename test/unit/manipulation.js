@@ -158,6 +158,7 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
 
     it('.html() - 从集合的第一个匹配元素中获取HTML内容 或 设置每一个匹配元素的html内容。', function () {
 
+        expect($("div")).to.have.property('html');
         document.body.innerHTML = '<div>Goodbye</div>';
         expect($("div").html()).eql('Goodbye');
         expect($("div").html("string").html()).eql("string");
@@ -167,24 +168,26 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     })
 
     it('.prepend() - 将参数内容插入到每个匹配元素的前面（元素内部）。', function () {
+        expect($("div")).to.have.property('prepend');
         document.body.innerHTML = '<div>Goodbye</div>';
         expect($("div").prepend("dd")).to.have.length.below(2);
         expect($("div").html()).to.equal('ddGoodbye')
         expect($("div").prepend(function(){return "asdfasdf"})).to.have.length.below(2);
         expect($("div").html()).to.equal('asdfasdfddGoodbye');
-
     })
 
     it('.prependTo() - 将所有元素插入到目标前面（元素内）。', function () {
-        
+        expect($("div")).to.have.property('prependTo');
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect($('<div>test</div>').prependTo('div')).to.have.length.below(2);
+        expect($("div").html()).to.equal('<div>test</div>Goodbye');
     })
 
     it('.text() - 取得所有匹配节点对象的文本内容。', function () {
-
         document.body.innerHTML = '<div>Goodbye</div>';
         expect($("div").text()).eql("Goodbye");
         expect($("div").text("test").text()).eql("test");
-
+        expect($("div").text("test")).to.have.length.below(2);
     })
 
     it('.height() - 获取对象集合中第一个元素的高，或设置对象集合所有元素的高。', function () {
