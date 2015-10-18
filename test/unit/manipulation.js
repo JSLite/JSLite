@@ -184,71 +184,102 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
     })
 
     it('.text() - 取得所有匹配节点对象的文本内容。', function () {
+        expect($("div")).to.have.property('text');
         document.body.innerHTML = '<div>Goodbye</div>';
-        expect($("div").text()).eql("Goodbye");
+        expect($("div").text()).to.eql("Goodbye");
         expect($("div").text("test").text()).eql("test");
         expect($("div").text("test")).to.have.length.below(2);
     })
 
-    it('.height() - 获取对象集合中第一个元素的高，或设置对象集合所有元素的高。', function () {
-        
-    })
 
     it('.insertAfter() - 插入的对象集合中的元素到指定的每个元素后面的dom中。', function () {
-        
+        expect($("div")).to.have.property('insertAfter');
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect($('<p>test</p>').insertAfter('div')[0].outerHTML).to.equal('<p>test</p>');
+        expect($('body').html()).to.equal('<div>Goodbye</div><p>test</p>');
     })
 
     it('.insertBefore() - 将生成的内容插入 selector 匹配的节点标签开始前。', function () {
-        
-    })
-
-    it('.offset() - 获得当前元素相对于document的位置。', function () {
-        
+        expect($("div")).to.have.property('insertBefore');
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect($('<p>test</p>').insertBefore('div')[0].outerHTML).to.equal('<p>test</p>');
+        expect($('body').html()).to.equal('<p>test</p><div>Goodbye</div>');
     })
 
     it('.prepend() - 插入到标签开始标记之后（里面的第一个）。', function () {
-        
+        expect($("div")).to.have.property('prepend');
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect($("div").prepend("dd")[0].outerHTML).to.have.equal('<div>ddGoodbye</div>');
+        expect($("div").prepend(function(){return "www";})[0].outerHTML).to.have.equal('<div>wwwddGoodbye</div>');
     })
 
     it('.prependTo() - 将生成的内容插入到匹配的节点标签开始标记之后。', function () {
-        
+        expect($("div")).to.have.property('prependTo');
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect($("<div>s</div>").prependTo("div")[0].outerHTML).to.have.equal('<div>s</div>');
+        expect( $("body")[0].outerHTML ).to.have.equal('<body><div><div>s</div>Goodbye</div></body>');
     })
 
     it('.remove() - 删除所有匹配节点对象【自己】及所有【自己】里面的内容。', function () {
-        
+        expect($("div")).to.have.property('remove');
+        document.body.innerHTML = '<div>Goodbye<span>ww</span></div>';
+        expect($("div").remove('span')[0].outerHTML).to.have.equal('<span>ww</span>');
+        expect($("div").remove()[0].outerHTML).to.have.equal('<div>Goodbye</div>');
+        expect($('body')[0].outerHTML).to.have.equal('<body></body>');
     })
 
     it('.replaceWith() - 将所有匹配的元素替换成指定的HTML或DOM元素。', function () {
-        
-    })
-
-    it('.scrollLeft() - 获取匹配的元素集合中第一个元素的当前水平滚动条的位置。', function () {
-        
-    })
-
-    it('.scrollTop() - 获取匹配的元素集合中第一个元素的当前垂直滚动条的位置。', function () {
-        
-    })
-
-    it('.unwrap() - 移除集合中每个元素的直接父节点，并把他们的子元素保留在原来的位置。', function () {
-        document.body.innerHTML = '<div style="background:red"><p>jslite</p></div><button>移除</button>';
-        // console.log($("button").click(function(){$("p").unwrap()}))
-        expect($("button").click(function(){$("p").unwrap()}))
-        
+        expect($("div")).to.have.property('replaceWith');
+        document.body.innerHTML = '<div>Goodbye</div>';
+        expect($("div").replaceWith("<b>段落。</b>")).to.have.length.within(1,1)
+        expect($('body')[0].outerHTML).to.have.equal('<body><b>段落。</b></body>')
     })
 
     it('.val() - 获取设置input的 value 。', function () {
         document.body.innerHTML = '<input type="text" value="jslite">';
+        expect($("input")).to.have.property('val');
         expect($("input").val()).equal('jslite');
         expect($("input").val('jslite').val()).to.equal('jslite');
 
     })
 
-    it('.width() - 获取对象象集合中第一个元素的宽，或设置对象集合所有元素的宽。', function () {
-        document.body.innerHTML = '<div class="jslite" ><div style="width:100px;height:500px;display:block;">1</div><div>2</div></div>';
-        expect($(".jslite div").eq(0).width()).to.equal(0);
+    it('.scrollLeft() - 获取匹配的元素集合中第一个元素的当前水平滚动条的位置。', function () {
+        expect($("div")).to.have.property('scrollLeft');
+        document.body.innerHTML = '<div class="jslite" style="height:3000px;width:3000px" >www</div>';
+        expect($('body').scrollLeft(400)).to.have.length.within(1,1);
+        expect($('body')[0].scrollLeft).to.have.equal(400);
+    })
+
+    it('.scrollTop() - 获取匹配的元素集合中第一个元素的当前垂直滚动条的位置。', function () {
+        expect($("div")).to.have.property('scrollTop');
+        expect($('body').scrollTop(400)).to.have.length.within(1,1);
+        expect($('body')[0].scrollTop).to.have.equal(400);
+    })
+
+    // ==== 下列目前无法测试的样子。
+    it('.unwrap() - 移除集合中每个元素的直接父节点，并把他们的子元素保留在原来的位置。', function () {
+        expect($("div")).to.have.property('unwrap');
+        document.body.innerHTML = '<div class="jslite"><p>Goodbye<span>sss</span></p></div>';
+        expect($('span').unwrap()[0].outerHTML).to.have.equal('<span>sss</span>');
+        // expect($('div')[0].outerHTML).to.have.equal('<span>sss</span>');
+        // expect($('div')).to.have.length.within(0,0);
+        // $('span').unwrap()
         
     })
 
+    it('.offset() - 获得当前元素相对于document的位置。', function () {
+        expect($("div")).to.have.property('offset');
+        document.body.innerHTML = '<div style="position: absolute;top:100px;left:200px;width:500px;height: 450px;">www</div>';
+        expect($('div').offset()).to.eql({"left":0,"top":0,"width":0,"height":0});
+    })
+    it('.width() - 获取对象象集合中第一个元素的宽，或设置对象集合所有元素的宽。', function () {
+        expect($("div")).to.have.property('width');
+        document.body.innerHTML = '<div class="jslite" ><div style="width:100px;height:500px;display:block;">1</div><div>2</div></div>';
+        expect($(".jslite div").eq(0).width()).to.equal(0);
+    })
+
+    it('.height() - 获取对象集合中第一个元素的高，或设置对象集合所有元素的高。', function () {
+        expect($("div")).to.have.property('height');
+    })
 
 })
