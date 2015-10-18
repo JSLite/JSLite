@@ -274,7 +274,7 @@ JSLite.fn.extend({
     },
     unwrap: function(){
         this.parent().each(function(){
-            JSLite(this).replaceWith(JSLite(this).children())
+            JSLite(this).replaceWith(JSLite(this).html());
         })
         return this
     },
