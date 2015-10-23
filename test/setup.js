@@ -15,11 +15,11 @@ blacklist.push('constructor')
  */
 
 var defaults = {
-  globalize: true,
-  console: true,
-  useEach: false,
-  skipWindowCheck: true,
-  html: '<!doctype html><html><head><meta charset="utf-8"></head><body></body></html>'
+    globalize: true,
+    console: true,
+    useEach: false,
+    skipWindowCheck: true,
+    html: '<!doctype html><html><head><meta charset="utf-8"></head><body></body></html>'
 }
 
 /*
@@ -65,8 +65,7 @@ module.exports = function (_options) {
         "twice. use 'skipWindowCheck' to disable this check.")
     }
 
-    require('jsdom').env(
-      extend(extend({}, options), { done: done }))
+    require('jsdom').env(extend(extend({}, options), { done: done }))
 
     function done (errors, window) {
       if (options.globalize) {
