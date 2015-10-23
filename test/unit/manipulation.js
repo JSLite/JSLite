@@ -61,7 +61,7 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
         expect($("div")).to.have.property('removeClass');
         expect($("div").removeClass("jslite") ).to.be.have.length.above(0);
         expect($("div").attr('class')).to.equal('classname');
-        expect($("div").removeClass().attr('class')).to.empty;
+        expect($("div").removeClass().attr('class')).to.be.null;
 
     })
 
