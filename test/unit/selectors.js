@@ -8,7 +8,8 @@ jsdom({
 describe('selectors 选择器', function () {
 
     it('$("*"): 查找文档中的每一个元素（包括 head, body 等）', function () {
-        expect($("*")).to.have.length.within(7,7);
+        document.body.innerHTML = '';
+        expect($("*")).to.have.length.within(4,4);
     })
 
     it('$( "[attribute=value]" ): 选择 type="text" 的所有元素。', function () {
