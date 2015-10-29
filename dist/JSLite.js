@@ -410,7 +410,8 @@ JSLite.extend({
         return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z])/g, function( all, letter ) {
             return letter.toUpperCase();
         });
-    }
+    },
+    now:Date.now
 });
 
 JSLite.fn.extend({
