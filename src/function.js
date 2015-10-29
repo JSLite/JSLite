@@ -48,7 +48,15 @@ function isString(obj) {
     return typeof obj == 'string';
 }
 function isPlainObject(obj) {
-    return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == obj.constructor.prototype;
+    // 判断是否为 `{}` 和 `new Object`
+    function hasOwn( class2type ) {
+        return class2type.hasOwnProperty;
+    }
+    // 判断不是简单的对象 非 `DOM 节点`，`window`
+    if ( JSLite.type( obj ) !== "Object" || obj.nodeType || JSLite.isWindow( obj ) ) return false;
+    if ( obj.constructor && !hasOwn.call( obj.constructor.prototype, "isPrototypeOf" ) ) return false;
+    // 如果是 `{}` 和 `new Object` 返回true
+    return true;
 }
 
 function isJson(obj) {
