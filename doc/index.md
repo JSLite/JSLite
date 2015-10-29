@@ -397,8 +397,16 @@ $.isPlainObject(window)     // => false
 $.isArray([1,2,3])  //⇒ true
 ```
 
+### $.isString
+> 判断是否为【字符串】。
+
+```js
+$.isString('字符串')  //⇒ true
+$.isString({})       //⇒ false
+```
+
 ### $.isJson
-> 判断是否为【数组】。
+> 判断是否为JSON对象。
 
 ```js
 $.isJson({})  //⇒ true
