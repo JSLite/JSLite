@@ -1,4 +1,5 @@
 var jsdom = require('../setup.js');
+var assert = require('chai').assert;
 var fs = require('fs');
 
 
@@ -94,6 +95,10 @@ describe('utilities 实用工具', function (done) {
         });
         expect($.min(2,3)).to.equal(2);
         expect($.max(4,5)).to.equal(5);
+    })
+
+    it('$.now: 返回一个数字，表示当前时间。', function(){
+        assert.isNumber($.now(),'返回错误');
     })
 
 })
