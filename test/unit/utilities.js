@@ -27,6 +27,13 @@ describe('utilities 实用工具', function (done) {
         expect($img[0].outerHTML ).to.equal('<img src="test0.jpg">');
     })
 
+    it('$.map: 通过遍历集合中的节点对象，通过函数返回一个新的数组。', function(){
+        document.body.innerHTML = '';
+        var $arr = $.map({"w":1,"c":2,"j":3},function(idx,item){return item });
+        expect($arr).to.have.length.within(3,3);
+        expect($arr[0]).to.equal('w');
+    })
+
     it('$.isFunction: 判断对象是否为函数【function】。', function(){
         document.body.innerHTML = '';
         expect($.isFunction(function(){})).to.be.true;
@@ -70,13 +77,23 @@ describe('utilities 实用工具', function (done) {
     })
 
     // 暂时无法测试
-    it('$.isDocument: 判断对象是否为【document】。', function(){
+    // it('$.isDocument: 判断对象是否为【document】。', function(){
+    //     document.body.innerHTML = '';
+    //     // console.log("window.constructor:",window.document)
+    //     // console.log("window.DOCUMENT_NODE:",$.isDocument(window.document))
+    //     // console.log("window.DOCUMENT_NODE:",$.isDocument(window))
+    //     // expect($.isDocument(document)).to.be.true;
+    //     // expect($.isDocument(window)).to.be.false;
+    // })
+
+    it('$.extend: 通过源对象扩展目标对象的属性。', function(){
         document.body.innerHTML = '';
-        // console.log("window.constructor:",window.document)
-        // console.log("window.DOCUMENT_NODE:",$.isDocument(window.document))
-        // console.log("window.DOCUMENT_NODE:",$.isDocument(window))
-        // expect($.isDocument(document)).to.be.true;
-        // expect($.isDocument(window)).to.be.false;
+        $.extend({
+            min: function(a, b) { return a < b ? a : b; },
+            max: function(a, b) { return a > b ? a : b; }
+        });
+        expect($.min(2,3)).to.equal(2);
+        expect($.max(4,5)).to.equal(5);
     })
 
 })
