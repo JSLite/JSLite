@@ -48,7 +48,7 @@ function isString(obj) {
     return typeof obj == 'string';
 }
 function isPlainObject(obj) {
-    return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype;
+    return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == obj.constructor.prototype;
 }
 
 function isJson(obj) {
