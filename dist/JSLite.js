@@ -1,7 +1,7 @@
 /*!
 * JSLite v1.1.6 (http://JSLite.io)
 * Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)
-* build time 2015-10-18
+* build time 2015-10-29
 */
 ;(function (root, factory) {
     var JSLite = factory(root);
@@ -159,7 +159,7 @@ function isString(obj) {
     return typeof obj == 'string';
 }
 function isPlainObject(obj) {
-    return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == Object.prototype;
+    return isObject(obj) && !isWindow(obj) && Object.getPrototypeOf(obj) == obj.constructor.prototype;
 }
 
 function isJson(obj) {
