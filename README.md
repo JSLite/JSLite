@@ -63,7 +63,7 @@ $ grunt make # 先生成新的 压缩版本的JSLite
 $ npm test # 进行单元测试
 
 # 写测试用例的时候实时运行单元测试
-$ node_modules/.bin/mocha watch
+$ npm test watch
 ```
 
 ## JSLite模块
