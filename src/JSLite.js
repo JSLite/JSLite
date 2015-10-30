@@ -188,7 +188,7 @@ JSLite.fn.extend({
         if (this.length > 0 && isObject(selector)) return this.indexOf(selector)>-1?true:false;
         return this.length > 0 && JSLite.matches(this[0], selector);
     },
-    add: function(selector){return JSLite.unique(this.concat(JSLite(selector)));},
+    add: function(selector){return JSLite(JSLite.unique(this.concat(JSLite(selector))) );},
     eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
     first: function(){
         var el = this[0]
