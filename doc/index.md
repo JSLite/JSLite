@@ -327,7 +327,7 @@ var arr = [ 4, "Pete", 8, "John" ];
 $.inArray("John", arr);     //⇒ 3
 $.inArray(4, arr);          //⇒ 0
 $.inArray("David", arr);    //⇒ -1
-$.inArray("Pete", arr, 2);  //⇒ -1
+$.inArray("Pete", arr, 2);  //⇒ 1
 ```
 
 ### $.map
@@ -454,7 +454,7 @@ $.matches($("#box")[0], "#box")//⇒ true
 ```
 
 ### is
-> 判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素
+> 判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素 
 > is(selector)   ⇒ boolean  
 > is(element)    ⇒ boolean
 
