@@ -40,9 +40,12 @@ describe('utilities 实用工具', function (done) {
         expect($.isFunction(function(){})).to.be.true;
     })
 
-    it('$.isObject: 判断对象是否为函数【function】。', function(){
+    it('$.isObject: 判断是否为 `Object` 。', function(){
         document.body.innerHTML = '';
         expect($.isObject({})).to.be.true;
+        expect($.isObject([])).to.be.false;
+        expect($.isObject(1)).to.be.false;
+        expect($.isObject("2323")).to.be.false;
     })
 
     it('$.isPlainObject: 判断是否为 Object 。', function(){
@@ -55,6 +58,8 @@ describe('utilities 实用工具', function (done) {
     it('$.isArray: 判断是否为【数组】。', function(){
         document.body.innerHTML = '';
         expect($.isArray([1,2,3])).to.be.true;
+        expect($.isArray({})).to.be.false;
+        expect($.isArray(function(){})).to.be.false;
     })
 
     it('$.inArray: 判断是否为【数组】。', function(){
@@ -68,6 +73,8 @@ describe('utilities 实用工具', function (done) {
     it('$.isString: 判断是否为【字符串】。', function(){
         expect($.isString('字符串')).to.be.true;
         expect($.isString({})).to.be.false;
+        expect($.isString(123)).to.be.false;
+        expect($.isString(function(){})).to.be.false;
     })
 
     it('$.likeArray: 判断对象是否为数组或者是字符。', function(){
@@ -91,23 +98,32 @@ describe('utilities 实用工具', function (done) {
     })
 
     it('$.type() - 获取JavaScript 对象的类型。', function () {
-
+        expect($.type(true)).to.equal('Boolean');
+        expect($.type("div")).to.equal('String');
+        expect($.type(123)).to.equal('Number');
+        expect($.type({})).to.equal('Object');
+        expect($.type(function(){})).to.equal('Function');
+        expect($.type(undefined)).to.equal(undefined);
+        expect($.type(new RegExp())).to.equal("RegExp");
+        expect($.type(new Date())).to.equal("Date");
     })
-    
-    it('.is() - 判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素。', function () {
-
-
-    })
-
     // 暂时无法测试
-    // it('$.isDocument: 判断对象是否为【document】。', function(){
-    //     document.body.innerHTML = '';
-    //     // console.log("window.constructor:",window.document)
-    //     // console.log("window.DOCUMENT_NODE:",$.isDocument(window.document))
-    //     // console.log("window.DOCUMENT_NODE:",$.isDocument(window))
-    //     // expect($.isDocument(document)).to.be.true;
-    //     // expect($.isDocument(window)).to.be.false;
-    // })
+    it('.is() - 判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素。', function () {
+        document.body.innerHTML = '<div id="box"></div>';
+        // console.log("message:",$('div').is('div'));
+        // expect($('#box').is('div')).to.be.true;
+
+    })
+
+    // 暂时无法测试 element.webkitMatchesSelector 不存在
+    it('$.isDocument: 判断对象是否为【document】。', function(){
+        document.body.innerHTML = '';
+        // console.log("window.constructor:",window.document)
+        // console.log("window.DOCUMENT_NODE:",$.isDocument(window.document))
+        // console.log("window.DOCUMENT_NODE:",$.isDocument(window))
+        // expect($.isDocument(document)).to.be.true;
+        // expect($.isDocument(window)).to.be.false;
+    })
 
     it('$.extend: 通过源对象扩展目标对象的属性。', function(){
         document.body.innerHTML = '';
