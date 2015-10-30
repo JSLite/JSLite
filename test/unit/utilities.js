@@ -57,14 +57,27 @@ describe('utilities 实用工具', function (done) {
         expect($.isArray([1,2,3])).to.be.true;
     })
 
+    it('$.inArray: 判断是否为【数组】。', function(){
+        var arr = [ 4, "Pete", 8, "John" ];
+        assert.equal($.inArray("John", arr), '3');
+        assert.equal($.inArray(4, arr), '0');
+        assert.equal($.inArray("David", arr), -1);
+        assert.equal($.inArray("Pete", arr, 2), 1);
+    })
+
     it('$.isString: 判断是否为【字符串】。', function(){
-        document.body.innerHTML = '';
         expect($.isString('字符串')).to.be.true;
         expect($.isString({})).to.be.false;
     })
 
+    it('$.likeArray: 判断对象是否为数组或者是字符。', function(){
+        expect($.likeArray([1,2,3]) ).to.be.true;
+        expect($.likeArray("222") ).to.be.true;
+        expect($.likeArray({}) ).to.be.false;
+        expect($.likeArray(123) ).to.be.false;
+    })
+
     it('$.isJson: 判断是否为JSON对象。', function(){
-        document.body.innerHTML = '';
         expect($.isJson({})).to.be.true;
         expect($.isJson([])).to.be.false;
         expect($.isJson('ss')).to.be.false;
@@ -75,6 +88,15 @@ describe('utilities 实用工具', function (done) {
         expect($.isWindow(window)).to.be.true;
         expect($.isWindow({})).to.be.false;
         expect($.isWindow(function(){})).to.be.false;
+    })
+
+    it('$.type() - 获取JavaScript 对象的类型。', function () {
+
+    })
+    
+    it('.is() - 判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素。', function () {
+
+
     })
 
     // 暂时无法测试

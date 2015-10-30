@@ -197,6 +197,14 @@ describe('selectors 选择器', function () {
         expect($('body :not(p)')[0].outerHTML).to.equal('<h1>这是标题</h1>');
     })
 
+    it('$.contains  parent是否包含node节点对象。',function(){
+        document.body.innerHTML = '';
+    })
+
+    it('$.matches  如果当前节点能被指定的css选择器查找到，则返回true，否则返回false。',function(){
+        document.body.innerHTML = '';
+    })
+
     // it('::selection ::selection 选择被用户选取的元素部分。',function(){})
 
 })
