@@ -982,10 +982,19 @@ $("div").slice(3,5) //返回数组 3-5之间的元素
 ```
 
 ### add
-> 添加元素到匹配的`JSLite`对象集合
+> 添加元素到当前匹配的元素集合中。
 
-```js
-$("#box").siblings()
+```html
+<ul>
+    <li>list item 1</li>
+    <li>list item 2</li>
+    <li>list item 3</li>
+</ul>
+<p>a paragraph</p>
+
+<script type="text/javascript">
+    $('li').add('p').css('background-color', 'red');
+</script>
 ```
 
 ----
