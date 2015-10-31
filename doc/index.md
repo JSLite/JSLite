@@ -606,7 +606,7 @@ $('#test').data() //⇒  {"aa":1,"www":334343}
 
 ```js
 $("#box").pluck("nodeName") //⇒ ["DIV"]
-$("#box").pluck("nextElementSibling") //⇒ <div class="boxs">1234567890</div>
+$("#box").pluck("nextElementSibling") //⇒ [<div class="boxs">1234567890</div>]
 $("#box").pluck('children') //⇒ [HTMLCollection[4]]
 ```
 
@@ -852,7 +852,7 @@ $("#box").empty()
 ```js
 $("#box").remove()
 //⇒ self <div id="box" class="boxOne box2 box3" ></div>
-$("#box").remove('span')  //⇒ "span" <span>sss</span>
+$("#box").remove('span')  //⇒ "span" <span>sss</span> 删除匹配的对象内的所有 span
 $('div').remove(function(){
     return 'span'
 });//⇒ "span" <span>sss</span>
