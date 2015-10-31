@@ -60,10 +60,11 @@ $ npm start
 
 ```shell
 $ grunt make # 先生成新的 压缩版本的JSLite
+# 在命令行中 － 查看测试结果
 $ npm test # 进行单元测试
 
-# 写测试用例的时候实时运行单元测试
-$ npm test watch
+# 在浏览器中查看 － 编写预览测试结果
+# 打开 test/index.html
 ```
 
 ## JSLite模块
