@@ -280,7 +280,7 @@ JSLite.fn.extend({
         return this
     },
     remove: function(selector){
-        var elm = selector?JSLite(funcArg(this, selector)):this;
+        var elm = selector?JSLite(this.find(funcArg(this, selector))):this;
         return elm.each(function(){
             if (this.parentNode != null) this.parentNode.removeChild(this)
         })
