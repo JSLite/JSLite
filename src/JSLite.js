@@ -147,8 +147,7 @@ JSLite.extend({
     },
     sibling:function(nodes,ty){
         var ancestors = [];
-        while (nodes.length > 0)
-        nodes = JSLite.map(nodes, function(node){
+        if(nodes.length > 0) ancestors = JSLite.map(nodes, function(node){
             if ((node = node[ty]) && !isDocument(node) && ancestors.indexOf(node) < 0)
                 ancestors.push(node)
                 return node
