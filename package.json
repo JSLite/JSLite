@@ -24,7 +24,7 @@
     "url": "https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE"
   },
   "scripts": {
-    "test": "mocha",
+    "test": "mocha-phantomjs test/index.html",
     "start": "grunt watch"
   },
   "devDependencies": {
@@ -40,6 +40,6 @@
   },
   "dependencies": {
     "cli-color": "^1.0.0",
-    "jsdom": "^7.0.2"
+    "mocha-phantomjs": "^4.0.1"
   }
 }

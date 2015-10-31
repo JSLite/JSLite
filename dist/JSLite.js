@@ -1,7 +1,7 @@
 /*!
 * JSLite v1.1.6 (http://JSLite.io)
 * Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)
-* build time 2015-10-30
+* build time 2015-11-01
 */
 ;(function (root, factory) {
     var JSLite = factory(root);
@@ -393,13 +393,12 @@ JSLite.extend({
     },
     sibling:function(nodes,ty){
         var ancestors = [];
-        while (nodes.length > 0)
-        nodes = JSLite.map(nodes, function(node){
+        if(nodes.length > 0) ancestors = JSLite.map(nodes, function(node){
             if ((node = node[ty]) && !isDocument(node) && ancestors.indexOf(node) < 0)
                 ancestors.push(node)
                 return node
         });
-        return ancestors;
+        return this.unique(ancestors);
     },
     contains:function(parent, node){
         if(parent&&!node) return document.documentElement.contains(parent)
@@ -434,7 +433,7 @@ JSLite.fn.extend({
         if (this.length > 0 && isObject(selector)) return this.indexOf(selector)>-1?true:false;
         return this.length > 0 && JSLite.matches(this[0], selector);
     },
-    add: function(selector){return JSLite.unique(this.concat(JSLite(selector)));},
+    add: function(selector){return JSLite(JSLite.unique(this.concat(JSLite(selector))) );},
     eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
     first: function(){
         var el = this[0]
@@ -526,7 +525,7 @@ JSLite.fn.extend({
         return this
     },
     remove: function(selector){
-        var elm = selector?JSLite(funcArg(this, selector)):this;
+        var elm = selector?JSLite(this.find(funcArg(this, selector))):this;
         return elm.each(function(){
             if (this.parentNode != null) this.parentNode.removeChild(this)
         })
@@ -579,30 +578,6 @@ JSLite.fn.extend({
             width: obj.width,
             height: obj.height
         };
-    },
-    scrollTop: function(value){
-        if (!this.length) return;
-        var hasScrollTop = 'scrollTop' in this[0];
-        if (value === undefined){
-            return hasScrollTop ? this[0].scrollTop : this[0].pageYOffset;
-        };
-        return this.each(hasScrollTop ? function(){
-            this.scrollTop = value;
-        } : function(){
-            this.scrollTo(this.scrollX, value);
-        })
-    },
-    scrollLeft: function(value){
-        if (!this.length) return;
-        var hasScrollLeft = 'scrollLeft' in this[0];
-        if (value === undefined){
-            return hasScrollLeft ? this[0].scrollLeft : this[0].pageXOffset;
-        };
-        return this.each(hasScrollLeft ?function(){
-            this.scrollLeft = value;
-        } : function(){
-            this.scrollTo(value, this.scrollY);
-        })
     },
     //操控CSS
     css:function(property, value){
@@ -725,6 +700,24 @@ JSLite.fn.extend({
         try{data = JSON.parse(data);}catch(e){}
         return data;
     }
+});
+
+// 创建 scrollLeft 和 scrollTop 方法
+JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( method, prop ) {
+    var top = "pageYOffset" === prop;
+    JSLite.fn[ method ] = function( value ) {
+        var win = isWindow( this[0] );
+        if ( value === undefined ) return win ? window[ prop ] : this[0][ method ];
+        if ( win ) {
+            window.scrollTo(
+                !top ? value : window.pageXOffset,
+                top ? value : window.pageYOffset
+            );
+            return this[0];
+        } else return this.each(function(){
+            this[ method ] = value;
+        })
+    };
 });
 
 ;['after','prepend','before','append'].forEach(function(operator, operatorIndex) {

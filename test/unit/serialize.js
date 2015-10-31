@@ -1,11 +1,3 @@
-
-var jsdom = require('../setup.js');
-var fs = require('fs');
-
-jsdom({
-    src: fs.readFileSync('./dist/JSLite.js', 'utf-8')
-})
-
 describe('serialize 序列化。', function () {
 
 

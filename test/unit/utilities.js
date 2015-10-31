@@ -1,47 +1,36 @@
-var jsdom = require('../setup.js');
-var assert = require('chai').assert;
-var fs = require('fs');
 
-
-jsdom({
-    src: fs.readFileSync('./dist/JSLite.js', 'utf-8')
-})
 
 describe('utilities 实用工具', function (done) {
 
-    it('data: 读取或写入dom的 data-* 属性。', function (done) {
-        require( "./polyfill-jsdom" );
-
-        document.body.innerHTML = '<div class="intro"></div><input type="text"/>';
-        expect($('div').data('name',{"sss":1})).to.have.length.within(1,1);
-        expect($('div').data()).to.eql({"name":"{\"sss\":1}"});
-        expect($('div').data('name')).to.eql({ sss: 1 }); 
-        expect($('div').data('names',[1,2,3,4]) ).to.have.length.within(1,1);
-        expect($('div').data('names')).to.include(4); 
-        done()
+    it('data: 读取或写入dom的 data-* 属性。', function () {
+        var elm = document.getElementById("test").innerHTML = '<div class="intro"></div>';
+        expect($('div.intro').data('name',{"sss":1})).to.have.length.within(1,1);
+        expect($('div.intro').data()).to.eql({"name":"{\"sss\":1}"});
+        expect($('div.intro').data('name')).to.eql({ sss: 1 });
+        expect($('div.intro').data('names',[1,2,3,4]) ).to.have.length.within(1,1);
+        expect($('div.intro').data('names')).to.include(4);
     })
 
     it('each: 遍历一个 JSLite 集合对象，为每一个匹配元素执行一个函数。', function(){
-        document.body.innerHTML = '<img src="1.jpg" /><img src="2.jpg" /><img src="3.jpg" />';
-        var $img = $("img").each(function(i){this.src = "test" + i + ".jpg"; });
-        expect($img).to.have.length.within(3,3);
-        expect($img[0].outerHTML ).to.equal('<img src="test0.jpg">');
+        var elm = document.getElementById("test");
+        elm.innerHTML = '<span></span><span></span><span></span>';
+        var $span = $("#test span").each(function(i){this.className = "test" + i; });
+        expect($span).to.have.length(3);
+        expect($span[0].outerHTML).to.equal('<span class="test0"></span>');
+        elm.innerHTML = '';
     })
 
     it('$.map: 通过遍历集合中的节点对象，通过函数返回一个新的数组。', function(){
-        document.body.innerHTML = '';
         var $arr = $.map({"w":1,"c":2,"j":3},function(idx,item){return item });
         expect($arr).to.have.length.within(3,3);
         expect($arr[0]).to.equal('w');
     })
 
     it('$.isFunction: 判断对象是否为函数【function】。', function(){
-        document.body.innerHTML = '';
         expect($.isFunction(function(){})).to.be.true;
     })
 
     it('$.isObject: 判断是否为 `Object` 。', function(){
-        document.body.innerHTML = '';
         expect($.isObject({})).to.be.true;
         expect($.isObject([])).to.be.false;
         expect($.isObject(1)).to.be.false;
@@ -49,14 +38,12 @@ describe('utilities 实用工具', function (done) {
     })
 
     it('$.isPlainObject: 判断是否为 Object 。', function(){
-        document.body.innerHTML = '';
         expect($.isPlainObject(new Object())).to.be.true;
         expect($.isPlainObject(new Date())).to.be.false;
         expect($.isPlainObject(window)).to.be.false;
     })
 
     it('$.isArray: 判断是否为【数组】。', function(){
-        document.body.innerHTML = '';
         expect($.isArray([1,2,3])).to.be.true;
         expect($.isArray({})).to.be.false;
         expect($.isArray(function(){})).to.be.false;
@@ -91,7 +78,6 @@ describe('utilities 实用工具', function (done) {
     })
 
     it('$.isWindow: 确定参数是否为一个窗口（window对象）。', function(){
-        document.body.innerHTML = '';
         expect($.isWindow(window)).to.be.true;
         expect($.isWindow({})).to.be.false;
         expect($.isWindow(function(){})).to.be.false;
@@ -109,24 +95,21 @@ describe('utilities 实用工具', function (done) {
     })
     // 暂时无法测试
     it('.is() - 判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素。', function () {
-        document.body.innerHTML = '<div id="box"></div>';
-        // console.log("message:",$('div').is('div'));
-        // expect($('#box').is('div')).to.be.true;
-
+        var elm = document.getElementById("test");
+        elm.innerHTML = '<span></span><span></span><span></span>';
+        expect($('#test').is('div')).to.be.true;
+        expect($('#test').is('#test')).to.be.true;
+        expect($('#test').is('#boxss')).to.be.false;
+        expect($('#test').is(elm)).to.be.true;
     })
 
-    // 暂时无法测试 element.webkitMatchesSelector 不存在
     it('$.isDocument: 判断对象是否为【document】。', function(){
-        document.body.innerHTML = '';
-        // console.log("window.constructor:",window.document)
-        // console.log("window.DOCUMENT_NODE:",$.isDocument(window.document))
-        // console.log("window.DOCUMENT_NODE:",$.isDocument(window))
-        // expect($.isDocument(document)).to.be.true;
-        // expect($.isDocument(window)).to.be.false;
+        expect($.isDocument(document)).to.be.true;
+        expect($.isDocument(window)).to.be.true;
+        expect($.isDocument(document.documentElement)).to.be.false;
     })
 
     it('$.extend: 通过源对象扩展目标对象的属性。', function(){
-        document.body.innerHTML = '';
         $.extend({
             min: function(a, b) { return a < b ? a : b; },
             max: function(a, b) { return a > b ? a : b; }
@@ -137,6 +120,19 @@ describe('utilities 实用工具', function (done) {
 
     it('$.now: 返回一个数字，表示当前时间。', function(){
         assert.isNumber($.now(),'返回错误');
+    })
+
+    it('$.contains  parent是否包含node节点对象。',function(){
+        var elm = document.getElementById("test");
+        elm.innerHTML = '<div>这是 div 元素中的文本。</div>';
+        expect($.contains($("#test")[0],$("#test div")[0])).to.be.true;
+    })
+
+    it('$.matches  如果当前节点能被指定的css选择器查找到，则返回true，否则返回false。',function(){
+        var elm = document.getElementById("test");
+        elm.innerHTML = '<div id="box"></div>';
+        expect($.matches($("#test #box")[0], "#box")).to.be.true;
+        elm.innerHTML = ''
     })
 
 })

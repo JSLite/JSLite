@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>单元测试JSLite</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+</head>
+<body>
+    <!-- I you use Backbone Model you will need JSON -->
+    <div id="mocha"></div>
+    <script type="text/javascript" src="../dist/JSLite.js"></script>
+    <script type="text/javascript" src="../node_modules/chai/chai.js"></script>
+    <script src="../node_modules/mocha/mocha.js" type="text/javascript" ></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="unit/selectors.js"></script>
+    <script src="unit/utilities.js"></script>
+    <script src="unit/traversing.js"></script>
+    <script src="unit/serialize.js"></script>
+    <script src="unit/manipulation.js"></script>
+    <script src="unit/array.js"></script>
+    <script src="unit/attributes.js"></script>
+    <script src="unit/core.js"></script>
+    <script src="unit/effects.js"></script>
+    <script src="unit/event.js"></script>
+    <script src="unit/ready.js"></script>
+    <script src="unit/css.js"></script>
+    <script>
+        var expect = chai.expect;
+        var assert = chai.assert;
+        if (window.mochaPhantomJS) {
+            mochaPhantomJS.run();
+        } else {
+            mocha.run();
+        }
+    </script>
+    <div id="test"></div>
+</body>
+</html>
