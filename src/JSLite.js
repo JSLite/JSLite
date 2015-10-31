@@ -152,7 +152,7 @@ JSLite.extend({
                 ancestors.push(node)
                 return node
         });
-        return ancestors;
+        return this.unique(ancestors);
     },
     contains:function(parent, node){
         if(parent&&!node) return document.documentElement.contains(parent)
