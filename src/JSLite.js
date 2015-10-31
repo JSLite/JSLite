@@ -333,30 +333,6 @@ JSLite.fn.extend({
             height: obj.height
         };
     },
-    scrollTop: function(value){
-        if (!this.length) return;
-        var hasScrollTop = 'scrollTop' in this[0];
-        if (value === undefined){
-            return hasScrollTop ? this[0].scrollTop : this[0].pageYOffset;
-        };
-        return this.each(hasScrollTop ? function(){
-            this.scrollTop = value;
-        } : function(){
-            this.scrollTo(this.scrollX, value);
-        })
-    },
-    scrollLeft: function(value){
-        if (!this.length) return;
-        var hasScrollLeft = 'scrollLeft' in this[0];
-        if (value === undefined){
-            return hasScrollLeft ? this[0].scrollLeft : this[0].pageXOffset;
-        };
-        return this.each(hasScrollLeft ?function(){
-            this.scrollLeft = value;
-        } : function(){
-            this.scrollTo(value, this.scrollY);
-        })
-    },
     //操控CSS
     css:function(property, value){
         var elem = this[0];
@@ -480,6 +456,23 @@ JSLite.fn.extend({
     }
 });
 
+// 创建 scrollLeft 和 scrollTop 方法
+JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( method, prop ) {
+    var top = "pageYOffset" === prop;
+    JSLite.fn[ method ] = function( value ) {
+        var win = isWindow( this[0] );
+        if ( value === undefined ) return win ? window[ prop ] : this[0][ method ];
+        if ( win ) {
+            window.scrollTo(
+                !top ? value : window.pageXOffset,
+                top ? value : window.pageYOffset
+            );
+            return this[0];
+        } else return this.each(function(){
+            this[ method ] = value;
+        })
+    };
+});
 
 ;['after','prepend','before','append'].forEach(function(operator, operatorIndex) {
     var inside = operatorIndex % 2;
