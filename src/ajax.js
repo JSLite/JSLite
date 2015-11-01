@@ -41,7 +41,7 @@
             params.add=function(key, value){
                 this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value== null?"":value))
             };
-            if(scope==true&&$.type(obj)=='Object') params.add(traditional,obj)
+            if(scope==true&&type(obj)=='Object') params.add(traditional,obj)
             else {
                 for(var p in obj) {
                     var v = obj[p],str='',
@@ -49,9 +49,7 @@
                             if (traditional) {
                                 if (traditional==true) return p;
                                 else{
-                                    if(scope&&$.type(obj)=='Array'){
-                                        return traditional
-                                    }
+                                    if(scope&&type(obj)=='Array') return traditional
                                     return traditional + "[" + ($.type(obj)=='Array'?"":p) + "]";
                                 };
                             };
@@ -59,7 +57,9 @@
                         })();
                     if (typeof v=="object") {
                         str=this.param(v, k ,traditional);
-                    }else str=params.add(k,v);
+                    }else if(!isFunction(v)){
+                        str=params.add(k, v);
+                    }
 
                     if (str) params.push(str);
                 };
