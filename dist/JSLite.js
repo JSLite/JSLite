@@ -1,7 +1,7 @@
 /*!
 * JSLite v1.1.6 (http://JSLite.io)
 * Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)
-* build time 2015-11-01
+* build time 2015-11-02
 */
 ;(function (root, factory) {
     var JSLite = factory(root);
@@ -953,7 +953,7 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
             params.add=function(key, value){
                 this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value== null?"":value))
             };
-            if(scope==true&&$.type(obj)=='Object') params.add(traditional,obj)
+            if(scope==true&&type(obj)=='Object') params.add(traditional,obj)
             else {
                 for(var p in obj) {
                     var v = obj[p],str='',
@@ -961,9 +961,7 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
                             if (traditional) {
                                 if (traditional==true) return p;
                                 else{
-                                    if(scope&&$.type(obj)=='Array'){
-                                        return traditional
-                                    }
+                                    if(scope&&type(obj)=='Array') return traditional
                                     return traditional + "[" + ($.type(obj)=='Array'?"":p) + "]";
                                 };
                             };
@@ -971,7 +969,9 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
                         })();
                     if (typeof v=="object") {
                         str=this.param(v, k ,traditional);
-                    }else str=params.add(k,v);
+                    }else if(!isFunction(v)){
+                        str=params.add(k, v);
+                    }
 
                     if (str) params.push(str);
                 };
