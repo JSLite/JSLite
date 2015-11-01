@@ -6,7 +6,9 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
             elm.innerHTML = '<ul> <li>list item 1</li> <li>list item 2</li></ul> <p>a paragraph</p>';
 
         assert.lengthOf($('#test li').add('p').css('background-color', 'red'),3)
-        assert.equal($('#test').html(),'<ul> <li style="background-color: red;">list item 1</li> <li style="background-color: red;">list item 2</li></ul> <p style="background-color: red;">a paragraph</p>')
+        assert.equal($('#test li')[0].style.backgroundColor,'red')
+        assert.equal($('#test li')[1].style.backgroundColor,'red')
+        assert.equal($('#test p')[0].style.backgroundColor,'red')
 
     })
 
