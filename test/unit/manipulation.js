@@ -1,7 +1,14 @@
 describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。', function () {
 
     it('.add() - 添加元素到当前匹配的元素集合中。', function () {
-   
+        
+        var elm = document.getElementById("test")
+            elm.innerHTML = '<ul> <li>list item 1</li> <li>list item 2</li></ul> <p>a paragraph</p>';
+
+        console.log($('#test li').add('p'))
+        assert.lengthOf($('#test li').add('p').css('background-color', 'red'),3)
+        assert.equal($('#test').html(),'<ul> <li style="background-color: red;">list item 1</li> <li style="background-color: red;">list item 2</li></ul> <p style="background-color: red;">a paragraph</p>')
+
     })
 
     it('.append() - 根据参数设定在每个匹配元素里面的末尾处插入内容。', function () {
