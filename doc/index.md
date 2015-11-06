@@ -348,7 +348,7 @@ $.each(['a', 'b', 'c'], function(index, item){
 ```js
 $.grep( [0,1,2], function(n,i){
   return n != 0;
-});
+});//⇒ [1, 2]
 ```
 
 ### $.parseJSON
