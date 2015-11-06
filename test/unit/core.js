@@ -11,13 +11,20 @@ describe('core ', function () {
     })
     
     it('$.grep() - 使用过滤函数过滤数组元素。', function () {
-
+        var arr = $.grep( [0,1,2], function(n,i){return n != 0; })
+        assert.typeOf(arr, 'array');
+        assert.include(arr, 1)
+        assert.notInclude(arr, 0)
+        assert.lengthOf(arr, 2)
 
     })
     
     it('$.parseJSON() - 与 JSON.parse 方法相同。', function () {
-
-
+        var json = '{"name":"JSLite"}'
+        json = $.parseJSON(json)
+        assert.typeOf(json, 'object');
+        assert.deepEqual(json,{"name":"JSLite"})
+        assert.equal(json.name,'JSLite')
     })
 
     
