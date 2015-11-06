@@ -105,7 +105,7 @@ JSLite.extend({
     parseJSON:JSON.parse,
     type:type,
     likeArray:likeArray,
-    trim:function(str){if(str) return str.trim();},
+    trim:function(str){return str == null ? "" : String.prototype.trim.call(str)},
     intersect:function(a,b){
         var array=[];
         a.forEach(function(item){
