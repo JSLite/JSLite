@@ -37,6 +37,7 @@ describe('core ', function () {
         var elm = document.getElementById("test");
         elm.innerHTML = '<div class="jslite">Goodbye</div>';
         assert.equal($('#test div').length, 1);
+        elm.innerHTML = '';
     })
 
 
