@@ -469,8 +469,12 @@ JSLite.fn.extend({
         });
         return JSLite(e).filter(selector || '*');
     },
-    contents: function() {
-        return this.map(function() { return this.contentDocument || slice.call(this.childNodes) })
+    contents: function(selector) {
+        return this.map(function() { 
+            return this.contentDocument || $.grep(this.childNodes,function(node){
+                return selector? $.matches(node,selector):node
+            }) 
+        })
     },
     parent: function(selector){return JSLite(JSLite.unique(this.pluck('parentNode'))).filter(selector||'*')},
     parents: function(selector){
