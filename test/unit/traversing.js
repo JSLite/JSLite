@@ -98,10 +98,31 @@ describe('traversing 遍历，过滤', function () {
         assert.lengthOf($('#test .next').nextAll('ul'),0)
         assert.lengthOf($('#test .next').nextAll('div#prev'),1)
         assert.equal($('#test .next').nextAll('div#prev')[0].innerText,"prev33")
-
     })
 
     it('$.map() - 通过遍历集合中的节点对象，通过函数返回一个新的数组，null 或 undefined 将被过滤掉。', function () {
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<div class="next">prev1</div><div>prev22</div><div id="prev">prev33</div><p>JSLite</p>'
+
+        var elmarr = $.map($('#test div'),function(node,idx){return node.innerText }) 
+        assert.lengthOf(elmarr,3)
+        assert.include(elmarr,'prev1')
+        assert.isArray(elmarr)
+        
+        var newarr = $.map({"w":1,"c":2,"j":3},function(val,key){return key })
+        assert.lengthOf(newarr,3)
+        assert.include(newarr,'w')
+        assert.isArray(newarr)
+
+        newarr = $.map({"w":1,"c":2,"j":3},function(idx,item){if(item == 'w') return item });
+        assert.lengthOf(newarr,1)
+        assert.include(newarr,'w')
+        assert.isArray(newarr)
+
+        newarr = $.map(["J","S","L","i","t","e"],function(val,idx){return val})
+        assert.lengthOf(newarr,6)
+        assert.include(newarr,'J')
+        assert.isArray(newarr)
 
     })
 
