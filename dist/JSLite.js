@@ -129,40 +129,17 @@ function each(elements, callback) {
     }
     return elements;
 }
+
 var class2type = {}
 each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(i, name) {
     class2type[ "[object " + name + "]" ] = name.toLowerCase();
 });
 
 function type(obj) {
-
-    if ( obj == null ) {
-        return obj + "";
-    }
-    console.log("message:1:",typeof obj === "object");
-    console.log("message:2:",typeof obj === "object" || typeof obj === "function" ?
-        class2type[ toString.call(obj) ] || "object" :
-        typeof obj);
+    if ( obj == null ) return obj + "";
     return typeof obj === "object" || typeof obj === "function" ?
         class2type[ toString.call(obj) ] || "object" :
         typeof obj;
-
-    // return obj == null ? String(obj) :
-    //   class2type[toString.call(obj)] || "object"
-
-    // console.log("type:wcjian:",class2type);
-    // if (!obj) {
-    //     return undefined;
-    // }
-
-    // var type = '';
-    // each('Boolean Number HTMLDivElement String Function Array Date RegExp Object Error'.split(' '), function(i, name) {
-    //     if (toString.call(obj).indexOf(name) > -1) {
-    //         type = name == 'HTMLDivElement' ? 'Object' : name;
-    //     }
-    // });
-    // console.log("type1:",obj);
-    // return type;
 }
 
 function isFunction(fn) {
@@ -170,8 +147,6 @@ function isFunction(fn) {
 }
 
 function isObject(obj) {
-    // console.log("isObject1:",obj)
-    // console.log("isObject2:",type(obj))
     return type(obj) == 'object';
 }
 
@@ -460,11 +435,8 @@ JSLite.fn.extend({
     add: function(selector){return JSLite(JSLite.unique(this.concat(JSLite(selector))) );},
     eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
     first: function(){
-        var elm = this[0]
-        // console.log("el:",el)
-        console.log("el:",isObject(elm))
-
-        // return el && !isObject(el) ? el : JSLite(el)
+        var el = this[0]
+        return el && !isObject(el) ? el : JSLite(el)
     },
     slice:function(argument) { return JSLite(slice.apply(this, arguments));},
     size:function(){return this.length;},
