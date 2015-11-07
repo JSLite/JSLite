@@ -434,8 +434,8 @@ $.likeArray("222")  //⇒ true
 > 获取JavaScript 对象的类型。可能的类型有： `null` `undefined` `boolean` `number` `string` `function` `array` `date` `regexp` `object` `error` 。
 
 ```js
-$.type(true)  //⇒ Boolean
-$.type("div") //⇒ String
+$.type(true)  //⇒ boolean
+$.type("div") //⇒ string
 ```
 
 ### $.matches
@@ -885,6 +885,7 @@ $("#box").find(".box")  //⇒后代节点的集合，返回匹配'.box' 的集�
 
 ```js
 $("#box").children()
+$("#box").children('span')
 //下面这种方法也可以的 CSS3 节点选择器 -_+
 $("#box *")
 ```
