@@ -331,6 +331,9 @@ $.map({"w":1,"c":2,"j":3},function(idx,item){
      return item
 }); 
 //⇒ ["w", "c", "j"]
+$.map(["w","c"],function(idx,item){
+     return idx
+}); //⇒ ["w", "c"]
 ```
 
 ### $.each
@@ -528,11 +531,19 @@ $("div").get(0)//⇒ 返回节点 <div id="box" class="boxOne box2 box3" ></div>
 > .index(selector)  
 > .index(element)
 
+```html 
+<ul>
+  <li id="foo">foo</li>
+  <li id="bar">bar</li>
+  <li id="baz">baz</li>
+</ul>
+```
+
 ```js
-$("#box").index()//⇒ 4
-$("div").index("#box")//⇒ 2
-$("div").index($("#box"))//⇒ 2
-$("div").index($("#box")[0])//⇒ 2
+$("#bar").index()//⇒ 1
+$("div").index("#bar")//⇒ 1
+$("div").index($("#baz"))//⇒ 2
+$("div").index($("#bar")[0])//⇒ 1
 ```
 
 ### indexOf
