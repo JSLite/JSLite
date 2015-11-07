@@ -48,9 +48,9 @@ describe('traversing 遍历，过滤', function () {
     it('.parents() - 获取对象集合每个元素所有的祖先元素（不包含根元素）。', function () {
         var elm = document.getElementById("test")
         elm.innerHTML = '<div>Goodbye<p><span>Test</span></p><p>Goodbye</p></div>'
-        assert.lengthOf($('#test p').parents(),4)
-        assert.lengthOf($('#test p').parent('div'),1)
-        assert.equal($('#test p').parent('div')[0].innerText,'Goodbye\nTest\n\nGoodbye')
+        assert.lengthOf($('#test p').parents(),4,"错误1")
+        assert.lengthOf($('#test p').parents('div'),2,"错误2")
+        assert.equal($('#test p').parents('div')[0].innerText,'Goodbye\nTest\n\nGoodbye')
     })
 
     it('.siblings() - 获取对此对象【其它】所有兄弟对象(可以带上滤选择器)。', function () {
@@ -72,7 +72,7 @@ describe('traversing 遍历，过滤', function () {
 
     it('.prev() - 获取对象集合每个元素的所有上一个对象(可以带上滤选择器)。', function () {
         var elm = document.getElementById("test")
-        elm.innerHTML = '<div>prev1</div><div>prev22</div><div id="prev">prev33</div>'
+        elm.innerHTML = '<div class="next">prev1</div><div>prev22</div><div id="prev">prev33</div>'
         assert.lengthOf($('#test #prev').prev(),1)
         assert.lengthOf($('#test #prev').prev('ul'),0)
         assert.lengthOf($('#test #prev').prev('div'),1)
@@ -80,8 +80,6 @@ describe('traversing 遍历，过滤', function () {
     })
 
     it('.next() - 获取对象集合每个元素的所有下一个对象(可以带上滤选择器)。', function () {
-        var elm = document.getElementById("test")
-        elm.innerHTML = '<div class="next">prev1</div><div>prev22</div><div id="prev">prev33</div>'
         assert.lengthOf($('#test .next').next(),1)
         assert.lengthOf($('#test .next').next('ul'),0)
         assert.lengthOf($('#test .next').next('div'),1)
@@ -89,10 +87,17 @@ describe('traversing 遍历，过滤', function () {
     })
 
     it('.prevAll() - 获取对此对象【上】所有兄弟对象(可以带上滤选择器)。', function () {
-
+        assert.lengthOf($('#test #prev').prevAll(),2)
+        assert.lengthOf($('#test #prev').prevAll('ul'),0)
+        assert.lengthOf($('#test #prev').prevAll('div.next'),1)
+        assert.equal($('#test #prev').prevAll('div.next')[0].innerText,"prev1")
     })
 
     it('.nextAll() - 获取对此对象【下】所有兄弟对象(可以带上滤选择器)。', function () {
+        assert.lengthOf($('#test .next').nextAll(),2)
+        assert.lengthOf($('#test .next').nextAll('ul'),0)
+        assert.lengthOf($('#test .next').nextAll('div#prev'),1)
+        assert.equal($('#test .next').nextAll('div#prev')[0].innerText,"prev33")
 
     })
 
