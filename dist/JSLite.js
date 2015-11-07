@@ -1,7 +1,7 @@
 /*!
 * JSLite v1.1.7 (http://JSLite.io)
 * Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)
-* build time 2015-11-07
+* build time 2015-11-08
 */
 ;(function (root, factory) {
     var JSLite = factory(root);
@@ -441,7 +441,8 @@ JSLite.fn.extend({
         return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
     },
     index: function(element){
-        return element ? this.indexOf(JSLite(element)[0]) : this.parent().children().indexOf(this[0])
+        return element ? (type(element) === 'string'?this.indexOf(this.parent().children(element)[0]):this.indexOf(element))
+            : this.parent().children().indexOf(this[0])
     },
     is: function(selector){
         if (this.length > 0 && isObject(selector)) return this.indexOf(selector)>-1?true:false;
