@@ -2,18 +2,40 @@
 describe('traversing 遍历，过滤', function () {
 
     it('.children() - 获得每个匹配元素集合元素的直接子元素(可以带上滤选择器)。', function () {
+        var elm = document.getElementById("test")
+
+        assert.lengthOf($('#test').children(),0)
+        elm.innerHTML = '<div>Goodbye</div><span>Test</span>';
+        assert.lengthOf($('#test').children(),2)
+        assert.lengthOf($('#test').children('span'),1)
+        assert.equal($('#test').children('span')[0].tagName,'SPAN')
 
     })
 
-    it('.closest() - 获得每个匹配元素集合元素的子元素，包括文字和注释节点。', function () {
-
+    it('.closest() - 获得匹配选择器的第一个祖先元素，从当前元素开始沿 DOM 树向上。', function () {
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<div>Goodbye<p><span>Test</span></p></div>';
+        var elmdiv = $("#test p").closest('div')
+        assert.lengthOf(elmdiv,1)
+        assert.equal(elmdiv[0].innerText,'Goodbye\nTest')
+        var elmdiv = $("#test span").closest('p',$('#test p')[0])
+        assert.lengthOf(elmdiv,1)
+        assert.equal(elmdiv[0].tagName,'P')
     })
 
     it('.find() - 后代节点的集合(可以带上滤选择器)。', function () {
-
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<div>Goodbye<p><span>Test</span></p><p>Goodbye</p></div>';
+        assert.lengthOf($('#test').find('p'),2)
+        assert.lengthOf($('#test').find('span'),1)
+        assert.lengthOf($('#test').find(),4)
     })
 
     it('.first() - 获取当前对象集合中的第一个元素。 first() ⇒ collection', function () {
+        // var elm = document.getElementById("test")
+        // elm.innerHTML = '<div>Goodbye<p><span>Test</span></p><p>Goodbye</p></div>';
+        // assert.lengthOf($('#test p').first(),1)
+        // assert.equal($('#test p').first()[0].innerText,'Goodbye\nTest')
 
     })
 

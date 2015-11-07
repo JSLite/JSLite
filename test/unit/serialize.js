@@ -5,10 +5,10 @@ describe('serialize 序列化。', function () {
     it('.param() 将表单元素数组或者对象序列化。', function () {
 
         assert.equal( decodeURI($.param({foo: {one: 1,two: 2 } })), 'foo[one]=1&foo[two]=2')
-        assert.equal( decodeURI($.param({ids:["a1","b2","c3"], c:{g:23,e:[567]}, a:3 },true)), 'ids=a1&ids=b2&ids=c3&c=[object Object]&a=3')
         assert.equal( decodeURI($.param({ids:["a1","b2","c3"], c:{g:23,e:[567]}, a:3 })), 'ids[]=a1&ids[]=b2&ids[]=c3&c[g]=23&c[e]=567&a=3')
         assert.equal( decodeURI($.param([1,2,3])), '0=1&1=2&2=3')
         assert.equal( decodeURI($.param({ids:[1,2,3] })), 'ids[]=1&ids[]=2&ids[]=3')
+        assert.equal( decodeURI($.param({ids:["a1","b2","c3"], c:{g:23,e:[567]}, a:3 },true)), 'ids=a1&ids=b2&ids=c3&c=[object Object]&a=3')
 
     })
 
