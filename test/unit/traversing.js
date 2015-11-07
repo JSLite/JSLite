@@ -32,11 +32,10 @@ describe('traversing 遍历，过滤', function () {
     })
 
     it('.first() - 获取当前对象集合中的第一个元素。 first() ⇒ collection', function () {
-        // var elm = document.getElementById("test")
-        // elm.innerHTML = '<div>Goodbye<p><span>Test</span></p><p>Goodbye</p></div>';
-        // assert.lengthOf($('#test p').first(),1)
-        // assert.equal($('#test p').first()[0].innerText,'Goodbye\nTest')
-
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<div>Goodbye<p><span>Test</span></p><p>Goodbye</p></div>';
+        assert.lengthOf($('#test p').first(),1)
+        assert.equal($('#test p').first()[0].innerText,'Test')
     })
 
     it('.parent() - 对象集合中每个元素的直接父元素。', function () {
