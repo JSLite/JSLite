@@ -4,14 +4,6 @@ describe('core ', function () {
         assert.equal($.trim('hello JSLite.  '),'hello JSLite.')
         assert.equal($.trim('  hello JSLite.  '),'hello JSLite.')
     })
-    
-    it('$.grep() - 使用过滤函数过滤数组元素。', function () {
-        var arr = $.grep( [0,1,2], function(n,i){return n != 0; })
-        assert.typeOf(arr, 'array');
-        assert.include(arr, 1)
-        assert.notInclude(arr, 0)
-        assert.lengthOf(arr, 2)
-    })
 
     it('$.noConflict() - 放弃 JSLite 控制的$ 变量。', function () {
         $.noConflict();
