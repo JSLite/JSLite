@@ -182,6 +182,21 @@ describe('traversing 遍历，过滤', function () {
     })
 
     it('.forEach() - 类似 each，forEach遍历不会停止。', function () {
+        var newarr = [1,"wcj",2,3].forEach(function(item,idx,array){
+            idx===0&&assert.isNumber(item)
+            idx===1&&assert.isString(item)
+            assert.isNumber(idx)
+            assert.isArray(array)
+        })
+        assert.isUndefined(newarr)
+        var elm = document.getElementById("test");
+        elm.innerHTML = '<div>J</div><div>S</div><div>L</div><div>i</div><div>t</div><div>e</div>';
+        var elmarr = $("#test div").forEach(function(item,index,array){
+            index===0&&assert.equal(item.innerHTML,'J')
+            assert.isNumber(index)
+            assert.isArray(array)
+        })
+        assert.isUndefined(elmarr)
 
     })
 
