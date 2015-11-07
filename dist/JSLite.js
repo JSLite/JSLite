@@ -244,6 +244,21 @@ function dasherize(str) {
            .replace(/_/g, '-')
            .toLowerCase()
 }
+
+// parents、 nextAll等方法调用
+// nodes 节点集合或者单个节点
+// selector 选择器，过滤用
+// dir 获取集合比如`parentNode`
+function dir(nodes,selector,dir){
+    var ancestors = []
+    while (nodes.length > 0) nodes = $.map(nodes, function(node){
+        if ((node = node[dir]) && !isDocument(node) && ancestors.indexOf(node) < 0) {
+            ancestors.push(node)
+            return node
+        }
+    })
+    return selector&&isString(selector)?$(ancestors).filter(selector):$(ancestors);
+}
 var emptyArray = [],
     slice = emptyArray.slice,
     filter = emptyArray.filter,
@@ -477,16 +492,7 @@ JSLite.fn.extend({
         })
     },
     parent: function(selector){return JSLite(JSLite.unique(this.pluck('parentNode'))).filter(selector||'*')},
-    parents: function(selector){
-        var ancestors = [], nodes = this
-        while (nodes.length > 0) nodes = $.map(nodes, function(node){
-            if ((node = node.parentNode) && !isDocument(node) && ancestors.indexOf(node) < 0) {
-                ancestors.push(node)
-                return node
-            }
-        })
-        return selector&&isString(selector)?$(ancestors).filter(selector):$(ancestors);
-    },
+    parents: function(selector){return dir(this,selector,'parentNode')},
     closest: function(selector, context){
         var node = this[0], collection = false
         if (typeof selector == 'object') collection = JSLite(selector)
@@ -500,12 +506,8 @@ JSLite.fn.extend({
     next: function(selector){
         return JSLite(this.pluck('nextElementSibling')).filter(selector || '*')
     },
-    nextAll: function (selector) {
-        return JSLite(JSLite.sibling(this,'nextElementSibling')).filter(selector || '*');
-    },
-    prevAll: function (selector) {
-        return JSLite(JSLite.sibling(this,'previousElementSibling')).filter(selector || '*');
-    },
+    nextAll: function (selector) { return dir(this,selector,'nextElementSibling')},
+    prevAll: function (selector) { return dir(this,selector,'previousElementSibling')},
     siblings: function(selector){
         var n=[];this.map(function(i,el){
             filter.call(el.parentNode.children, function(els, idx){
