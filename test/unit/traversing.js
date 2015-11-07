@@ -71,11 +71,21 @@ describe('traversing 遍历，过滤', function () {
     })
 
     it('.prev() - 获取对象集合每个元素的所有上一个对象(可以带上滤选择器)。', function () {
-
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<div>prev1</div><div>prev22</div><div id="prev">prev33</div>'
+        assert.lengthOf($('#test #prev').prev(),1)
+        assert.lengthOf($('#test #prev').prev('ul'),0)
+        assert.lengthOf($('#test #prev').prev('div'),1)
+        assert.equal($('#test #prev').prev('div')[0].innerText,"prev22")
     })
 
     it('.next() - 获取对象集合每个元素的所有下一个对象(可以带上滤选择器)。', function () {
-
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<div class="next">prev1</div><div>prev22</div><div id="prev">prev33</div>'
+        assert.lengthOf($('#test .next').next(),1)
+        assert.lengthOf($('#test .next').next('ul'),0)
+        assert.lengthOf($('#test .next').next('div'),1)
+        assert.equal($('#test .next').next('div')[0].innerText,"prev22")
     })
 
     it('.prevAll() - 获取对此对象【上】所有兄弟对象(可以带上滤选择器)。', function () {
