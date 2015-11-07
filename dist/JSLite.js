@@ -1,7 +1,7 @@
 /*!
-* JSLite v1.1.6 (http://JSLite.io)
+* JSLite v1.1.7 (http://JSLite.io)
 * Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)
-* build time 2015-11-02
+* build time 2015-11-07
 */
 ;(function (root, factory) {
     var JSLite = factory(root);
@@ -129,30 +129,54 @@ function each(elements, callback) {
     }
     return elements;
 }
-function type(obj) {
-    if (!obj) {
-        return undefined;
-    }
+var class2type = {}
+each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(i, name) {
+    class2type[ "[object " + name + "]" ] = name.toLowerCase();
+});
 
-    var type = '';
-    each('Boolean Number HTMLDivElement String Function Array Date RegExp Object Error'.split(' '), function(i, name) {
-        if (toString.call(obj).indexOf(name) > -1) {
-            type = name == 'HTMLDivElement' ? 'Object' : name;
-        }
-    });
-    return type;
+function type(obj) {
+
+    if ( obj == null ) {
+        return obj + "";
+    }
+    console.log("message:1:",typeof obj === "object");
+    console.log("message:2:",typeof obj === "object" || typeof obj === "function" ?
+        class2type[ toString.call(obj) ] || "object" :
+        typeof obj);
+    return typeof obj === "object" || typeof obj === "function" ?
+        class2type[ toString.call(obj) ] || "object" :
+        typeof obj;
+
+    // return obj == null ? String(obj) :
+    //   class2type[toString.call(obj)] || "object"
+
+    // console.log("type:wcjian:",class2type);
+    // if (!obj) {
+    //     return undefined;
+    // }
+
+    // var type = '';
+    // each('Boolean Number HTMLDivElement String Function Array Date RegExp Object Error'.split(' '), function(i, name) {
+    //     if (toString.call(obj).indexOf(name) > -1) {
+    //         type = name == 'HTMLDivElement' ? 'Object' : name;
+    //     }
+    // });
+    // console.log("type1:",obj);
+    // return type;
 }
 
 function isFunction(fn) {
-    return type(fn) == 'Function';
+    return type(fn) == 'function';
 }
 
 function isObject(obj) {
-    return type(obj) == 'Object';
+    // console.log("isObject1:",obj)
+    // console.log("isObject2:",type(obj))
+    return type(obj) == 'object';
 }
 
 function isArray(arr) {
-    return Array.isArray ? Array.isArray(arr) : type(arr) === 'Array';
+    return Array.isArray ? Array.isArray(arr) : type(arr) === 'array';
 }
 
 function isString(obj) {
@@ -164,7 +188,7 @@ function isPlainObject(obj) {
         return class2type.hasOwnProperty;
     }
     // 判断不是简单的对象 非 `DOM 节点`，`window`
-    if ( JSLite.type( obj ) !== "Object" || obj.nodeType || JSLite.isWindow( obj ) ) return false;
+    if ( JSLite.type( obj ) !== "object" || obj.nodeType || JSLite.isWindow( obj ) ) return false;
     if ( obj.constructor && !hasOwn.call( obj.constructor.prototype, "isPrototypeOf" ) ) return false;
     // 如果是 `{}` 和 `new Object` 返回true
     return true;
@@ -351,7 +375,7 @@ JSLite.extend({
     parseJSON:JSON.parse,
     type:type,
     likeArray:likeArray,
-    trim:function(str){if(str) return str.trim();},
+    trim:function(str){return str == null ? "" : String.prototype.trim.call(str)},
     intersect:function(a,b){
         var array=[];
         a.forEach(function(item){
@@ -436,8 +460,11 @@ JSLite.fn.extend({
     add: function(selector){return JSLite(JSLite.unique(this.concat(JSLite(selector))) );},
     eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
     first: function(){
-        var el = this[0]
-        return el && !isObject(el) ? el : JSLite(el)
+        var elm = this[0]
+        // console.log("el:",el)
+        console.log("el:",isObject(elm))
+
+        // return el && !isObject(el) ? el : JSLite(el)
     },
     slice:function(argument) { return JSLite(slice.apply(this, arguments));},
     size:function(){return this.length;},
@@ -725,8 +752,8 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
     JSLite.fn[operator] = function(){
         var argType, nodes = JSLite.map(arguments, function(arg) {
                 argType = type(arg)
-                if(argType=="Function") arg = funcArg(this, arg)
-                return argType == "Object" || argType == "Array" || arg == null ? arg : fragment(arg)
+                if(argType=="function") arg = funcArg(this, arg)
+                return argType == "object" || argType == "array" || arg == null ? arg : fragment(arg)
             }),parent,script,copyByClone = this.length > 1
         if (nodes.length < 1) return this
         return this.each(function(_, target){
@@ -948,12 +975,12 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
             cache: true
         },
         param:function(obj,traditional,scope){
-            if($.type(obj) == "String") return obj;
+            if($.type(obj) == "string") return obj;
             var params = [],str='';
             params.add=function(key, value){
                 this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value== null?"":value))
             };
-            if(scope==true&&type(obj)=='Object') params.add(traditional,obj)
+            if(scope==true&&type(obj)=='object') params.add(traditional,obj)
             else {
                 for(var p in obj) {
                     var v = obj[p],str='',
@@ -961,8 +988,8 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
                             if (traditional) {
                                 if (traditional==true) return p;
                                 else{
-                                    if(scope&&type(obj)=='Array') return traditional
-                                    return traditional + "[" + ($.type(obj)=='Array'?"":p) + "]";
+                                    if(scope&&type(obj)=='array') return traditional
+                                    return traditional + "[" + ($.type(obj)=='array'?"":p) + "]";
                                 };
                             };
                             return p
