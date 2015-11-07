@@ -36,12 +36,12 @@
             cache: true
         },
         param:function(obj,traditional,scope){
-            if($.type(obj) == "String") return obj;
+            if($.type(obj) == "string") return obj;
             var params = [],str='';
             params.add=function(key, value){
                 this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value== null?"":value))
             };
-            if(scope==true&&type(obj)=='Object') params.add(traditional,obj)
+            if(scope==true&&type(obj)=='object') params.add(traditional,obj)
             else {
                 for(var p in obj) {
                     var v = obj[p],str='',
@@ -49,8 +49,8 @@
                             if (traditional) {
                                 if (traditional==true) return p;
                                 else{
-                                    if(scope&&type(obj)=='Array') return traditional
-                                    return traditional + "[" + ($.type(obj)=='Array'?"":p) + "]";
+                                    if(scope&&type(obj)=='array') return traditional
+                                    return traditional + "[" + ($.type(obj)=='array'?"":p) + "]";
                                 };
                             };
                             return p

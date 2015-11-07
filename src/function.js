@@ -18,30 +18,29 @@ function each(elements, callback) {
     }
     return elements;
 }
-function type(obj) {
-    if (!obj) {
-        return undefined;
-    }
 
-    var type = '';
-    each('Boolean Number HTMLDivElement String Function Array Date RegExp Object Error'.split(' '), function(i, name) {
-        if (toString.call(obj).indexOf(name) > -1) {
-            type = name == 'HTMLDivElement' ? 'Object' : name;
-        }
-    });
-    return type;
+var class2type = {}
+each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(i, name) {
+    class2type[ "[object " + name + "]" ] = name.toLowerCase();
+});
+
+function type(obj) {
+    if ( obj == null ) return obj + "";
+    return typeof obj === "object" || typeof obj === "function" ?
+        class2type[ toString.call(obj) ] || "object" :
+        typeof obj;
 }
 
 function isFunction(fn) {
-    return type(fn) == 'Function';
+    return type(fn) == 'function';
 }
 
 function isObject(obj) {
-    return type(obj) == 'Object';
+    return type(obj) == 'object';
 }
 
 function isArray(arr) {
-    return Array.isArray ? Array.isArray(arr) : type(arr) === 'Array';
+    return Array.isArray ? Array.isArray(arr) : type(arr) === 'array';
 }
 
 function isString(obj) {
@@ -53,7 +52,7 @@ function isPlainObject(obj) {
         return class2type.hasOwnProperty;
     }
     // 判断不是简单的对象 非 `DOM 节点`，`window`
-    if ( JSLite.type( obj ) !== "Object" || obj.nodeType || JSLite.isWindow( obj ) ) return false;
+    if ( JSLite.type( obj ) !== "object" || obj.nodeType || JSLite.isWindow( obj ) ) return false;
     if ( obj.constructor && !hasOwn.call( obj.constructor.prototype, "isPrototypeOf" ) ) return false;
     // 如果是 `{}` 和 `new Object` 返回true
     return true;
