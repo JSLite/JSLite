@@ -474,8 +474,14 @@ JSLite.fn.extend({
     },
     parent: function(selector){return JSLite(JSLite.unique(this.pluck('parentNode'))).filter(selector||'*')},
     parents: function(selector){
-        var ancestors=JSLite.sibling(this,'parentNode');
-        return selector == null ? JSLite(ancestors) : JSLite(ancestors).filter(selector);
+        var ancestors = [], nodes = this
+        while (nodes.length > 0) nodes = $.map(nodes, function(node){
+            if ((node = node.parentNode) && !isDocument(node) && ancestors.indexOf(node) < 0) {
+                ancestors.push(node)
+                return node
+            }
+        })
+        return selector&&isString(selector)?$(ancestors).filter(selector):$(ancestors);
     },
     closest: function(selector, context){
         var node = this[0], collection = false

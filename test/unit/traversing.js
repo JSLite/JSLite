@@ -39,10 +39,18 @@ describe('traversing 遍历，过滤', function () {
     })
 
     it('.parent() - 对象集合中每个元素的直接父元素。', function () {
-
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<div>Goodbye<p><span>Test</span></p><p>Goodbye</p></div>'
+        assert.lengthOf($('#test p').parent(),1)
+        assert.equal($('#test p').parent()[0].innerText,'Goodbye\nTest\n\nGoodbye')
     })
 
     it('.parents() - 获取对象集合每个元素所有的祖先元素（不包含根元素）。', function () {
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<div>Goodbye<p><span>Test</span></p><p>Goodbye</p></div>'
+        console.log("message:",$('#test p').parents());
+        // assert.lengthOf($('#test p').parents(),1)
+        // assert.equal($('#test p').parent()[0].innerText,'Goodbye\nTest\n\nGoodbye')
 
     })
 
