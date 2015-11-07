@@ -48,9 +48,9 @@ describe('traversing 遍历，过滤', function () {
     it('.parents() - 获取对象集合每个元素所有的祖先元素（不包含根元素）。', function () {
         var elm = document.getElementById("test")
         elm.innerHTML = '<div>Goodbye<p><span>Test</span></p><p>Goodbye</p></div>'
-        console.log("message:",$('#test p').parents());
-        // assert.lengthOf($('#test p').parents(),1)
-        // assert.equal($('#test p').parent()[0].innerText,'Goodbye\nTest\n\nGoodbye')
+        assert.lengthOf($('#test p').parents(),4)
+        assert.lengthOf($('#test p').parent('div'),1)
+        assert.equal($('#test p').parent('div')[0].innerText,'Goodbye\nTest\n\nGoodbye')
 
     })
 
