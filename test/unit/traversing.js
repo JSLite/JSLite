@@ -51,15 +51,23 @@ describe('traversing 遍历，过滤', function () {
         assert.lengthOf($('#test p').parents(),4)
         assert.lengthOf($('#test p').parent('div'),1)
         assert.equal($('#test p').parent('div')[0].innerText,'Goodbye\nTest\n\nGoodbye')
-
     })
 
     it('.siblings() - 获取对此对象【其它】所有兄弟对象(可以带上滤选择器)。', function () {
-
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<p>test</p><p>3test</p><div>siblings</div><p>3sdtest</p><p class="wcj">3sdtest</p><p>3sdasdftest</p>'
+        assert.lengthOf($('#test .wcj').siblings(),5)
+        assert.lengthOf($('#test .wcj').siblings('div'),1)
+        assert.equal($('#test .wcj').siblings('div')[0].innerText,'siblings')
     })
 
     it('.contents() - 获得每个匹配元素集合元素的子元素，包括文字和注释节点。', function () {
-
+        var elm = document.getElementById("test")
+        elm.innerHTML = 'JSLite contents<div>JSLite</div>'
+        assert.lengthOf($('#test').contents(),2)
+        assert.equal($('#test').contents()[0].data,'JSLite contents')
+        assert.lengthOf($('#test').contents('div'),1)
+        assert.equal($('#test').contents('div')[0].innerText,'JSLite')
     })
 
     it('.prev() - 获取对象集合每个元素的所有上一个对象(可以带上滤选择器)。', function () {
