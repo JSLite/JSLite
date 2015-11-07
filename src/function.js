@@ -133,3 +133,18 @@ function dasherize(str) {
            .replace(/_/g, '-')
            .toLowerCase()
 }
+
+// parents、 nextAll等方法调用
+// nodes 节点集合或者单个节点
+// selector 选择器，过滤用
+// dir 获取集合比如`parentNode`
+function dir(nodes,selector,dir){
+    var ancestors = []
+    while (nodes.length > 0) nodes = $.map(nodes, function(node){
+        if ((node = node[dir]) && !isDocument(node) && ancestors.indexOf(node) < 0) {
+            ancestors.push(node)
+            return node
+        }
+    })
+    return selector&&isString(selector)?$(ancestors).filter(selector):$(ancestors);
+}
