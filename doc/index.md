@@ -1156,7 +1156,8 @@ $("#box").click(function(){
 > 添加一个事件侦听器，当页面 `dom` 加载完毕 `DOMContentLoaded` 事件触发时触发。加载完毕执行，建议使用 `$(func)` 来代替这种用法。
 
 ```js
-$(document).ready(function(){
+$(document).ready(function(J){
+    // J === JSLite === $
     alert("当页面dom加载完毕执行");
     console.log($("#box"));
 })
@@ -1167,7 +1168,8 @@ $(document).ready(function(){
 
 ```js
 //或者使用下面方法代替ready
-$(function(){
+$(function($){
+    // J === JSLite === $
     console.log("当页面dom加载完毕执行");
 })
 ```
