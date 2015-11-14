@@ -211,9 +211,15 @@ describe('selectors 选择器', function () {
         expect($('#test :not(p)')).to.have.length.within(2,2);
         expect($('#test :not(p)')[0].outerHTML).to.equal('<h1>这是标题</h1>');
         elm.innerHTML = ''
-        
+    })    
+  
+    it('.eq(index) li.eq(3) 选择<li>元素中的第三个标签元素。其中参数index表示索引号(即：一个整数)，它是从0开始，如果index的值为3，表示选择的是第4个元素。',function(){
+        var elm = document.getElementById("test");
+        elm.innerHTML = '<ul><li>第1行</li><li>第2行</li><li>第3行</li><li>第4行</li></ul>';
+        expect($('#test li').eq(3)).to.have.length.within(1,1);
+        expect($('#test li').eq(3)[0].outerHTML).to.equal('<li>第4行</li>');
+        // console.log($('#test li').eq(3)[0].outerHTML)
     })
-
     // it('::selection ::selection 选择被用户选取的元素部分。',function(){})
 
 })
