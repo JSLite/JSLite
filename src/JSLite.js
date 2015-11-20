@@ -524,3 +524,20 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
         })
     }
 });
+
+var _JSLite = window.JSLite,
+    _$ = window.$;
+
+JSLite.noConflict = function( deep ) {
+    if ( window.$ === JSLite ) {
+        window.$ = _$;
+    }
+
+    if ( deep && window.JSLite === JSLite ) {
+        window.JSLite = _JSLite;
+    }
+
+    return JSLite;
+};
+
+window.JSLite = window.$ = JSLite;
