@@ -78,16 +78,14 @@ JSLite 模块中的 `src/` 目录的各个文件。
 
 模块 | 默认加载 | 描述
 --- | ------- | -----
-JSLite | ✔ | 核心模块，包含大多数方法。
-function | ✔ | 内部函数调用
-start | ✔ | UMD开始。
-end | ✔ | UMD结束。
+JSLite | `✔` | 核心模块，包含大多数方法。
+function | `✔` | 内部函数调用
 polyfill | - | 支持桌面浏览器IE和移动端 Windows Phone 8。
 form | - | 表单方法。
 event | - | 事件处理。
 ajax | - | 异步请求的方法，发起任意Ajax请求。
 
-默认合并 `start` `polyfill` `function` `JSLite` `end` 。上面打 `✔` 都为默认加载的核心模块。其它均可选择性加载。
+默认合并 `polyfill` `function` `JSLite` 。上面打 `✔` 都为默认加载的核心模块。其它均可选择性加载。
 
 ```shell
 # 运行下面任务请确认依赖是否安装 安装方法 `npm install`
