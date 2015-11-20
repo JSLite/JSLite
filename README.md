@@ -59,9 +59,15 @@ $ npm start
 > 测试需要在系统上安装 `Node.js`的 `4.x` 以上版本。 
 
 ```shell
-$ grunt make # 先生成新的 压缩版本的JSLite
+# 安装全局的 gulp
+$ npm install gulp -g && npm install 
+
+# 先生成新的 压缩版本的JSLite
+$ gulp  
+
 # 在命令行中 － 查看测试结果
-$ npm test # 进行单元测试
+# 进行单元测试
+$ npm test 
 
 # 在浏览器中查看 － 编写预览测试结果
 # 打开 test/index.html
@@ -87,11 +93,17 @@ ajax | - | 异步请求的方法，发起任意Ajax请求。
 # 运行下面任务请确认依赖是否安装 安装方法 `npm install`
 # 模块选择合并，做一个自定义生成
 # 默认不传环境变量全部合并
-$ MODULES="polyfill event" grunt make
+$ MODULES="polyfill event" gulp
 
 # on Windows
 c:\JSLite> SET MODULES=polyfill event
-c:\JSLite> grunt make
+c:\JSLite> gulp
+```
+
+## 生成map文件
+
+```bash
+gulp map
 ```
 
 ### 传统方法
