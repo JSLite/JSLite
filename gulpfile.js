@@ -6,6 +6,7 @@ var gutil = require('gulp-util');
 var concat = require('gulp-concat');
 var sourcemap = require('gulp-sourcemap');
 var umd = require('gulp-umd')
+var gzip = require('gulp-gzip')
 
 var clc = require('cli-color');
 
@@ -49,6 +50,7 @@ gulp.task('build', function (cb) {
         .pipe(rename({
             suffix:".min"
         }))
+        .pipe(gzip())
         .pipe(umd({
             exports: function(file) {
                 return 'JSLite';
