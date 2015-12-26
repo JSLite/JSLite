@@ -21,7 +21,7 @@
     "url": "http://jslite.io/license/"
   },
   "bugs": {
-    "url": "https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE"
+    "url": "https://github.com/JSLite/JSLite/issues"
   },
   "scripts": {
     "test": "mocha-phantomjs test/index.html",
