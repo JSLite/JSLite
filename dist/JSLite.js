@@ -279,7 +279,7 @@ JSLite = function() {
         return element ? "string" === type(element) ? this.indexOf(this.parent().children(element)[0]) : this.indexOf(element) : this.parent().children().indexOf(this[0]);
     },
     is: function(selector) {
-        return this.length > 0 && isObject(selector) ? this.indexOf(selector) > -1 ? !0 : !1 : this.length > 0 && JSLite.matches(this[0], selector);
+        return this.length > 0 && "string" != typeof selector ? this.indexOf(selector) > -1 ? !0 : !1 : this.length > 0 && JSLite.matches(this[0], selector);
     },
     add: function(selector) {
         return JSLite(JSLite.unique(this.concat(JSLite(selector))));
