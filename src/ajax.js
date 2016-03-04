@@ -104,7 +104,7 @@
             return options.xhr()
         },
         ajax:function(options){
-            var key,settings,
+            var key,settings,name,
                 setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
                 appendQuery = function(url, query) {
                     if (query == '') return url
