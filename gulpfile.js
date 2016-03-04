@@ -73,17 +73,6 @@ gulp.task('build', function (cb) {
     gulp.src(module_files)
         .on('error',gutil.log)
         .pipe(concat('JSLite.js'))
-        .pipe(uglify({
-            mangle: false,
-            output: {
-                beautify: true
-            },
-            compress: {
-                "hoist_funs": false,
-                loops: false,
-                unused: false
-            }
-        }))
         .pipe(umd({
             dependencies: function(file) {
                 return ['JSLite'];
