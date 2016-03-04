@@ -802,7 +802,7 @@ JSLite.noConflict = function(deep) {
                 settings.headers) for (name in settings.headers) setHeader(name, settings.headers[name]);
                 (settings.contentType || settings.contentType !== !1 && settings.data && "GET" != settings.type.toUpperCase()) && setHeader("Content-Type", settings.contentType || "application/x-www-form-urlencoded"), 
                 xhr.onreadystatechange = function() {
-                    if (4 == xhr.readyState) if (xhr.status >= 200 && xhr.status < 300 || 0 == xhr.status) if ("application/json" != mime || /^\s*$/.test(xhr.responseText)) callback(xhr.responseText, "success", xhr); else {
+                    if (4 == xhr.readyState) if (xhr.status >= 200 && xhr.status < 300 || 0 == xhr.status) {
                         var result, error = !1;
                         result = xhr.responseText;
                         try {

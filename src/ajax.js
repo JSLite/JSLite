@@ -167,20 +167,16 @@
             xhr.onreadystatechange = function(){
                 if (xhr.readyState == 4) {
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 0) {
-                        if (mime == 'application/json'&&!(/^\s*$/.test(xhr.responseText))) {
-                            var result, error = false;
-                                result = xhr.responseText
-                            try {
-                                if (settings.dataType == 'script')    (1,eval)(result)
-                                else if (settings.dataType == 'xml')  result = xhr.responseXML
-                                else if (settings.dataType == 'json') result = /^\s*$/.test(result) ? null : JSON.parse(result)
-                            } catch (e) { error = e }
+                        var result, error = false;
+                            result = xhr.responseText
+                        try {
+                            if (settings.dataType == 'script')    (1,eval)(result)
+                            else if (settings.dataType == 'xml')  result = xhr.responseXML
+                            else if (settings.dataType == 'json') result = /^\s*$/.test(result) ? null : JSON.parse(result)
+                        } catch (e) { error = e }
 
-                            if (error) errback(error, 'parsererror', xhr, settings);
-                            else callback(result, 'success', xhr);
-                        } else {
-                            callback(xhr.responseText, 'success', xhr)
-                        };
+                        if (error) errback(error, 'parsererror', xhr, settings);
+                        else callback(result, 'success', xhr);
                     } else {
                         settings.complete(xhr, error ? 'error' : 'success')
                     }
