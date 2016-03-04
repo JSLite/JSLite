@@ -27,12 +27,20 @@ var module_files = (function() {
     return _results;
 })();
 
-gulp.task('default',["build"])
+gulp.task('default',["build","zp"])
 
 // 侦听文件改变执行任务
 gulp.task('watch', function (cb) {
     gulp.watch('src/**/*.js', ['default']);
 });
+
+gulp.task('zp',function(){
+
+    // 生成 JSLite.min.js
+    gulp.src('./dist/JSLite.min.js')
+        .pipe(gzip())
+        .pipe(gulp.dest('./dist/'));
+})
 
 // 侦听文件改变执行任务
 gulp.task('build', function (cb) {
@@ -41,16 +49,9 @@ gulp.task('build', function (cb) {
     gulp.src(module_files)
         .on('error',gutil.log)
         .pipe(concat('JSLite.js'))
-        .pipe(uglify({
-            mangle: false,
-            output:{
-                // comments:true
-            }
-        }))
         .pipe(rename({
             suffix:".min"
         }))
-        .pipe(gzip())
         .pipe(umd({
             exports: function(file) {
                 return 'JSLite';
@@ -59,7 +60,14 @@ gulp.task('build', function (cb) {
                 return 'JSLite';
             }
         }))
+        .pipe(uglify({
+            mangle: true,
+            output:{
+                comments:false
+            }
+        }))
         .pipe(gulp.dest('./dist/'));
+
 
     // 生成 JSLite.js
     gulp.src(module_files)
