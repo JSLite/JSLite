@@ -185,7 +185,7 @@ JSLite.fn.extend({
             : this.parent().children().indexOf(this[0])
     },
     is: function(selector){
-        if (this.length > 0 && isObject(selector)) return this.indexOf(selector)>-1?true:false;
+        if (this.length > 0 && typeof selector !== 'string') return this.indexOf(selector)>-1?true:false;
         return this.length > 0 && JSLite.matches(this[0], selector);
     },
     add: function(selector){return JSLite(JSLite.unique(this.concat(JSLite(selector))) );},
