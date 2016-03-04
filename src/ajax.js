@@ -22,7 +22,6 @@
               return new window.XMLHttpRequest();
             },
             processData:true,
-            async:true,
             complete:function(){},//要求执行回调完整（包括：错误和成功）
             // MIME类型的映射
             accepts:{
@@ -185,7 +184,8 @@
             if (data&&data instanceof Object&&settings.type=='GET'){
                 data?settings.url =(settings.url.indexOf('?')>-1?settings.url +'&'+ data:settings.url +'?'+ data) :null;
             }
-            xhr.open(settings.type, settings.url, true);
+            var async = 'async' in settings ? settings.async : true
+            xhr.open(settings.type, settings.url, async);
             if (mime) xhr.setRequestHeader('Accept', mime);
             if (data instanceof Object && mime == 'application/json' ) data = JSON.stringify(data), content = content || 'application/json';
             for (name in headers) nativeSetHeader.apply(xhr, headers[name]);

@@ -728,7 +728,6 @@ JSLite.noConflict = function(deep) {
                 return new window.XMLHttpRequest();
             },
             processData: !0,
-            async: !0,
             complete: function() {},
             accepts: {
                 script: "text/javascript, application/javascript",
@@ -812,8 +811,9 @@ JSLite.noConflict = function(deep) {
                         }
                         error ? errback(error, "parsererror", xhr, settings) : callback(result, "success", xhr);
                     } else settings.complete(xhr, error ? "error" : "success");
-                }, data && data instanceof Object && "GET" == settings.type && (data ? settings.url = settings.url.indexOf("?") > -1 ? settings.url + "&" + data : settings.url + "?" + data : null), 
-                xhr.open(settings.type, settings.url, !0), mime && xhr.setRequestHeader("Accept", mime), 
+                }, data && data instanceof Object && "GET" == settings.type && (data ? settings.url = settings.url.indexOf("?") > -1 ? settings.url + "&" + data : settings.url + "?" + data : null);
+                var async = "async" in settings ? settings.async : !0;
+                xhr.open(settings.type, settings.url, async), mime && xhr.setRequestHeader("Accept", mime), 
                 data instanceof Object && "application/json" == mime && (data = JSON.stringify(data), 
                 content = content || "application/json");
                 for (name in headers) nativeSetHeader.apply(xhr, headers[name]);
