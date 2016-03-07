@@ -63,9 +63,8 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
         expect($('#test').html()).to.equal('<div class="jslite">Goodbye</div><div class="jslite">Goodbye</div>');
 
     })
-
-    // 暂时移除该测试
-    /*it('.detach() - 被遗弃的方法(不建议使用)，作用跟remove一样，所有绑定的事件、附加的数据等都会保留下来。', function () {
+    
+    it('.detach() - 被遗弃的方法(不建议使用)，作用跟remove一样，所有绑定的事件、附加的数据等都会保留下来。', function () {
 
         var elm = document.getElementById("test")
             elm.innerHTML = '<p>Goodbye</p><div>String</div>';
@@ -76,7 +75,7 @@ describe('Manipulation 此部分中所有的方法是一些操作DOM的方式。
         expect($('#test div').append(div)).to.have.length.above(0);
         expect($('#test div').html()).to.equal('String<p>Goodbye</p>');
 
-    })*/
+    })
 
 
     it('.empty() - 所有匹配节点对象集合中移除所有的dom子节点，不包括自己，清空内容。', function () {
