@@ -18,18 +18,15 @@ function each(elements, callback) {
     }
     return elements;
 }
-function type(obj) {
-    if (!obj) {
-        return undefined;
-    }
 
-    var type = '';
-    each('Boolean Number HTMLDivElement String Function Array Date RegExp Object Error'.split(' '), function(i, name) {
-        if (toString.call(obj).indexOf(name) > -1) {
-            type = name == 'HTMLDivElement' ? 'Object' : name;
-        }
-    });
-    return type;
+function type(obj) {
+    var typeName = toString.call(obj).slice(8, -1);
+
+    var alias = { // 别名映射
+        'HTMLDivElement': 'Object'
+    };
+
+    return alias[typeName] || typeName;
 }
 
 function isFunction(fn) {
