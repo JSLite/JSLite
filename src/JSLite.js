@@ -105,7 +105,7 @@ JSLite.extend({
     parseJSON:JSON.parse,
     type:type,
     likeArray:likeArray,
-    trim:function(str){if(str) return str.trim();},
+    trim:function(str){return str == null ? "" : String.prototype.trim.call(str)},
     intersect:function(a,b){
         var array=[];
         a.forEach(function(item){
@@ -181,10 +181,11 @@ JSLite.fn.extend({
         return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
     },
     index: function(element){
-        return element ? this.indexOf(JSLite(element)[0]) : this.parent().children().indexOf(this[0])
+        return element ? (type(element) === 'string'?this.indexOf(this.parent().children(element)[0]):this.indexOf(element))
+            : this.parent().children().indexOf(this[0])
     },
     is: function(selector){
-        if (this.length > 0 && isObject(selector)) return this.indexOf(selector)>-1?true:false;
+        if (this.length > 0 && typeof selector !== 'string') return this.indexOf(selector)>-1?true:false;
         return this.length > 0 && JSLite.matches(this[0], selector);
     },
     add: function(selector){return JSLite(JSLite.unique(this.concat(JSLite(selector))) );},
@@ -224,14 +225,15 @@ JSLite.fn.extend({
         });
         return JSLite(e).filter(selector || '*');
     },
-    contents: function() {
-        return this.map(function() { return this.contentDocument || slice.call(this.childNodes) })
+    contents: function(selector) {
+        return this.map(function() { 
+            return this.contentDocument || $.grep(this.childNodes,function(node){
+                return selector? $.matches(node,selector):node
+            }) 
+        })
     },
     parent: function(selector){return JSLite(JSLite.unique(this.pluck('parentNode'))).filter(selector||'*')},
-    parents: function(selector){
-        var ancestors=JSLite.sibling(this,'parentNode');
-        return selector == null ? JSLite(ancestors) : JSLite(ancestors).filter(selector);
-    },
+    parents: function(selector){return dir(this,selector,'parentNode')},
     closest: function(selector, context){
         var node = this[0], collection = false
         if (typeof selector == 'object') collection = JSLite(selector)
@@ -245,12 +247,8 @@ JSLite.fn.extend({
     next: function(selector){
         return JSLite(this.pluck('nextElementSibling')).filter(selector || '*')
     },
-    nextAll: function (selector) {
-        return JSLite(JSLite.sibling(this,'nextElementSibling')).filter(selector || '*');
-    },
-    prevAll: function (selector) {
-        return JSLite(JSLite.sibling(this,'previousElementSibling')).filter(selector || '*');
-    },
+    nextAll: function (selector) { return dir(this,selector,'nextElementSibling')},
+    prevAll: function (selector) { return dir(this,selector,'previousElementSibling')},
     siblings: function(selector){
         var n=[];this.map(function(i,el){
             filter.call(el.parentNode.children, function(els, idx){
@@ -479,8 +477,8 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
     JSLite.fn[operator] = function(){
         var argType, nodes = JSLite.map(arguments, function(arg) {
                 argType = type(arg)
-                if(argType=="Function") arg = funcArg(this, arg)
-                return argType == "Object" || argType == "Array" || arg == null ? arg : fragment(arg)
+                if(argType=="function") arg = funcArg(this, arg)
+                return argType == "object" || argType == "array" || arg == null ? arg : fragment(arg)
             }),parent,script,copyByClone = this.length > 1
         if (nodes.length < 1) return this
         return this.each(function(_, target){
@@ -526,3 +524,20 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
         })
     }
 });
+
+var _JSLite = window.JSLite,
+    _$ = window.$;
+
+JSLite.noConflict = function( deep ) {
+    if ( window.$ === JSLite ) {
+        window.$ = _$;
+    }
+
+    if ( deep && window.JSLite === JSLite ) {
+        window.JSLite = _JSLite;
+    }
+
+    return JSLite;
+};
+
+window.JSLite = window.$ = JSLite;

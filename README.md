@@ -59,9 +59,15 @@ $ npm start
 > 测试需要在系统上安装 `Node.js`的 `4.x` 以上版本。 
 
 ```shell
-$ grunt make # 先生成新的 压缩版本的JSLite
+# 安装全局的 gulp
+$ npm install gulp -g && npm install 
+
+# 先生成新的 压缩版本的JSLite
+$ gulp  
+
 # 在命令行中 － 查看测试结果
-$ npm test # 进行单元测试
+# 进行单元测试
+$ npm test 
 
 # 在浏览器中查看 － 编写预览测试结果
 # 打开 test/index.html
@@ -72,26 +78,30 @@ JSLite 模块中的 `src/` 目录的各个文件。
 
 模块 | 默认加载 | 描述
 --- | ------- | -----
-JSLite | ✔ | 核心模块，包含大多数方法。
-function | ✔ | 内部函数调用
-start | ✔ | UMD开始。
-end | ✔ | UMD结束。
+JSLite | `✔` | 核心模块，包含大多数方法。
+function | `✔` | 内部函数调用
 polyfill | - | 支持桌面浏览器IE和移动端 Windows Phone 8。
 form | - | 表单方法。
 event | - | 事件处理。
 ajax | - | 异步请求的方法，发起任意Ajax请求。
 
-默认合并 `start` `polyfill` `function` `JSLite` `end` 。上面打 `✔` 都为默认加载的核心模块。其它均可选择性加载。
+默认合并 `polyfill` `function` `JSLite` 。上面打 `✔` 都为默认加载的核心模块。其它均可选择性加载。
 
 ```shell
 # 运行下面任务请确认依赖是否安装 安装方法 `npm install`
 # 模块选择合并，做一个自定义生成
 # 默认不传环境变量全部合并
-$ MODULES="polyfill event" grunt make
+$ MODULES="polyfill event" gulp
 
 # on Windows
 c:\JSLite> SET MODULES=polyfill event
-c:\JSLite> grunt make
+c:\JSLite> gulp
+```
+
+## 生成map文件
+
+```bash
+gulp map
 ```
 
 ### 传统方法

@@ -18,6 +18,7 @@ function each(elements, callback) {
     }
     return elements;
 }
+<<<<<<< HEAD
 
 function type(obj) {
     var typeName = toString.call(obj).slice(8, -1);
@@ -27,18 +28,31 @@ function type(obj) {
     };
 
     return alias[typeName] || typeName;
+=======
+
+var class2type = {}
+each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(i, name) {
+    class2type[ "[object " + name + "]" ] = name.toLowerCase();
+});
+
+function type(obj) {
+    if ( obj == null ) return obj + "";
+    return typeof obj === "object" || typeof obj === "function" ?
+        class2type[ toString.call(obj) ] || "object" :
+        typeof obj;
+>>>>>>> dev
 }
 
 function isFunction(fn) {
-    return type(fn) == 'Function';
+    return type(fn) == 'function';
 }
 
 function isObject(obj) {
-    return type(obj) == 'Object';
+    return type(obj) == 'object';
 }
 
 function isArray(arr) {
-    return Array.isArray ? Array.isArray(arr) : type(arr) === 'Array';
+    return Array.isArray ? Array.isArray(arr) : type(arr) === 'array';
 }
 
 function isString(obj) {
@@ -50,7 +64,7 @@ function isPlainObject(obj) {
         return class2type.hasOwnProperty;
     }
     // 判断不是简单的对象 非 `DOM 节点`，`window`
-    if ( JSLite.type( obj ) !== "Object" || obj.nodeType || JSLite.isWindow( obj ) ) return false;
+    if ( JSLite.type( obj ) !== "object" || obj.nodeType || JSLite.isWindow( obj ) ) return false;
     if ( obj.constructor && !hasOwn.call( obj.constructor.prototype, "isPrototypeOf" ) ) return false;
     // 如果是 `{}` 和 `new Object` 返回true
     return true;
@@ -130,4 +144,19 @@ function dasherize(str) {
            .replace(/([a-z\d])([A-Z])/g, '$1_$2')
            .replace(/_/g, '-')
            .toLowerCase()
+}
+
+// parents、 nextAll等方法调用
+// nodes 节点集合或者单个节点
+// selector 选择器，过滤用
+// dir 获取集合比如`parentNode`
+function dir(nodes,selector,dir){
+    var ancestors = []
+    while (nodes.length > 0) nodes = $.map(nodes, function(node){
+        if ((node = node[dir]) && !isDocument(node) && ancestors.indexOf(node) < 0) {
+            ancestors.push(node)
+            return node
+        }
+    })
+    return selector&&isString(selector)?$(ancestors).filter(selector):$(ancestors);
 }
