@@ -112,7 +112,7 @@
                     return (url + '&' + query).replace(/[&?]{1,2}/, '?')
                 },
                 serializeData = function(options){
-                    if (options.processData && options.data && $.type(options.data) != "string")
+                    if (options.processData && options.data && $.type(options.data) != "String")
                         options.data = $.param(options.data, options.traditional)
                     if (options.data && (!options.type || options.type.toUpperCase() == 'GET'))
                         options.url = appendQuery(options.url, options.data), options.data = undefined
