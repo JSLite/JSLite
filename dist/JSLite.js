@@ -1,38 +1,12 @@
-/*!
-* JSLite v1.1.6 (http://JSLite.io)
-* Licensed under MIT (https://github.com/JSLite/JSLite/blob/master/MIT-LICENSE)
-* build time 2015-11-02
-*/
-;(function (root, factory) {
-    var JSLite = factory(root);
-    if ( typeof define === 'function' && define.amd) {
-        // AMD
-        define('JSLite', function() {
-            return JSLite;
-        });
-    } else if ( typeof exports === 'object') {
-        // Node.js
-        module.exports = JSLite;
-    } else {
-        // Browser globals
-        var _JSLite = root.JSLite;
-        var _$ = root.$;
-        JSLite.noConflict = function (deep) {
-            if (deep && root.JSLite === JSLite) {
-                root.JSLite = _JSLite;
-            }
-
-            if (root.$ === JSLite) {
-                root.$ = _$;
-            }
-
-            return JSLite;
-        };
-        root.JSLite = JSLite;
-        root.$ = JSLite;
-    }
-}(this, function (root, undefined) {
-    "use strict";
+;(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['JSLite'], factory);
+  } else if (typeof exports === 'object') {
+    module.exports = factory(require('JSLite'));
+  } else {
+    root.JSLite = factory(root.JSLite);
+  }
+}(this, function(JSLite) {
 //修复IE，增加方法getComputedStyle为对象的窗口和getPropertyValue方法的对象，它返回的getComputedStyle
 if (window&&!window.getComputedStyle) {
     window.getComputedStyle = function(el, pseudo) {
@@ -129,30 +103,29 @@ function each(elements, callback) {
     }
     return elements;
 }
-function type(obj) {
-    if (!obj) {
-        return undefined;
-    }
 
-    var type = '';
-    each('Boolean Number HTMLDivElement String Function Array Date RegExp Object Error'.split(' '), function(i, name) {
-        if (toString.call(obj).indexOf(name) > -1) {
-            type = name == 'HTMLDivElement' ? 'Object' : name;
-        }
-    });
-    return type;
+var class2type = {}
+each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(i, name) {
+    class2type[ "[object " + name + "]" ] = name.toLowerCase();
+});
+
+function type(obj) {
+    if ( obj == null ) return obj + "";
+    return typeof obj === "object" || typeof obj === "function" ?
+        class2type[ toString.call(obj) ] || "object" :
+        typeof obj;
 }
 
 function isFunction(fn) {
-    return type(fn) == 'Function';
+    return type(fn) == 'function';
 }
 
 function isObject(obj) {
-    return type(obj) == 'Object';
+    return type(obj) == 'object';
 }
 
 function isArray(arr) {
-    return Array.isArray ? Array.isArray(arr) : type(arr) === 'Array';
+    return Array.isArray ? Array.isArray(arr) : type(arr) === 'array';
 }
 
 function isString(obj) {
@@ -164,7 +137,7 @@ function isPlainObject(obj) {
         return class2type.hasOwnProperty;
     }
     // 判断不是简单的对象 非 `DOM 节点`，`window`
-    if ( JSLite.type( obj ) !== "Object" || obj.nodeType || JSLite.isWindow( obj ) ) return false;
+    if ( JSLite.type( obj ) !== "object" || obj.nodeType || JSLite.isWindow( obj ) ) return false;
     if ( obj.constructor && !hasOwn.call( obj.constructor.prototype, "isPrototypeOf" ) ) return false;
     // 如果是 `{}` 和 `new Object` 返回true
     return true;
@@ -245,6 +218,21 @@ function dasherize(str) {
            .replace(/_/g, '-')
            .toLowerCase()
 }
+
+// parents、 nextAll等方法调用
+// nodes 节点集合或者单个节点
+// selector 选择器，过滤用
+// dir 获取集合比如`parentNode`
+function dir(nodes,selector,dir){
+    var ancestors = []
+    while (nodes.length > 0) nodes = $.map(nodes, function(node){
+        if ((node = node[dir]) && !isDocument(node) && ancestors.indexOf(node) < 0) {
+            ancestors.push(node)
+            return node
+        }
+    })
+    return selector&&isString(selector)?$(ancestors).filter(selector):$(ancestors);
+}
 var emptyArray = [],
     slice = emptyArray.slice,
     filter = emptyArray.filter,
@@ -267,6 +255,7 @@ var emptyArray = [],
         'contenteditable': 'contentEditable'
     },
     JSLite;
+
 
 JSLite = (function(){
     var JSLite = function(selector) {
@@ -351,7 +340,7 @@ JSLite.extend({
     parseJSON:JSON.parse,
     type:type,
     likeArray:likeArray,
-    trim:function(str){if(str) return str.trim();},
+    trim:function(str){return str == null ? "" : String.prototype.trim.call(str)},
     intersect:function(a,b){
         var array=[];
         a.forEach(function(item){
@@ -427,10 +416,11 @@ JSLite.fn.extend({
         return index === undefined ? slice.call(this) : this[index >= 0 ? index : index + this.length];
     },
     index: function(element){
-        return element ? this.indexOf(JSLite(element)[0]) : this.parent().children().indexOf(this[0])
+        return element ? (type(element) === 'string'?this.indexOf(this.parent().children(element)[0]):this.indexOf(element))
+            : this.parent().children().indexOf(this[0])
     },
     is: function(selector){
-        if (this.length > 0 && isObject(selector)) return this.indexOf(selector)>-1?true:false;
+        if (this.length > 0 && typeof selector !== 'string') return this.indexOf(selector)>-1?true:false;
         return this.length > 0 && JSLite.matches(this[0], selector);
     },
     add: function(selector){return JSLite(JSLite.unique(this.concat(JSLite(selector))) );},
@@ -470,14 +460,15 @@ JSLite.fn.extend({
         });
         return JSLite(e).filter(selector || '*');
     },
-    contents: function() {
-        return this.map(function() { return this.contentDocument || slice.call(this.childNodes) })
+    contents: function(selector) {
+        return this.map(function() { 
+            return this.contentDocument || $.grep(this.childNodes,function(node){
+                return selector? $.matches(node,selector):node
+            }) 
+        })
     },
     parent: function(selector){return JSLite(JSLite.unique(this.pluck('parentNode'))).filter(selector||'*')},
-    parents: function(selector){
-        var ancestors=JSLite.sibling(this,'parentNode');
-        return selector == null ? JSLite(ancestors) : JSLite(ancestors).filter(selector);
-    },
+    parents: function(selector){return dir(this,selector,'parentNode')},
     closest: function(selector, context){
         var node = this[0], collection = false
         if (typeof selector == 'object') collection = JSLite(selector)
@@ -491,12 +482,8 @@ JSLite.fn.extend({
     next: function(selector){
         return JSLite(this.pluck('nextElementSibling')).filter(selector || '*')
     },
-    nextAll: function (selector) {
-        return JSLite(JSLite.sibling(this,'nextElementSibling')).filter(selector || '*');
-    },
-    prevAll: function (selector) {
-        return JSLite(JSLite.sibling(this,'previousElementSibling')).filter(selector || '*');
-    },
+    nextAll: function (selector) { return dir(this,selector,'nextElementSibling')},
+    prevAll: function (selector) { return dir(this,selector,'previousElementSibling')},
     siblings: function(selector){
         var n=[];this.map(function(i,el){
             filter.call(el.parentNode.children, function(els, idx){
@@ -725,8 +712,8 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
     JSLite.fn[operator] = function(){
         var argType, nodes = JSLite.map(arguments, function(arg) {
                 argType = type(arg)
-                if(argType=="Function") arg = funcArg(this, arg)
-                return argType == "Object" || argType == "Array" || arg == null ? arg : fragment(arg)
+                if(argType=="function") arg = funcArg(this, arg)
+                return argType == "object" || argType == "array" || arg == null ? arg : fragment(arg)
             }),parent,script,copyByClone = this.length > 1
         if (nodes.length < 1) return this
         return this.each(function(_, target){
@@ -758,6 +745,7 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
     }
 });
 
+
 ;['width', 'height'].forEach(function(dimension){
     var dimensionProperty = dimension.replace(/./,dimension[0].toUpperCase())
     JSLite.fn[dimension]=function(value){
@@ -771,6 +759,23 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
         })
     }
 });
+
+var _JSLite = window.JSLite,
+    _$ = window.$;
+
+JSLite.noConflict = function( deep ) {
+    if ( window.$ === JSLite ) {
+        window.$ = _$;
+    }
+
+    if ( deep && window.JSLite === JSLite ) {
+        window.JSLite = _JSLite;
+    }
+
+    return JSLite;
+};
+
+window.JSLite = window.$ = JSLite;
 ;(function($){
     $.fn.extend({
         serializeArray:function(){
@@ -934,7 +939,6 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
               return new window.XMLHttpRequest();
             },
             processData:true,
-            async:true,
             complete:function(){},//要求执行回调完整（包括：错误和成功）
             // MIME类型的映射
             accepts:{
@@ -948,12 +952,12 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
             cache: true
         },
         param:function(obj,traditional,scope){
-            if($.type(obj) == "String") return obj;
+            if($.type(obj) == "string") return obj;
             var params = [],str='';
             params.add=function(key, value){
                 this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value== null?"":value))
             };
-            if(scope==true&&type(obj)=='Object') params.add(traditional,obj)
+            if(scope==true&&type(obj)=='object') params.add(traditional,obj)
             else {
                 for(var p in obj) {
                     var v = obj[p],str='',
@@ -961,8 +965,8 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
                             if (traditional) {
                                 if (traditional==true) return p;
                                 else{
-                                    if(scope&&type(obj)=='Array') return traditional
-                                    return traditional + "[" + ($.type(obj)=='Array'?"":p) + "]";
+                                    if(scope&&type(obj)=='array') return traditional
+                                    return traditional + "[" + ($.type(obj)=='array'?"":p) + "]";
                                 };
                             };
                             return p
@@ -1017,7 +1021,7 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
             return options.xhr()
         },
         ajax:function(options){
-            var key,settings,
+            var key,settings,name,
                 setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
                 appendQuery = function(url, query) {
                     if (query == '') return url
@@ -1079,20 +1083,16 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
             xhr.onreadystatechange = function(){
                 if (xhr.readyState == 4) {
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 0) {
-                        if (mime == 'application/json'&&!(/^\s*$/.test(xhr.responseText))) {
-                            var result, error = false;
-                                result = xhr.responseText
-                            try {
-                                if (settings.dataType == 'script')    (1,eval)(result)
-                                else if (settings.dataType == 'xml')  result = xhr.responseXML
-                                else if (settings.dataType == 'json') result = /^\s*$/.test(result) ? null : JSON.parse(result)
-                            } catch (e) { error = e }
+                        var result, error = false;
+                            result = xhr.responseText
+                        try {
+                            if (settings.dataType == 'script')    (1,eval)(result)
+                            else if (settings.dataType == 'xml')  result = xhr.responseXML
+                            else if (settings.dataType == 'json') result = /^\s*$/.test(result) ? null : JSON.parse(result)
+                        } catch (e) { error = e }
 
-                            if (error) errback(error, 'parsererror', xhr, settings);
-                            else callback(result, 'success', xhr);
-                        } else {
-                            callback(xhr.responseText, 'success', xhr)
-                        };
+                        if (error) errback(error, 'parsererror', xhr, settings);
+                        else callback(result, 'success', xhr);
                     } else {
                         settings.complete(xhr, error ? 'error' : 'success')
                     }
@@ -1101,7 +1101,8 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
             if (data&&data instanceof Object&&settings.type=='GET'){
                 data?settings.url =(settings.url.indexOf('?')>-1?settings.url +'&'+ data:settings.url +'?'+ data) :null;
             }
-            xhr.open(settings.type, settings.url, true);
+            var async = 'async' in settings ? settings.async : true
+            xhr.open(settings.type, settings.url, async);
             if (mime) xhr.setRequestHeader('Accept', mime);
             if (data instanceof Object && mime == 'application/json' ) data = JSON.stringify(data), content = content || 'application/json';
             for (name in headers) nativeSetHeader.apply(xhr, headers[name]);
@@ -1132,5 +1133,5 @@ JSLite.each( { scrollLeft: "pageXOffset", scrollTop: "pageYOffset" }, function( 
         }
     });
 })(JSLite);
-    return JSLite;
+return JSLite;
 }));

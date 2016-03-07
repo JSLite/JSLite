@@ -84,14 +84,14 @@ describe('utilities 实用工具', function (done) {
     })
 
     it('$.type() - 获取JavaScript 对象的类型。', function () {
-        expect($.type(true)).to.equal('Boolean');
-        expect($.type("div")).to.equal('String');
-        expect($.type(123)).to.equal('Number');
-        expect($.type({})).to.equal('Object');
-        expect($.type(function(){})).to.equal('Function');
-        expect($.type(undefined)).to.equal(undefined);
-        expect($.type(new RegExp())).to.equal("RegExp");
-        expect($.type(new Date())).to.equal("Date");
+        expect($.type(true)).to.equal('boolean');
+        expect($.type("div")).to.equal('string');
+        expect($.type(123)).to.equal('number');
+        expect($.type({})).to.equal('object');
+        expect($.type(function(){})).to.equal('function');
+        expect($.type(undefined)).to.equal('undefined');
+        expect($.type(new RegExp())).to.equal("regexp");
+        expect($.type(new Date())).to.equal("date");
     })
     // 暂时无法测试
     it('.is() - 判断当前匹配的元素集合中的元素，是否为一个选择器，DOM元素。', function () {

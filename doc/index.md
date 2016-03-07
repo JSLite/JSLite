@@ -331,6 +331,9 @@ $.map({"w":1,"c":2,"j":3},function(idx,item){
      return item
 }); 
 //⇒ ["w", "c", "j"]
+$.map(["w","c"],function(idx,item){
+     return idx
+}); //⇒ ["w", "c"]
 ```
 
 ### $.each
@@ -434,8 +437,8 @@ $.likeArray("222")  //⇒ true
 > 获取JavaScript 对象的类型。可能的类型有： `null` `undefined` `boolean` `number` `string` `function` `array` `date` `regexp` `object` `error` 。
 
 ```js
-$.type(true)  //⇒ Boolean
-$.type("div") //⇒ String
+$.type(true)  //⇒ boolean
+$.type("div") //⇒ string
 ```
 
 ### $.matches
@@ -528,11 +531,19 @@ $("div").get(0)//⇒ 返回节点 <div id="box" class="boxOne box2 box3" ></div>
 > .index(selector)  
 > .index(element)
 
+```html 
+<ul>
+  <li id="foo">foo</li>
+  <li id="bar">bar</li>
+  <li id="baz">baz</li>
+</ul>
+```
+
 ```js
-$("#box").index()//⇒ 4
-$("div").index("#box")//⇒ 2
-$("div").index($("#box"))//⇒ 2
-$("div").index($("#box")[0])//⇒ 2
+$("#bar").index()//⇒ 1
+$("div").index("#bar")//⇒ 1
+$("div").index($("#baz"))//⇒ 2
+$("div").index($("#bar")[0])//⇒ 1
 ```
 
 ### indexOf
@@ -885,6 +896,7 @@ $("#box").find(".box")  //⇒后代节点的集合，返回匹配'.box' 的集�
 
 ```js
 $("#box").children()
+$("#box").children('span')
 //下面这种方法也可以的 CSS3 节点选择器 -_+
 $("#box *")
 ```
@@ -1144,7 +1156,8 @@ $("#box").click(function(){
 > 添加一个事件侦听器，当页面 `dom` 加载完毕 `DOMContentLoaded` 事件触发时触发。加载完毕执行，建议使用 `$(func)` 来代替这种用法。
 
 ```js
-$(document).ready(function(){
+$(document).ready(function(J){
+    // J === JSLite === $
     alert("当页面dom加载完毕执行");
     console.log($("#box"));
 })
@@ -1155,7 +1168,8 @@ $(document).ready(function(){
 
 ```js
 //或者使用下面方法代替ready
-$(function(){
+$(function($){
+    // J === JSLite === $
     console.log("当页面dom加载完毕执行");
 })
 ```

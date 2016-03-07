@@ -22,7 +22,6 @@
               return new window.XMLHttpRequest();
             },
             processData:true,
-            async:true,
             complete:function(){},//要求执行回调完整（包括：错误和成功）
             // MIME类型的映射
             accepts:{
@@ -36,12 +35,12 @@
             cache: true
         },
         param:function(obj,traditional,scope){
-            if($.type(obj) == "String") return obj;
+            if($.type(obj) == "string") return obj;
             var params = [],str='';
             params.add=function(key, value){
                 this.push(encodeURIComponent(key) + '=' + encodeURIComponent(value== null?"":value))
             };
-            if(scope==true&&type(obj)=='Object') params.add(traditional,obj)
+            if(scope==true&&type(obj)=='object') params.add(traditional,obj)
             else {
                 for(var p in obj) {
                     var v = obj[p],str='',
@@ -49,8 +48,8 @@
                             if (traditional) {
                                 if (traditional==true) return p;
                                 else{
-                                    if(scope&&type(obj)=='Array') return traditional
-                                    return traditional + "[" + ($.type(obj)=='Array'?"":p) + "]";
+                                    if(scope&&type(obj)=='array') return traditional
+                                    return traditional + "[" + ($.type(obj)=='array'?"":p) + "]";
                                 };
                             };
                             return p
@@ -105,14 +104,14 @@
             return options.xhr()
         },
         ajax:function(options){
-            var key,settings,
+            var key,settings,name,
                 setHeader = function(name, value) { headers[name.toLowerCase()] = [name, value] },
                 appendQuery = function(url, query) {
                     if (query == '') return url
                     return (url + '&' + query).replace(/[&?]{1,2}/, '?')
                 },
                 serializeData = function(options){
-                    if (options.processData && options.data && $.type(options.data) != "String")
+                    if (options.processData && options.data && $.type(options.data) != "string")
                         options.data = $.param(options.data, options.traditional)
                     if (options.data && (!options.type || options.type.toUpperCase() == 'GET'))
                         options.url = appendQuery(options.url, options.data), options.data = undefined
@@ -167,20 +166,16 @@
             xhr.onreadystatechange = function(){
                 if (xhr.readyState == 4) {
                     if ((xhr.status >= 200 && xhr.status < 300) || xhr.status == 0) {
-                        if (mime == 'application/json'&&!(/^\s*$/.test(xhr.responseText))) {
-                            var result, error = false;
-                                result = xhr.responseText
-                            try {
-                                if (settings.dataType == 'script')    (1,eval)(result)
-                                else if (settings.dataType == 'xml')  result = xhr.responseXML
-                                else if (settings.dataType == 'json') result = /^\s*$/.test(result) ? null : JSON.parse(result)
-                            } catch (e) { error = e }
+                        var result, error = false;
+                            result = xhr.responseText
+                        try {
+                            if (settings.dataType == 'script')    (1,eval)(result)
+                            else if (settings.dataType == 'xml')  result = xhr.responseXML
+                            else if (settings.dataType == 'json') result = /^\s*$/.test(result) ? null : JSON.parse(result)
+                        } catch (e) { error = e }
 
-                            if (error) errback(error, 'parsererror', xhr, settings);
-                            else callback(result, 'success', xhr);
-                        } else {
-                            callback(xhr.responseText, 'success', xhr)
-                        };
+                        if (error) errback(error, 'parsererror', xhr, settings);
+                        else callback(result, 'success', xhr);
                     } else {
                         settings.complete(xhr, error ? 'error' : 'success')
                     }
@@ -189,7 +184,8 @@
             if (data&&data instanceof Object&&settings.type=='GET'){
                 data?settings.url =(settings.url.indexOf('?')>-1?settings.url +'&'+ data:settings.url +'?'+ data) :null;
             }
-            xhr.open(settings.type, settings.url, true);
+            var async = 'async' in settings ? settings.async : true
+            xhr.open(settings.type, settings.url, async);
             if (mime) xhr.setRequestHeader('Accept', mime);
             if (data instanceof Object && mime == 'application/json' ) data = JSON.stringify(data), content = content || 'application/json';
             for (name in headers) nativeSetHeader.apply(xhr, headers[name]);
