@@ -103,14 +103,17 @@ function each(elements, callback) {
     }
     return elements;
 }
+
+var class2type = {}
+each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(i, name) {
+    class2type[ "[object " + name + "]" ] = name.toLowerCase();
+});
+
 function type(obj) {
-    var typeName = toString.call(obj).slice(8, -1);
-
-    var alias = { // 别名映射
-        'HTMLDivElement': 'Object'
-    };
-
-    return alias[typeName] || typeName;
+    if ( obj == null ) return obj + "";
+    return typeof obj === "object" || typeof obj === "function" ?
+        class2type[ toString.call(obj) ] || "object" :
+        typeof obj;
 }
 
 function isFunction(fn) {
