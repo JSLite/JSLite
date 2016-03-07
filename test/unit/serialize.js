@@ -31,8 +31,17 @@ describe('serialize 序列化。', function () {
     // 还没有找到测试方法
     it('.getUrlParam() 获取 url 参数的值。', function () {
 
-        // document.location.hash='?param=2'
+        // document.location.search='?id=22&name=%E4%B8%AD%E6%96%87&DEBUG'
+        var search = '?id=22&name=%E4%B8%AD%E6%96%87&DEBUG'
+        assert.equal( $.getUrlParam('id', search),   '22')
+        assert.equal( $.getUrlParam('name', search), '中文')
+        assert.equal( $.getUrlParam('DEBUG', search), undefined)
 
+        var params = $.getUrlParam(null, search)
+        assert.equal( params.id,   '22')
+        assert.equal( params.name, '中文')
+        assert.equal( params.DEBUG, undefined)
+        
     })
 
 
