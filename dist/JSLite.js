@@ -349,10 +349,20 @@ JSLite.extend({
         return array;
     },
     error:function(msg) {throw msg;},
-    getUrlParam:function (name) {
-        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"),
-        r = window.location.search.substr(1).match(reg);
-        if (r != null) return unescape(r[2]); return null;
+    getUrlParam: function(name, searchStr) {
+        // 兼容 ?id=22&name=%E4%B8%AD%E6%96%87&DEBUG 处理
+        var url = searchStr || location.search;
+        var params = {};
+
+        if (url.indexOf('?') != -1) {
+            var arr = url.substr(1).split('&');
+            for(var i = 0, l = arr.length; i < l; i ++) {
+                var kv = arr[i].split('=');
+                params[kv[0]] = kv[1] && decodeURIComponent(kv[1]); // 有值解码，无值 undefined
+            }
+        }
+
+        return name ? params[name] : params;
     },
     each:function(elements, callback){return each.apply(this,arguments);},
     map:function(elements, callback){
