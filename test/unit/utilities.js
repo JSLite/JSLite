@@ -135,4 +135,11 @@ describe('utilities 实用工具', function (done) {
         elm.innerHTML = ''
     })
 
+    it('$.camelCase  将样式属性字符转换成驼峰',function(){
+        expect( $.camelCase('padding-top') ).to.equal('paddingTop');
+        expect( $.camelCase('-webkit-border-radius') ).to.equal('WebkitBorderRadius');
+        expect( $.camelCase('-ms-border-radius') ).to.equal('msBorderRadius');
+        expect( $.camelCase('-moz-border-radius') ).to.equal('MozBorderRadius');
+    })
+
 })
