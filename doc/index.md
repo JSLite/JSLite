@@ -6,9 +6,7 @@ JSLite
 [![](https://img.shields.io/github/forks/JSLite/JSLite.svg?style=social)](https://img.shields.io/github/forks/JSLite/JSLite.svg) [![](https://img.shields.io/github/stars/JSLite/JSLite.svg?style=social)](https://github.com/JSLite/JSLite/stargazers) [![](https://img.shields.io/github/followers/jaywcjlove.svg?style=social)](https://github.com/jaywcjlove/followers)
 
 [![](https://img.shields.io/github/issues/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/issues) [![](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/JSLite/JSLite/master/MIT-LICENSE) [![](https://img.shields.io/github/release/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/releases) [![](https://travis-ci.org/JSLite/JSLite.svg?branch=master)](https://travis-ci.org/JSLite/JSLite)
-
-
-QQ交流群：397463673   
+  
 [segmentfault社区](http://segmentfault.com/t/jslite/blogs) | [官方网站](http://jslite.io) | [官方文档-更详细](http://jslite.io/API/) | [Issues](https://github.com/JSLite/JSLite/issues)  
 
 > 1. jQuery 的目标是兼容所有主流浏览器，这就意味着它的大量代码对移动端的浏览器是无用或者低效的。
@@ -447,6 +445,16 @@ $.type("div") //⇒ string
 
 ```js
 $.matches($("#box")[0], "#box")//⇒ true   
+```
+
+### $.camelCase
+> 将CSS样式属性字符转换成驼峰
+
+```js
+$.camelCase('padding-top') //⇒paddingTop
+$.camelCase('-webkit-border-radius') //⇒WebkitBorderRadius
+$.camelCase('-ms-border-radius') //⇒msBorderRadius
+$.camelCase('-moz-border-radius') //⇒MozBorderRadius
 ```
 
 ### is
