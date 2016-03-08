@@ -12,14 +12,9 @@ if (window&&!window.getComputedStyle) {
     window.getComputedStyle = function(el, pseudo) {
         this.el = el;
         this.getPropertyValue = function(prop) {
-            var re = /(\-([a-z]){1})/g;
             if (prop == 'float') prop = 'styleFloat';
-            if (re.test(prop)) {
-                prop = prop.replace(re, function () {
-                    return arguments[2].toUpperCase();
-                });
-            }
-            return el.currentStyle[prop] ? el.currentStyle[prop] : null;
+            prop = camelCase(prop);
+            return el.currentStyle[prop] || null;
         }
         return this;
     }
@@ -403,12 +398,7 @@ JSLite.extend({
         if(parent&&!node) return document.documentElement.contains(parent)
         return parent !== node && parent.contains(node)
     },
-    camelCase:function(string){
-        // Support: IE9-11+
-        return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z])/g, function( all, letter ) {
-            return letter.toUpperCase();
-        });
-    },
+    camelCase:camelCase,
     now:Date.now
 });
 
@@ -611,8 +601,8 @@ JSLite.fn.extend({
     hasClass:function(name){
         if (!name) return false
         return emptyArray.some.call(this, function(el){
-            return this.test(el.className)
-        }, new RegExp('(^|\\s)' + name + '(\\s|$)'));
+            return (' ' + el.className + ' ').indexOf(this) > -1
+        }, ' ' + name + ' ');
     },
     addClass:function(name){
         if (!name) return this;
@@ -1124,8 +1114,7 @@ window.JSLite = window.$ = JSLite;
     $.fn.extend({
         load:function (url, data, success) {
             //兼容 onload 事件
-            if (arguments[0] && typeof arguments[0] !== "string" && _load ) return _load.apply( this, arguments );
-            console.log("test")
+            if (arguments[0] && typeof arguments[0] !== 'string' && _load ) return _load.apply( this, arguments );
             if (!this.length || arguments.length === 0) return this
             var self = this, parts = arguments[0].split(/\s/), selector,
                 options = parseArguments(url, data, success),
@@ -1134,7 +1123,7 @@ window.JSLite = window.$ = JSLite;
                 options.url = parts[0], selector = parts[1]
             }
             options.success = function(response){
-                response = response.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,'')
+                response = response.replace(/<(script)[^>]*>(|[\s\S]+?)<\/\1>/gi,'')
                 self.html(selector ? $('<div>').html(response).find(selector) : response)
                 callback && callback.apply(self, arguments)
             }

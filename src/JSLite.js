@@ -168,12 +168,7 @@ JSLite.extend({
         if(parent&&!node) return document.documentElement.contains(parent)
         return parent !== node && parent.contains(node)
     },
-    camelCase:function(string){
-        // Support: IE9-11+
-        return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z])/g, function( all, letter ) {
-            return letter.toUpperCase();
-        });
-    },
+    camelCase:camelCase,
     now:Date.now
 });
 
@@ -376,8 +371,8 @@ JSLite.fn.extend({
     hasClass:function(name){
         if (!name) return false
         return emptyArray.some.call(this, function(el){
-            return this.test(el.className)
-        }, new RegExp('(^|\\s)' + name + '(\\s|$)'));
+            return (' ' + el.className + ' ').indexOf(this) > -1
+        }, ' ' + name + ' ');
     },
     addClass:function(name){
         if (!name) return this;
