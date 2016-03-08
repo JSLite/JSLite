@@ -197,8 +197,7 @@
     $.fn.extend({
         load:function (url, data, success) {
             //兼容 onload 事件
-            if (arguments[0] && typeof arguments[0] !== "string" && _load ) return _load.apply( this, arguments );
-            console.log("test")
+            if (arguments[0] && typeof arguments[0] !== 'string' && _load ) return _load.apply( this, arguments );
             if (!this.length || arguments.length === 0) return this
             var self = this, parts = arguments[0].split(/\s/), selector,
                 options = parseArguments(url, data, success),
@@ -207,7 +206,7 @@
                 options.url = parts[0], selector = parts[1]
             }
             options.success = function(response){
-                response = response.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,'')
+                response = response.replace(/<(script)[^>]*>(|[\s\S]+?)<\/\1>/gi,'')
                 self.html(selector ? $('<div>').html(response).find(selector) : response)
                 callback && callback.apply(self, arguments)
             }
