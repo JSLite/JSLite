@@ -1,0 +1,7 @@
+node_modules/ 
+test/
+LOGO.png
+gulpfile.js
+src/
+bower.json
+dist/JSLite.min.js.gz
