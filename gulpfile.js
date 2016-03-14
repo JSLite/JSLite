@@ -35,7 +35,16 @@ gulp.task('script', function () {
             moduleName:"JSLite",
             sourceMap: true,
             dest: 'dist/JSLite.js',
-            useStrict: true
+            useStrict: true,
+            banner: (
+              '/*!\n' +
+              ' * JSLite JavaScript Library v' + package.version + '\n' + 
+              ' * http://JSLite.io\n *\n' + '' +
+              String(fs.readFileSync('./MIT-LICENSE')).trim().split('\n')
+                .map( (l,u) => u==0?` * ${l}`:``).join('') +
+              '\n * Date:' + new Date() +
+              '\n */'
+            )
         });
     });
 });
