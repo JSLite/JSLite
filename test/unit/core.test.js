@@ -119,4 +119,10 @@ describe('core ', function () {
         expect($.max(4,5)).to.equal(5);
     })
 
+    it('$.merge: 合并两个数组内容到第一个数组。', function(){
+        var first = [1,23,45], second = [23,"23"]
+        var newarr = $.merge(first,second);
+        expect(newarr.length).to.equal(5);
+    })
+
 })
