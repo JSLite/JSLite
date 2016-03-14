@@ -96,6 +96,16 @@ JSLite.extend({
             }
         }
         return elements;
+    },
+    // 合并两个数组内容到第一个数组。
+    // 只做合并，不过滤
+    merge: function( first, second ) {
+        var i = first.length;
+        for (let j =0 ; j < +second.length; j++ ) {
+            first[ i++ ] = second[ j ];
+        }
+        first.length = i;
+        return first;
     }
 })
 
