@@ -1,3 +1,10 @@
+/*!
+ * JSLite JavaScript Library v1.1.10
+ * http://JSLite.io
+ *
+ * Copyright (c) 2015-2016 kenny.wang
+ * Date:Mon Mar 14 2016 13:42:08 GMT+0800 (CST)
+ */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
     typeof define === 'function' && define.amd ? define(factory) :
