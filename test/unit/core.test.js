@@ -53,7 +53,7 @@ describe('core ', function () {
         expect($.type(new Date())).to.equal("date");
     })
 
-    it('each: 遍历一个 JSLite 集合对象，为每一个匹配元素执行一个函数。', function(){
+    it('.each: 遍历一个 JSLite 集合对象，为每一个匹配元素执行一个函数。', function(){
         var elm = document.getElementById("test");
         elm.innerHTML = '<span></span><span></span><span></span>';
         var $span = $("#test span").each(function(idx,itm){
@@ -123,6 +123,17 @@ describe('core ', function () {
         var first = [1,23,45], second = [23,"23"]
         var newarr = $.merge(first,second);
         expect(newarr.length).to.equal(5);
+
+        var first = ['a','b','c'];
+        var second = ['d','e','f'];
+        expect( $.merge( $.merge([],first), second) ).to.deep.equal(["a","b","c","d","e","f"])
+    })
+
+    it('.get: 取得其中一个匹配的元素。', function(){
+        var elm = document.getElementById("test")
+            elm.innerHTML = '<div>Goodbye</div><div>JSLite</div>';
+
+            assert.lengthOf($('#test div').get(),2)
     })
 
 })
