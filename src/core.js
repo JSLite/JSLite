@@ -1,4 +1,4 @@
-import { JSLite, version } from './global/var.js';
+import { JSLite, version, slice } from './global/var.js';
 import { trimRE } from './global/regexp.js';
 import init from './core/init.js';
 import { isArrayLike, type, isDocument, isWindow, isFunction, isObject, isPlainObject, isString, inArray
@@ -111,6 +111,13 @@ JSLite.extend({
 
 JSLite.fn.extend({
     each: function(callback ){ return JSLite.each(this,callback);},
+    get: function(num) {
+        return num != null ?
+            // 返回集合中的一个元素
+            ( num < 0 ? this[ num + this.length ] : this[ num ] ) :
+            // 如果num不存在返回所有元素的原始数组
+            slice.call( this );
+    },
     eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
     ready: function(callback){
         if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(JSLite)

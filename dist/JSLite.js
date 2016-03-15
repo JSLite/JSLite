@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Tue Mar 15 2016 09:51:32 GMT+0800 (CST)
+ * Date:Tue Mar 15 2016 10:22:56 GMT+0800 (CST)
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -267,6 +267,13 @@
     JSLite.fn.extend({
         each: function each(callback) {
             return JSLite.each(this, callback);
+        },
+        get: function get(num) {
+            return num != null ?
+            // 返回集合中的一个元素
+            num < 0 ? this[num + this.length] : this[num] :
+            // 如果num不存在返回所有元素的原始数组
+            slice.call(this);
         },
         eq: function eq(idx) {
             return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, +idx + 1));
