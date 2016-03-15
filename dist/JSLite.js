@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Mon Mar 14 2016 13:42:08 GMT+0800 (CST)
+ * Date:Tue Mar 15 2016 09:51:32 GMT+0800 (CST)
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -251,6 +251,16 @@
                 }
             }
             return elements;
+        },
+        // 合并两个数组内容到第一个数组。
+        // 只做合并，不过滤
+        merge: function merge(first, second) {
+            var i = first.length;
+            for (var j = 0; j < +second.length; j++) {
+                first[i++] = second[j];
+            }
+            first.length = i;
+            return first;
         }
     });
 
