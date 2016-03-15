@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Tue Mar 15 2016 10:57:14 GMT+0800 (CST)
+ * Date:Tue Mar 15 2016 14:05:09 GMT+0800 (CST)
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -30,6 +30,7 @@
     var emptyArray = [];
     var slice = emptyArray.slice;
     var filter = emptyArray.filter;
+    var concat = emptyArray.concat;
     var some = emptyArray.some;
     var elementTypes = [1, 9, 11];
     var version = "1.1.10";
@@ -121,6 +122,13 @@
 
     function inArray(elem, array, i) {
         return array == null ? -1 : emptyArray.indexOf.call(array, elem, i);
+    }
+
+    function isEmptyObject(obj) {
+        for (var name in obj) {
+            return false;
+        }
+        return true;
     }
 
     var init = (function (selector, context) {
@@ -232,6 +240,7 @@
         isPlainObject: isPlainObject,
         isObject: isObject,
         inArray: inArray,
+        isEmptyObject: isEmptyObject,
         type: type,
         trim: function trim(text) {
             return text == null ? "" : (text + "").replace(trimRE, "");
@@ -252,6 +261,32 @@
             }
             return elements;
         },
+        // 默认将一个数组循环，处理之后成返回一个新的数组
+        map: function map(elems, callback, arg) {
+            var value,
+                i = 0,
+                ret = [];
+            // 如果是个数组，通过数组循环
+            if (isArrayLike(elems)) {
+                for (; i < elems.length; i++) {
+                    value = callback(elems[i], i, arg);
+
+                    if (value != null) {
+                        ret.push(value);
+                    }
+                }
+                // 如果是键值对，就通过键循环
+            } else {
+                    for (i in elems) {
+                        value = callback(elems[i], i, arg);
+
+                        if (value != null) {
+                            ret.push(value);
+                        }
+                    }
+                }
+            return emptyArray.concat.apply([], ret);
+        },
         // 合并两个数组内容到第一个数组。
         // 只做合并，不过滤
         merge: function merge(first, second) {
@@ -265,8 +300,16 @@
     });
 
     JSLite.fn.extend({
+        forEach: emptyArray.forEach,
+        concat: emptyArray.concat,
+        indexOf: emptyArray.indexOf,
         each: function each(callback) {
             return JSLite.each(this, callback);
+        },
+        map: function map(callback) {
+            return JSLite.map(this, function (elem, i) {
+                return callback.call(elem, i, elem);
+            });
         },
         get: function get(num) {
             return num != null ?
@@ -274,6 +317,9 @@
             num < 0 ? this[num + this.length] : this[num] :
             // 如果num不存在返回所有元素的原始数组
             slice.call(this);
+        },
+        size: function size() {
+            return this.length;
         },
         eq: function eq(idx) {
             return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, +idx + 1));

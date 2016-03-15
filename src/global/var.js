@@ -3,6 +3,7 @@ import { singleTagRE, fragmentRE, tagExpanderRE} from './regexp'
 var emptyArray = [];
 var slice = emptyArray.slice;
 var filter = emptyArray.filter;
+var concat = emptyArray.concat;
 var some = emptyArray.some;
 var emptyObject = {};
 var toString = emptyObject.toString;

@@ -1,12 +1,12 @@
-import { JSLite, version, slice } from './global/var.js';
+import { JSLite, version, slice, emptyArray } from './global/var.js';
 import { trimRE } from './global/regexp.js';
 import init from './core/init.js';
-import { isArrayLike, type, isDocument, isWindow, isFunction, isObject, isPlainObject, isString, inArray
+import { isArrayLike, type, isDocument, isWindow, isFunction, isObject, isPlainObject, isString, isEmptyObject, inArray
  } from './core/validator'
 
 JSLite.fn = JSLite.prototype = {
     jslite:version,
-    init:init
+    init:init,
 }
 
 //给init函数后实例化JSLite原型
@@ -79,6 +79,7 @@ JSLite.extend({
     isPlainObject:isPlainObject,
     isObject:isObject,
     inArray:inArray,
+    isEmptyObject:isEmptyObject,
     type:type,
     trim:(text) => text == null ? "" : ( text + "" ).replace( trimRE, "" ),
     each:function(elements, callback) {
@@ -97,6 +98,30 @@ JSLite.extend({
         }
         return elements;
     },
+    // 默认将一个数组循环，处理之后成返回一个新的数组
+    map: function( elems, callback, arg ) {
+        var value,i = 0,ret = [];
+        // 如果是个数组，通过数组循环
+        if ( isArrayLike( elems ) ) {
+            for ( ; i < elems.length; i++ ) {
+                value = callback( elems[ i ], i, arg );
+
+                if ( value != null ) {
+                    ret.push( value );
+                }
+            }
+        // 如果是键值对，就通过键循环
+        } else {
+            for ( i in elems ) {
+                value = callback( elems[ i ], i, arg );
+
+                if ( value != null ) {
+                    ret.push( value );
+                }
+            }
+        }
+        return emptyArray.concat.apply( [], ret );
+    },
     // 合并两个数组内容到第一个数组。
     // 只做合并，不过滤
     merge: function( first, second ) {
@@ -110,7 +135,15 @@ JSLite.extend({
 })
 
 JSLite.fn.extend({
+    forEach: emptyArray.forEach,
+    concat: emptyArray.concat,
+    indexOf: emptyArray.indexOf,
     each: function(callback ){ return JSLite.each(this,callback);},
+    map: function(callback){
+        return JSLite.map(this, function( elem, i ) {
+            return callback.call( elem, i, elem );
+        } )
+    },
     get: function(num) {
         return num != null ?
             // 返回集合中的一个元素
@@ -118,6 +151,7 @@ JSLite.fn.extend({
             // 如果num不存在返回所有元素的原始数组
             slice.call( this );
     },
+    size:function(){return this.length;},
     eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
     ready: function(callback){
         if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(JSLite)

@@ -41,6 +41,13 @@ function inArray(elem, array, i){
     return array == null ? -1 : emptyArray.indexOf.call( array, elem, i );
 }
 
+function isEmptyObject(obj){
+    for ( var name in obj ) {
+        return false;
+    }
+    return true;
+}
+
 export { 
     type, 
     isObject, 
@@ -50,5 +57,6 @@ export {
     isWindow, 
     isPlainObject, 
     isString,
+    isEmptyObject,
     inArray
 }
