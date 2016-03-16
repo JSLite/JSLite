@@ -145,6 +145,9 @@ JSLite.fn.extend({
             return callback.call( elem, i, elem );
         } )
     },
+    slice: function(){
+        return slice.apply( this, arguments )
+    },
     get: function(num) {
         return num != null ?
             // 返回集合中的一个元素

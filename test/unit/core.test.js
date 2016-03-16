@@ -194,8 +194,20 @@ describe('core ', function () {
     it('.toArray() - 把JSLite集合中所有DOM元素恢复成一个数组。', function () {
         var elm = document.getElementById("test")
         elm.innerHTML = '<div>J</div><div>S</div><div>L</div><div>i</div><div>t</div><div>e</div>';
-        assert.lengthOf($('#test div').toArray(),6)
-        assert.deepEqual($('#test div').toArray()[1].outerHTML,'<div>S</div>')
+        var toarr = $('#test div').toArray();
+        assert.lengthOf(toarr,6)
+        assert.deepEqual(toarr[1].outerHTML,'<div>S</div>')
+        expect(toarr).to.not.property('toArray');
+    })
+    
+    it('.slice(start, [end]) - 选取一个匹配的子集', function () {
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<p>Hello</p><p>cruel</p><p>World</p>';
+        var new_elm = $("#test p").slice(0, 1)
+        assert.deepEqual($("#test p").slice(0, 1)[0].outerHTML,'<p>Hello</p>');
+        assert.deepEqual($("#test p").slice(0, 2)[0].outerHTML,'<p>Hello</p>');
+        assert.deepEqual($("#test p").slice(0, 2)[1].outerHTML,'<p>cruel</p>');
+        assert.lengthOf($("#test p").slice(0, 2),2);
     })
     
     it('$.trim() - 去掉字符串起始和结尾的空格。', function () {

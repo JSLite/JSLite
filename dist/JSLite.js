@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Wed Mar 16 2016 22:19:45 GMT+0800 (CST)
+ * Date:Wed Mar 16 2016 22:30:49 GMT+0800 (CST)
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -170,8 +170,8 @@
         init: init
     };
 
-    //给init函数后实例化JSLite原型
-    JSLite.fn.init.prototype = JSLite.prototype;
+    // 给init函数后实例化JSLite原型
+    // JSLite.fn.init.prototype = JSLite.prototype;
 
     // 把对象合并为参数。
     // 对于一个深度的扩展，将第一个参数设置为“真”。
@@ -313,6 +313,9 @@
             return JSLite.map(this, function (elem, i) {
                 return callback.call(elem, i, elem);
             });
+        },
+        slice: function slice$$() {
+            return slice.apply(this, arguments);
         },
         get: function get(num) {
             return num != null ?
