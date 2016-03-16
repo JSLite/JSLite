@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Tue Mar 15 2016 14:05:09 GMT+0800 (CST)
+ * Date:Wed Mar 16 2016 22:19:45 GMT+0800 (CST)
  */
 (function (global, factory) {
     typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
@@ -303,6 +303,9 @@
         forEach: emptyArray.forEach,
         concat: emptyArray.concat,
         indexOf: emptyArray.indexOf,
+        toArray: function toArray() {
+            return this.get();
+        },
         each: function each(callback) {
             return JSLite.each(this, callback);
         },

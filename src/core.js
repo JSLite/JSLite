@@ -138,6 +138,7 @@ JSLite.fn.extend({
     forEach: emptyArray.forEach,
     concat: emptyArray.concat,
     indexOf: emptyArray.indexOf,
+    toArray: function(){ return this.get() },
     each: function(callback ){ return JSLite.each(this,callback);},
     map: function(callback){
         return JSLite.map(this, function( elem, i ) {

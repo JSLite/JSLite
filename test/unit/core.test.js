@@ -190,6 +190,13 @@ describe('core ', function () {
         var elm = document.getElementById("test")
         assert.lengthOf($('#test').concat('ww'),2)
     })
+
+    it('.toArray() - 把JSLite集合中所有DOM元素恢复成一个数组。', function () {
+        var elm = document.getElementById("test")
+        elm.innerHTML = '<div>J</div><div>S</div><div>L</div><div>i</div><div>t</div><div>e</div>';
+        assert.lengthOf($('#test div').toArray(),6)
+        assert.deepEqual($('#test div').toArray()[1].outerHTML,'<div>S</div>')
+    })
     
     it('$.trim() - 去掉字符串起始和结尾的空格。', function () {
         assert.equal($.trim('hello JSLite.  '),'hello JSLite.')
