@@ -9,8 +9,8 @@ JSLite.fn = JSLite.prototype = {
     init:init,
 }
 
-//给init函数后实例化JSLite原型
-JSLite.fn.init.prototype = JSLite.prototype;
+// 给init函数后实例化JSLite原型
+// JSLite.fn.init.prototype = JSLite.prototype;
 
 // 把对象合并为参数。
 // 对于一个深度的扩展，将第一个参数设置为“真”。
