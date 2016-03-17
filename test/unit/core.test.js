@@ -142,6 +142,19 @@ describe('core ', function () {
             })
             assert.deepEqual(newarr, {"a":"ww","b":"JSLite"});
         })
+        
+        it('.map() - 遍历节点对象集合中的所有节点对象返回一个新的集合对象', function () {
+            var elm = document.getElementById("test");
+            elm.innerHTML = '<div>J</div><div>S</div><div>L</div><div>i</div><div>t</div><div>e</div>';
+            var itemarr = $("#test div").map(function(idx,item){
+                assert.isNumber(idx, '不是数字！')
+                if(idx === 0 ) assert.deepEqual(item.outerHTML, '<div>J</div>')
+                if(idx === 3 ) assert.deepEqual(item.outerHTML, '<div>i</div>')
+                return item.innerText
+            });
+            assert.isArray(itemarr)
+            assert.equal(itemarr.join(''),'JSLite')
+        })
 
         it('$.map() - 通过遍历集合中的节点对象，通过函数返回一个新的数组，null 或 undefined 将被过滤掉。', function () {
             var elm = document.getElementById("test")
@@ -172,18 +185,19 @@ describe('core ', function () {
 
         })
 
-        it('.map() - 遍历节点对象集合中的所有节点对象返回一个新的集合对象', function () {
-            var elm = document.getElementById("test");
-            elm.innerHTML = '<div>J</div><div>S</div><div>L</div><div>i</div><div>t</div><div>e</div>';
-            var itemarr = $("#test div").map(function(idx,item){
-                assert.isNumber(idx, '不是数字！')
-                if(idx === 0 ) assert.deepEqual(item.outerHTML, '<div>J</div>')
-                if(idx === 3 ) assert.deepEqual(item.outerHTML, '<div>i</div>')
-                return item.innerText
-            });
-            assert.isArray(itemarr)
-            assert.equal(itemarr.join(''),'JSLite')
+        it('$.grep(array, callback, [invert]) - 使用过滤函数过滤数组元素。', function () {
+            var arr = $.grep( [0,1,2], function(n,i){return n != 0; });
+            assert.typeOf(arr, 'array');
+            assert.include(arr, 1);
+            assert.notInclude(arr, 0);
+            assert.lengthOf(arr, 2);
+            var arr = $.grep( [0,1,2,3,4,5,6], function(n,i){return n > 3; }, true);
+            assert.typeOf(arr, 'array');
+            assert.notInclude(arr, 4);
+            assert.notInclude(arr, 5);
+            assert.lengthOf(arr, 4);
         })
+
     })
     
     it('.concat() - 将一个数组对象或者一个对象，合并到JSLite数组对象中', function () {

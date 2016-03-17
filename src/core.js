@@ -122,6 +122,25 @@ JSLite.extend({
         }
         return emptyArray.concat.apply( [], ret );
     },
+    // 使用过滤函数过滤数组元素。
+    grep(elems, callback, invert){
+
+        var callbackInverse,
+            matches = [];
+            invert = !invert;
+
+        // 将循环到的值保存到 matches 数组中
+        for (let i = 0; i < elems.length; i++ ) {
+            // 返回 true 或者 false
+            callbackInverse = !callback( elems[ i ], i ,invert);
+            if ( callbackInverse !== invert ) {
+                matches.push( elems[ i ] );
+            }
+        }
+
+        return matches;
+
+    },
     // 合并两个数组内容到第一个数组。
     // 只做合并，不过滤
     merge( first, second ) {
