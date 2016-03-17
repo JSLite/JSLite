@@ -72,17 +72,17 @@ JSLite.extend = JSLite.fn.extend = function() {
 
 JSLite.extend({
     isArray:Array.isArray,
-    isString:isString,
-    isFunction:isFunction,
-    isDocument:isDocument,
-    isWindow:isWindow,
-    isPlainObject:isPlainObject,
-    isObject:isObject,
-    inArray:inArray,
-    isEmptyObject:isEmptyObject,
-    type:type,
-    trim:(text) => text == null ? "" : ( text + "" ).replace( trimRE, "" ),
-    each:function(elements, callback) {
+    isString,
+    isFunction,
+    isDocument,
+    isWindow,
+    isPlainObject,
+    isObject,
+    inArray, 
+    isEmptyObject, 
+    type,
+    trim(text){ return text == null ? "" : ( text + "" ).replace( trimRE, "" ) },
+    each(elements, callback) {
         if (isArrayLike(elements)) {
             for (let i = 0; i < elements.length; i++) {
                 if (callback.call(elements[i], i, elements[i]) === false) {
@@ -99,7 +99,7 @@ JSLite.extend({
         return elements;
     },
     // 默认将一个数组循环，处理之后成返回一个新的数组
-    map: function( elems, callback, arg ) {
+    map( elems, callback, arg ) {
         var value,i = 0,ret = [];
         // 如果是个数组，通过数组循环
         if ( isArrayLike( elems ) ) {
@@ -124,7 +124,7 @@ JSLite.extend({
     },
     // 合并两个数组内容到第一个数组。
     // 只做合并，不过滤
-    merge: function( first, second ) {
+    merge( first, second ) {
         var i = first.length;
         for (let j =0 ; j < +second.length; j++ ) {
             first[ i++ ] = second[ j ];
@@ -138,26 +138,26 @@ JSLite.fn.extend({
     forEach: emptyArray.forEach,
     concat: emptyArray.concat,
     indexOf: emptyArray.indexOf,
-    toArray: function(){ return this.get() },
-    each: function(callback ){ return JSLite.each(this,callback);},
-    map: function(callback){
+    toArray(){ return this.get() },
+    each(callback ){ return JSLite.each(this,callback);},
+    map(callback){
         return JSLite.map(this, function( elem, i ) {
             return callback.call( elem, i, elem );
         } )
     },
-    slice: function(){
+    slice(){
         return slice.apply( this, arguments )
     },
-    get: function(num) {
+    get(num) {
         return num != null ?
             // 返回集合中的一个元素
             ( num < 0 ? this[ num + this.length ] : this[ num ] ) :
             // 如果num不存在返回所有元素的原始数组
             slice.call( this );
     },
-    size:function(){return this.length;},
-    eq: function(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
-    ready: function(callback){
+    size(){return this.length;},
+    eq(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
+    ready(callback){
         if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(JSLite)
         else document.addEventListener('DOMContentLoaded', function(){callback(JSLite) }, false)
         return this

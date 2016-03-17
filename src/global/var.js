@@ -1,13 +1,13 @@
 import { singleTagRE, fragmentRE, tagExpanderRE} from './regexp'
 
-var emptyArray = [];
-var slice = emptyArray.slice;
-var filter = emptyArray.filter;
-var concat = emptyArray.concat;
-var some = emptyArray.some;
-var emptyObject = {};
-var toString = emptyObject.toString;
-var elementTypes = [1, 9, 11];
+let emptyArray = [];
+let slice = [].slice;
+let filter = [].filter;
+let concat = [].concat;
+let some = [].some;
+let emptyObject = {};
+let toString = emptyObject.toString;
+let elementTypes = [1, 9, 11];
 let version ="<@VERSION@>";
 
 var class2type = {}
