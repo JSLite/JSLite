@@ -62,7 +62,7 @@ describe('core ', function () {
         })
 
 
-        it('$.inArray(): 搜索数组中指定的值并返回它的索引（如果未找到返回-1）数字。', function(){
+        it('$.inArray(value,array,[fromIndex]): 搜索数组中指定的值并返回它的索引（如果未找到返回-1）数字。', function(){
             var arr = [ 4, "Pete", 8, "John" ];
             assert.equal($.inArray("John", arr), '3');
             assert.equal($.inArray(4, arr), '0');
@@ -142,7 +142,7 @@ describe('core ', function () {
             })
             assert.deepEqual(newarr, {"a":"ww","b":"JSLite"});
         })
-        
+
         it('.map() - 遍历节点对象集合中的所有节点对象返回一个新的集合对象', function () {
             var elm = document.getElementById("test");
             elm.innerHTML = '<div>J</div><div>S</div><div>L</div><div>i</div><div>t</div><div>e</div>';
@@ -227,6 +227,13 @@ describe('core ', function () {
     it('$.trim() - 去掉字符串起始和结尾的空格。', function () {
         assert.equal($.trim('hello JSLite.  '),'hello JSLite.')
         assert.equal($.trim('  hello JSLite.  '),'hello JSLite.')
+    })
+
+    it('$.camelCase(string)  将样式属性字符转换成驼峰',function(){
+        expect( $.camelCase('padding-top') ).to.equal('paddingTop');
+        expect( $.camelCase('-webkit-border-radius') ).to.equal('WebkitBorderRadius');
+        expect( $.camelCase('-ms-border-radius') ).to.equal('msBorderRadius');
+        expect( $.camelCase('-moz-border-radius') ).to.equal('MozBorderRadius');
     })
 
     it('$(document).ready() - 当DOM载入就绪可以查询及操纵时绑定一个要执行的函数。', function () {

@@ -1,7 +1,7 @@
 import { JSLite, version, slice, emptyArray } from './global/var.js';
 import { trimRE } from './global/regexp.js';
 import init from './core/init.js';
-import { isArrayLike, type, isDocument, isWindow, isFunction, isObject, isPlainObject, isString, isEmptyObject, inArray
+import { isArrayLike, type, isDocument, isWindow, isFunction, isObject, isPlainObject, isString, isEmptyObject, inArray, camelCase
  } from './core/validator'
 
 JSLite.fn = JSLite.prototype = {
@@ -81,6 +81,7 @@ JSLite.extend({
     inArray, 
     isEmptyObject, 
     type,
+    camelCase,
     trim(text){ return text == null ? "" : ( text + "" ).replace( trimRE, "" ) },
     each(elements, callback) {
         if (isArrayLike(elements)) {

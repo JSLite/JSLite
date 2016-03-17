@@ -48,6 +48,10 @@ function isEmptyObject(obj){
     return true;
 }
 
+function camelCase(string){
+    return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z])/g, ( all, letter ) => letter.toUpperCase() );
+}
+
 export { 
     type, 
     isObject, 
@@ -58,5 +62,6 @@ export {
     isPlainObject, 
     isString,
     isEmptyObject,
-    inArray
+    inArray,
+    camelCase
 }

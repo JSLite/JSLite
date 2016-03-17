@@ -102,6 +102,11 @@
         for (var name in obj) return false;
         return true;
     }
+    function camelCase(string) {
+        return string.replace(/^-ms-/, "ms-").replace(/-([a-z])/g, function(all, letter) {
+            return letter.toUpperCase();
+        });
+    }
     var init = function(selector, context) {
         var dom;
         if (!selector) //没有参数，返回空数组
@@ -169,6 +174,7 @@
         inArray: inArray,
         isEmptyObject: isEmptyObject,
         type: type,
+        camelCase: camelCase,
         trim: function(text) {
             return null == text ? "" : (text + "").replace(trimRE, "");
         },
