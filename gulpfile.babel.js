@@ -4,6 +4,7 @@ const uglify      = require('gulp-uglify');
 const rename      = require('gulp-rename');
 const header      = require('gulp-header');
 const sourcemap   = require('gulp-sourcemap');
+const gutil       = require('gulp-util');
 const babel       = require('rollup-plugin-babel');
 const replace     = require('rollup-plugin-replace');
 const fs          = require('fs');
@@ -54,7 +55,7 @@ gulp.task('script', () => {
                 }
             })
           ]
-      }))
+      }).on('error',gutil.log))
       // babel 一些奇怪的转化方式，需要通过 uglify 再转换一下
       .pipe(uglify({
         mangle:false,
@@ -85,12 +86,12 @@ gulp.task('script', () => {
         output: { 
             beautify: true 
         }
-      }))
+      }).on('error',gutil.log))
       .pipe(header(banner_str))
       .pipe(gulp.dest('dist'))
       .pipe(uglify({
         mangle: true
-      }))
+      }).on('error',gutil.log))
       .pipe(rename({
         extname: ".min.js"
       }))
@@ -100,7 +101,7 @@ gulp.task('script', () => {
           outSourceMap:'JSLite.js.map',
           sourceRoot:"http://jslite.io",
           write:'./dist/'
-      }))
+      }).on('error',gutil.log))
 });
 
 
