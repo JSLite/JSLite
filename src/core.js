@@ -131,7 +131,8 @@ JSLite.extend({
         }
         first.length = i;
         return first;
-    }
+    },
+    now: Date.now,
 })
 
 JSLite.fn.extend({
@@ -163,6 +164,22 @@ JSLite.fn.extend({
         return this
     }
 })
+
+var _JSLite = window.JSLite,
+    _$ = window.$;
+
+// 放弃 JSLite 控制的$ 变量为 $ 符号冲突弄一个解决方法
+JSLite.noConflict = ( deep ) => {
+    if ( window.$ === JSLite ) {
+        window.$ = _$;
+    }
+
+    if ( deep && window.JSLite === JSLite ) {
+        window.JSLite = _JSLite;
+    }
+
+    return JSLite;
+};
 
 
 export default JSLite;

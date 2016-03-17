@@ -256,6 +256,19 @@ describe('core ', function () {
             assert.equal($('#test div').get(0).outerHTML,'<div>Goodbye</div>')
     })
 
+    it('$.now: 返回一个数字，表示当前时间。', function(){
+        assert.isNumber($.now(),'返回错误');
+    })
 
+    it('$.noConflict() - 放弃 JSLite 控制的$ 变量。', function () {
+        $.noConflict();
+        JSLite(document).ready(function($) {
+            assert.property($,'noConflict');
+        });
+        assert.isUndefined($)
+        $ = JSLite.noConflict();
+        assert.isFunction($)
+        assert.property($,'noConflict');
+    })
 
 })

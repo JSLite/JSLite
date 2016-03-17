@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Thu Mar 17 2016 16:50:33 GMT+0800 (CST)
+ * Date:Thu Mar 17 2016 21:27:07 GMT+0800 (CST)
  */
 !function(global, factory) {
     "object" === typeof exports && "undefined" !== typeof module ? factory() : "function" === typeof define && define.amd ? define(factory) : factory();
@@ -198,7 +198,8 @@
             for (var j = 0; j < +second.length; j++) first[i++] = second[j];
             first.length = i;
             return first;
-        }
+        },
+        now: Date.now
     });
     JSLite.fn.extend({
         forEach: emptyArray.forEach,
@@ -236,5 +237,13 @@
             return this;
         }
     });
+    var _JSLite = window.JSLite;
+    var _$ = window.$;
+    // 放弃 JSLite 控制的$ 变量为 $ 符号冲突弄一个解决方法
+    JSLite.noConflict = function(deep) {
+        if (window.$ === JSLite) window.$ = _$;
+        if (deep && window.JSLite === JSLite) window.JSLite = _JSLite;
+        return JSLite;
+    };
     window.JSLite = window.$ = JSLite;
 });
