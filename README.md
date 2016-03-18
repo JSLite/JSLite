@@ -24,7 +24,13 @@ JSLite
 
 ```bash
 # 安装全局的 gulp
-$ npm install gulp -g && npm install 
+$ npm install && npm run build
+
+# 监听模式
+$ npm run watch
+
+# 如果不能执行build
+$ chmod +x .bin/build.sh
 
 # 在命令行中 － 查看测试结果
 # 进行单元测试
