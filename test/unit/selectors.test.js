@@ -223,4 +223,17 @@ describe('selectors 选择器', function () {
     })
     // it('::selection ::selection 选择被用户选取的元素部分。',function(){})
 
+    it('.first(): 获取第一个元素', function(){
+        var elm = document.getElementById('test').innerHTML='<ul> <li>list item 1</li> <li>list item 2</li> <li>list item 3</li> <li>list item 4</li> <li>list item 5</li> </ul>'
+        assert.lengthOf($('#test ul li').first(),1)
+        assert.equal($('#test ul li').first()[0].outerHTML,'<li>list item 1</li>')
+    })
+    
+    it('.last(): 获取最后一个元素', function(){
+        var elm = document.getElementById('test').innerHTML='<ul> <li>list item 1</li> <li>list item 2</li> <li>list item 3</li> <li>list item 4</li> <li>list item 5</li> </ul>';
+        assert.lengthOf($('#test ul li').last(),1);
+        assert.equal($('#test ul li').last()[0].outerHTML,'<li>list item 5</li>');
+        elm.innerHTML = '';
+    })
+
 })

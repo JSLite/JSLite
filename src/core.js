@@ -82,7 +82,7 @@ JSLite.extend({
     isEmptyObject, 
     type,
     camelCase,
-    trim(text){ return text == null ? "" : ( text + "" ).replace( trimRE, "" ) },
+    trim:(text) =>`${text == null ? "" : ( text + "" ).replace( trimRE, "" )}`,
     each(elements, callback) {
         if (isArrayLike(elements)) {
             for (let i = 0; i < elements.length; i++) {
@@ -182,7 +182,9 @@ JSLite.fn.extend({
         if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(JSLite)
         else document.addEventListener('DOMContentLoaded', function(){callback(JSLite) }, false)
         return this
-    }
+    },
+    first(){return this.eq( 0 )},
+    last(){return this.eq( -1 )}
 })
 
 var _JSLite = window.JSLite,

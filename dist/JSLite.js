@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Fri Mar 18 2016 16:38:26 GMT+0800 (CST)
+ * Date:Fri Mar 18 2016 22:59:29 GMT+0800 (CST)
  */
 !function(global, factory) {
     "object" === typeof exports && "undefined" !== typeof module ? factory() : "function" === typeof define && define.amd ? define(factory) : factory();
@@ -176,7 +176,7 @@
         type: type,
         camelCase: camelCase,
         trim: function(text) {
-            return null == text ? "" : (text + "").replace(trimRE, "");
+            return "" + (null == text ? "" : (text + "").replace(trimRE, ""));
         },
         each: function(elements, callback) {
             if (isArrayLike(elements)) {
@@ -253,6 +253,12 @@
                 callback(JSLite);
             }, false);
             return this;
+        },
+        first: function() {
+            return this.eq(0);
+        },
+        last: function() {
+            return this.eq(-1);
         }
     });
     var _JSLite = window.JSLite;
