@@ -1,5 +1,4 @@
 JSLite
-
 ---
 
 [![](https://img.shields.io/github/issues/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/issues)  [![](https://img.shields.io/github/forks/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/network) [![](https://img.shields.io/github/stars/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/stargazers) [![](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/JSLite/JSLite/master/MIT-LICENSE) [![](https://travis-ci.org/JSLite/JSLite.svg?branch=master)](https://travis-ci.org/JSLite/JSLite) [![](https://img.shields.io/github/release/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/releases)

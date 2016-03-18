@@ -2,7 +2,7 @@ import { JSLite, version, slice, emptyArray } from './global/var.js';
 import { trimRE } from './global/regexp.js';
 import init from './core/init.js';
 import { isArrayLike, type, isDocument, isWindow, isFunction, isObject, isPlainObject, isString, isEmptyObject, inArray, camelCase
- } from './core/validator'
+ } from './core/validator';
 
 JSLite.fn = JSLite.prototype = {
     jslite:version,

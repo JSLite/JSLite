@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Thu Mar 17 2016 21:27:07 GMT+0800 (CST)
+ * Date:Fri Mar 18 2016 16:38:26 GMT+0800 (CST)
  */
 !function(global, factory) {
     "object" === typeof exports && "undefined" !== typeof module ? factory() : "function" === typeof define && define.amd ? define(factory) : factory();
