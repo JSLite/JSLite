@@ -3,27 +3,12 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Mon Mar 21 2016 22:56:22 GMT+0800 (CST)
+ * Date:Tue Mar 22 2016 00:07:14 GMT+0800 (CST)
  */
 !function(global, factory) {
     "object" === typeof exports && "undefined" !== typeof module ? module.exports = factory() : "function" === typeof define && define.amd ? define(factory) : global.JSLite = factory();
 }(this, function() {
     "use strict";
-    // 匹配空格的正则表达式
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
-    var trimRE = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
-    // 只写了便签的开始或者结束 如 <div> 或者 <div/>
-    var singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/;
-    // HTML代码片断的正则
-    var fragmentRE = /^\s*<(\w+|!)[^>]*>/;
-    // 匹配非单独一个闭合标签的标签，类似将<div></div>写成了<div/>
-    var tagExpanderRE = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi;
-    // 正则匹配 id ，规则以 # 开头
-    var idRE = /^#([\w-]+)$/;
-    // 正则匹配 class 只包括下划线，换行空格等不包括，包括中文,日文,英文,韩文.
-    var classRE = /^\.([\w-]+)$/;
-    // 正则匹配 tag标签
-    var tagRE = /^[\w-]+$/;
     var emptyArray = [];
     var slice = [].slice;
     var elementTypes = [ 1, 9, 11 ];
@@ -59,27 +44,21 @@
     var JSLite = function JSLite(selector, context) {
         return new JSLite.prototype.init(selector, context);
     };
-    // fragment
-    // 需要一个HTML字符串和一个可选的标签名
-    // 生成DOM节点从给定的HTML字符串节点。
-    // 生成的DOM节点作为一个数组返回。
-    function fragment(html, name) {
-        var dom, container;
-        if (singleTagRE.test(html)) dom = JSLite(document.createElement(RegExp.$1));
-        if (!dom) {
-            if (html.replace) html = html.replace(tagExpanderRE, "<$1></$2>");
-            if (void 0 === name) name = fragmentRE.test(html) && RegExp.$1;
-            if (!(name in containers)) name = "*";
-            container = containers[name];
-            container.innerHTML = "" + html;
-            console.log(slice.call(container.childNodes));
-            // 取容器的子节点，这样就直接把字符串转成DOM节点了
-            dom = JSLite.each(slice.call(container.childNodes), function() {
-                container.removeChild(this);
-            });
-        }
-        return dom;
-    }
+    // 匹配空格的正则表达式
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim
+    var trimRE = /^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g;
+    // 只写了便签的开始或者结束 如 <div> 或者 <div/>
+    var singleTagRE = /^<(\w+)\s*\/?>(?:<\/\1>|)$/;
+    // HTML代码片断的正则
+    var fragmentRE = /^\s*<(\w+|!)[^>]*>/;
+    // 匹配非单独一个闭合标签的标签，类似将<div></div>写成了<div/>
+    var tagExpanderRE = /<(?!area|br|col|embed|hr|img|input|link|meta|param)(([\w:]+)[^>]*)\/>/gi;
+    // 正则匹配 id ，规则以 # 开头
+    var idRE = /^#([\w-]+)$/;
+    // 正则匹配 class 只包括下划线，换行空格等不包括，包括中文,日文,英文,韩文.
+    var classRE = /^\.([\w-]+)$/;
+    // 正则匹配 tag标签
+    var tagRE = /^[\w-]+$/;
     "Boolean Number String Function Array Date RegExp Object Error Symbol".split(" ").map(function(itm, idx) {
         class2type["[object " + itm + "]"] = itm.toLowerCase();
     });
@@ -126,6 +105,26 @@
     // 为函数的时候执行函数返回，返回函数返回的字符串
     function funcArg(context, arg, idx, payload) {
         return isFunction(arg) ? arg.call(context, idx, payload) : arg;
+    }
+    // fragment
+    // 需要一个HTML字符串和一个可选的标签名
+    // 生成DOM节点从给定的HTML字符串节点。
+    // 生成的DOM节点作为一个数组返回。
+    function fragment(html, name) {
+        var dom, container;
+        if (singleTagRE.test(html)) dom = JSLite(document.createElement(RegExp.$1));
+        if (!dom) {
+            if (html.replace) html = html.replace(tagExpanderRE, "<$1></$2>");
+            if (void 0 === name) name = fragmentRE.test(html) && RegExp.$1;
+            if (!(name in containers)) name = "*";
+            container = containers[name];
+            container.innerHTML = "" + html;
+            // 取容器的子节点，这样就直接把字符串转成DOM节点了
+            dom = JSLite.each(slice.call(container.childNodes), function() {
+                container.removeChild(this);
+            });
+        }
+        return dom;
     }
     // 将字符串格式化成 如border-width 样式上使用
     // 例如：paddingTop 转换成 padding-top
@@ -251,6 +250,11 @@
             for (var j = 0; j < +second.length; j++) first[i++] = second[j];
             first.length = i;
             return first;
+        },
+        // 一个DOM节点是否包含另一个DOM节点。
+        contains: function(parent, node) {
+            if (parent && !node) return document.documentElement.contains(parent);
+            return parent !== node && parent.contains(node);
         },
         error: function(msg) {
             throw msg;
@@ -389,7 +393,9 @@
             return JSLite.map(this, function(el) {
                 return el[property];
             });
-        },
+        }
+    });
+    JSLite.fn.extend({
         //操控CSS
         css: function css(property, value) {
             var elem = this[0];
@@ -416,6 +422,35 @@
                 for (var a in css) this.style[a] = css[a];
             });
         }
+    });
+    [ "after", "prepend", "before", "append" ].forEach(function(operator, operatorIndex) {
+        var inside = operatorIndex % 2;
+        JSLite.fn[operator] = function() {
+            var argType, parent, script, nodes = JSLite.map(arguments, function(arg) {
+                argType = type(arg);
+                if ("function" == argType) arg = funcArg(this, arg);
+                return "object" == argType || "array" == argType || null == arg ? arg : fragment(arg);
+            }), copyByClone = this.length > 1;
+            if (nodes.length < 1) return this;
+            return this.each(function(_, target) {
+                parent = inside ? target : target.parentNode;
+                target = 0 == operatorIndex ? target.nextSibling : 1 == operatorIndex ? target.firstChild : 2 == operatorIndex ? target : null;
+                var parentInDocument = JSLite.contains(document.documentElement, parent);
+                nodes.forEach(function(node) {
+                    var txt;
+                    if (copyByClone) node = node.cloneNode(true);
+                    parent.insertBefore(node, target);
+                    if (parentInDocument && null != node.nodeName && "SCRIPT" === node.nodeName.toUpperCase() && (!node.type || "text/javascript" === node.type) && !node.src) txt = node.innerHTML; else if (parentInDocument && node.children && node.children.length > 0 && JSLite(node) && (script = JSLite(node).find("script"))) if (script.length > 0) script.each(function(_, item) {
+                        txt = item.innerHTML;
+                    });
+                    txt ? window["eval"].call(window, txt) : void 0;
+                });
+            });
+        };
+        JSLite.fn[inside ? operator + "To" : "insert" + (operatorIndex ? "Before" : "After")] = function(html) {
+            JSLite(html)[operator](this);
+            return this;
+        };
     });
     window.JSLite = window.$ = JSLite;
     return JSLite;

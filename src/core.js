@@ -157,6 +157,11 @@ JSLite.extend({
         first.length = i;
         return first;
     },
+    // 一个DOM节点是否包含另一个DOM节点。
+    contains( parent, node){
+        if(parent&&!node) return document.documentElement.contains(parent)
+        return parent !== node && parent.contains(node)
+    },
     error(msg){throw msg},
     now: Date.now,
 })

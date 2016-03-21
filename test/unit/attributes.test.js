@@ -102,19 +102,45 @@ describe('attributes 获取和设置页面元素的 DOM 属性。', function () 
     })
 
 
-    it('.css() - 获取或设置节点对象的style样式内容。', function () {
+
+    it('.insertAfter() - 插入的对象集合中的元素到指定的每个元素后面的dom中。', function () {
 
         var elm = document.getElementById("test")
-            elm.innerHTML = '<div style="height:333px;">Goodbye</div>';
+            elm.innerHTML = '<div>Goodbye</div>';
+        expect($("div")).to.have.property('insertAfter');
+        expect($('<p>test</p>').insertAfter('#test div')[0].outerHTML).to.equal('<p>test</p>');
+        expect($('#test')[0].innerHTML).to.equal('<div>Goodbye</div><p>test</p>');
 
-        expect($("#test div")).to.have.property('css');
-        expect($("#test div").css(['color','background','height'])).to.eql({ color: '', background: '' ,"height": "333px"}); 
-        expect($("#test div").css('height')).to.equal('333px');
-        expect($("#test div").css({'color':'#fff','background':'red'})).to.have.length.above(0); 
-        expect($("#test div").css('color')).to.equal('rgb(255, 255, 255)');
-        expect($("#test div").css('color','')).to.have.length.above(0); 
-        expect($("#test div").css('color')).to.be.empty; 
+    })
+
+    it('.insertBefore() - 将生成的内容插入 selector 匹配的节点标签开始前。', function () {
+
+        var elm = document.getElementById("test")
+            elm.innerHTML = '<div>Goodbye</div>';
+        expect($("div")).to.have.property('insertBefore');
+        expect($('<p>test</p>').insertBefore('#test div')[0].outerHTML).to.equal('<p>test</p>');
+
+    })
+
+    it('.prepend() - 插入到标签开始标记之后（里面的第一个）。', function () {
+
+        var elm = document.getElementById("test")
+            elm.innerHTML = '<div>Goodbye</div>';
+        expect($("div")).to.have.property('prepend');
+        expect($("#test div").prepend("dd")[0].outerHTML).to.have.equal('<div>ddGoodbye</div>');
+        expect($("#test div").prepend(function(){return "www";})[0].outerHTML).to.have.equal('<div>wwwddGoodbye</div>');
+
+    })
+
+    it('.prependTo() - 将生成的内容插入到匹配的节点标签开始标记之后。', function () {
+
+        var elm = document.getElementById("test")
+            elm.innerHTML = '<div>Goodbye</div>';
+        expect($("div")).to.have.property('prependTo');
+        expect($("<div>s</div>").prependTo("#test")[0].outerHTML).to.have.equal('<div>s</div>');
+        expect($("#test")[0].outerHTML).to.have.equal('<div id="test"><div>s</div><div>Goodbye</div></div>');
         elm.innerHTML = '';
+
     })
 
 })

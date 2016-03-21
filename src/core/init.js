@@ -1,6 +1,6 @@
-import { JSLite, slice, emptyArray, fragment, elementTypes } from '../global/var.js';
+import { JSLite, slice, emptyArray, elementTypes } from '../global/var.js';
 import { fragmentRE, idRE, classRE, tagRE } from '../global/regexp'
-import { type, isFunction } from './validator'
+import { type, fragment, isFunction } from './validator'
 
 export default function(selector,context){
     var dom ;

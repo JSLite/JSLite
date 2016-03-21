@@ -62,6 +62,13 @@ describe('core ', function () {
         })
 
 
+        it('$.contains(parent,node)  parent是否包含node节点对象。',function(){
+            var elm = document.getElementById("test");
+            elm.innerHTML = '<div>这是 div 元素中的文本。</div>';
+            expect($.contains($("#test")[0],$("#test div")[0])).to.be.true;
+        })
+
+
         it('$.inArray(value,array,[fromIndex]): 搜索数组中指定的值并返回它的索引（如果未找到返回-1）数字。', function(){
             var arr = [ 4, "Pete", 8, "John" ];
             assert.equal($.inArray("John", arr), '3');

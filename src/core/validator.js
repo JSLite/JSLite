@@ -1,4 +1,5 @@
-import { class2type,emptyArray } from '../global/var';
+import { JSLite, containers, class2type, emptyArray, slice } from '../global/var';
+import { singleTagRE, tagExpanderRE, fragmentRE} from '../global/regexp'
 
 "Boolean Number String Function Array Date RegExp Object Error Symbol".split(" ").map(function(itm,idx){
     class2type[ "[object " + itm + "]" ] = itm.toLowerCase();
@@ -59,6 +60,32 @@ function funcArg(context, arg, idx, payload) {
     return isFunction(arg) ? arg.call(context, idx, payload) : arg;
 }
 
+// fragment
+// 需要一个HTML字符串和一个可选的标签名
+// 生成DOM节点从给定的HTML字符串节点。
+// 生成的DOM节点作为一个数组返回。
+function fragment(html, name) {
+    var dom, container;
+    if (singleTagRE.test(html)) dom = JSLite(document.createElement(RegExp.$1));
+    if (!dom) {
+        if (html.replace) {
+            html = html.replace(tagExpanderRE, "<$1></$2>");
+        }
+        if (name === undefined) {
+            name = fragmentRE.test(html) && RegExp.$1;
+        }
+        if (!(name in containers)) {
+            name = '*';
+        }
+        container = containers[name];
+        container.innerHTML = '' + html;
+        // 取容器的子节点，这样就直接把字符串转成DOM节点了
+        dom = JSLite.each(slice.call(container.childNodes), function() {
+            container.removeChild(this);
+        });
+    }
+    return dom;
+}
 
 // 将字符串格式化成 如border-width 样式上使用
 // 例如：paddingTop 转换成 padding-top
@@ -83,5 +110,6 @@ export {
     inArray,
     camelCase,
     funcArg,
-    dasherize
+    dasherize,
+    fragment
 }
