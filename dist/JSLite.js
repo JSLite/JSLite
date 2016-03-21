@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Mon Mar 21 2016 21:20:39 GMT+0800 (CST)
+ * Date:Mon Mar 21 2016 22:15:20 GMT+0800 (CST)
  */
 !function(global, factory) {
     "object" === typeof exports && "undefined" !== typeof module ? module.exports = factory() : "function" === typeof define && define.amd ? define(factory) : global.JSLite = factory();
@@ -335,6 +335,47 @@
                     this[name] = void 0;
                     delete this[name];
                 } catch (e) {}
+            });
+        },
+        // 为每个匹配的元素添加指定的样式类名
+        addClass: function(name) {
+            if (!name) return this;
+            var classList, cls, newName;
+            return this.each(function(idx) {
+                classList = [], cls = this.className, newName = funcArg(this, name).trim();
+                newName.split(/\s+/).forEach(function(k) {
+                    if (!JSLite(this).hasClass(k)) classList.push(k);
+                }, this);
+                if (!newName) return this;
+                classList.length ? this.className = cls + (cls ? " " : "") + classList.join(" ") : null;
+            });
+        },
+        // 确定任何一个匹配元素是否有被分配给定的（样式）类。
+        hasClass: function(name) {
+            if (!name) return false;
+            return emptyArray.some.call(this, function(el) {
+                return (" " + el.className + " ").indexOf(this) > -1;
+            }, " " + name + " ");
+        },
+        // 为集合中匹配的元素删除一个属性
+        removeClass: function(name) {
+            var cls;
+            if (void 0 === name) return this.removeAttr("class");
+            return this.each(function(idx) {
+                cls = this.className;
+                funcArg(this, name, idx, cls).split(/\s+/).forEach(function(k) {
+                    cls = cls.replace(new RegExp("(^|\\s)" + k + "(\\s|$)"), " ").trim();
+                }, this);
+                cls ? this.className = cls : this.className = "";
+            });
+        },
+        toggleClass: function(name) {
+            if (!name) return this;
+            return this.each(function(idx) {
+                var w = JSLite(this), names = funcArg(this, name);
+                names.split(/\s+/g).forEach(function(cls) {
+                    w.hasClass(cls) ? w.removeClass(cls) : w.addClass(cls);
+                });
             });
         }
     });
