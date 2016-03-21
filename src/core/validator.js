@@ -59,6 +59,17 @@ function funcArg(context, arg, idx, payload) {
     return isFunction(arg) ? arg.call(context, idx, payload) : arg;
 }
 
+
+// 将字符串格式化成 如border-width 样式上使用
+// 例如：paddingTop 转换成 padding-top
+function dasherize(str) {
+    return str.replace(/::/g, '/')
+       .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
+       .replace(/([a-z\d])([A-Z])/g, '$1_$2')
+       .replace(/_/g, '-')
+       .toLowerCase()
+}
+
 export { 
     type, 
     isObject, 
@@ -71,5 +82,6 @@ export {
     isEmptyObject,
     inArray,
     camelCase,
-    funcArg
+    funcArg,
+    dasherize
 }

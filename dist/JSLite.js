@@ -3,7 +3,7 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Mon Mar 21 2016 22:15:20 GMT+0800 (CST)
+ * Date:Mon Mar 21 2016 22:56:22 GMT+0800 (CST)
  */
 !function(global, factory) {
     "object" === typeof exports && "undefined" !== typeof module ? module.exports = factory() : "function" === typeof define && define.amd ? define(factory) : global.JSLite = factory();
@@ -126,6 +126,11 @@
     // 为函数的时候执行函数返回，返回函数返回的字符串
     function funcArg(context, arg, idx, payload) {
         return isFunction(arg) ? arg.call(context, idx, payload) : arg;
+    }
+    // 将字符串格式化成 如border-width 样式上使用
+    // 例如：paddingTop 转换成 padding-top
+    function dasherize(str) {
+        return str.replace(/::/g, "/").replace(/([A-Z]+)([A-Z][a-z])/g, "$1_$2").replace(/([a-z\d])([A-Z])/g, "$1_$2").replace(/_/g, "-").toLowerCase();
     }
     function init(selector, context) {
         var dom;
@@ -369,6 +374,7 @@
                 cls ? this.className = cls : this.className = "";
             });
         },
+        // 在匹配的节点对象集合中的每个节点对象上添加或删除一个或多个样式类。
         toggleClass: function(name) {
             if (!name) return this;
             return this.each(function(idx) {
@@ -376,6 +382,38 @@
                 names.split(/\s+/g).forEach(function(cls) {
                     w.hasClass(cls) ? w.removeClass(cls) : w.addClass(cls);
                 });
+            });
+        },
+        // 获取对象集合中每一个元素的属性值。
+        pluck: function(property) {
+            return JSLite.map(this, function(el) {
+                return el[property];
+            });
+        },
+        //操控CSS
+        css: function css(property, value) {
+            var elem = this[0];
+            if (arguments.length < 2) {
+                if (!elem) return [];
+                if (!value && "string" == typeof property) return elem.style[property];
+                if (JSLite.isArray(property)) {
+                    var props = {};
+                    $.each(property, function(_, prop) {
+                        props[prop] = elem.style[camelCase(prop)];
+                    });
+                    return props;
+                }
+            }
+            var k, css = {};
+            if ("string" == typeof property) //当value的值为非零的 空不存在，删掉property样式
+            if (!value && 0 !== value) this.each(function() {
+                this.style.removeProperty(dasherize(property));
+            }); else css[dasherize(property)] = value; else for (k in property) if (!property[k] && 0 !== property[k]) this.each(function() {
+                this.style.removeProperty(dasherize(k));
+            }); else css[dasherize(k)] = property[k];
+            // 设置样式
+            return this.each(function() {
+                for (var a in css) this.style[a] = css[a];
             });
         }
     });
