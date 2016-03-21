@@ -2,7 +2,7 @@ import { JSLite, slice, emptyArray, fragment, elementTypes } from '../global/var
 import { fragmentRE, idRE, classRE, tagRE } from '../global/regexp'
 import { type, isFunction } from './validator'
 
-export default (selector,context) => {
+export default function(selector,context){
     var dom ;
 
     if (!selector) {

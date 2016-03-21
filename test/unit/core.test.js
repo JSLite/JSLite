@@ -236,6 +236,17 @@ describe('core ', function () {
         expect( $.camelCase('-moz-border-radius') ).to.equal('MozBorderRadius');
     })
 
+    it('$.globalEval(string)  执行代码的作用域为全局作用域。',function(){
+        var newVar = undefined;
+        function test() {
+          $.globalEval( "newVar = true" )
+        }
+        expect(window.newVar).to.be.undefined;
+        test();
+        expect(window.newVar).to.be.true;
+
+    })
+
     it('$(document).ready() - 当DOM载入就绪可以查询及操纵时绑定一个要执行的函数。', function () {
         var a = 3;
         var ready = $(document).ready(function(){++a; });

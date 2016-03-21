@@ -3,10 +3,10 @@
  * http://JSLite.io
  *
  * Copyright (c) 2015-2016 kenny.wang
- * Date:Fri Mar 18 2016 22:59:29 GMT+0800 (CST)
+ * Date:Mon Mar 21 2016 21:20:39 GMT+0800 (CST)
  */
 !function(global, factory) {
-    "object" === typeof exports && "undefined" !== typeof module ? factory() : "function" === typeof define && define.amd ? define(factory) : factory();
+    "object" === typeof exports && "undefined" !== typeof module ? module.exports = factory() : "function" === typeof define && define.amd ? define(factory) : global.JSLite = factory();
 }(this, function() {
     "use strict";
     // 匹配空格的正则表达式
@@ -39,6 +39,20 @@
         tfoot: table,
         td: tableRow,
         th: tableRow
+    };
+    var propMap = {
+        tabindex: "tabIndex",
+        readonly: "readOnly",
+        "for": "htmlFor",
+        "class": "className",
+        maxlength: "maxLength",
+        cellspacing: "cellSpacing",
+        cellpadding: "cellPadding",
+        rowspan: "rowSpan",
+        colspan: "colSpan",
+        usemap: "useMap",
+        frameborder: "frameBorder",
+        contenteditable: "contentEditable"
     };
     // 构造函数
     // 通过实例init函数，每次都构建新的init实例对象，来分隔this，避免交互混淆
@@ -102,12 +116,18 @@
         for (var name in obj) return false;
         return true;
     }
+    // 转换为驼峰式
     function camelCase(string) {
         return string.replace(/^-ms-/, "ms-").replace(/-([a-z])/g, function(all, letter) {
             return letter.toUpperCase();
         });
     }
-    var init = function(selector, context) {
+    // 处理arg为函数的的情况
+    // 为函数的时候执行函数返回，返回函数返回的字符串
+    function funcArg(context, arg, idx, payload) {
+        return isFunction(arg) ? arg.call(context, idx, payload) : arg;
+    }
+    function init(selector, context) {
         var dom;
         if (!selector) //没有参数，返回空数组
         dom = emptyArray, dom.selector = selector || "", dom.__proto__ = JSLite.fn.init.prototype; else if ("string" === type(selector) && (selector = selector.trim()) && "<" == selector[0] && fragmentRE.test(selector)) // 如果selector是一个 JSLite dome 实例，
@@ -123,7 +143,13 @@
         JSLite.extend(dom, JSLite.fn);
         dom.selector = selector || "";
         return dom;
-    };
+    }
+    function globalEval(code, doc) {
+        doc = doc || document;
+        var script = doc.createElement("script");
+        script.text = code;
+        doc.head.appendChild(script).parentNode.removeChild(script);
+    }
     JSLite.fn = JSLite.prototype = {
         jslite: version,
         init: init
@@ -174,7 +200,11 @@
         inArray: inArray,
         isEmptyObject: isEmptyObject,
         type: type,
+        // 转换为驼峰式
         camelCase: camelCase,
+        // 执行一段js代码
+        globalEval: globalEval,
+        // 去掉字符串起始和结尾的空格
         trim: function(text) {
             return "" + (null == text ? "" : (text + "").replace(trimRE, ""));
         },
@@ -216,6 +246,9 @@
             for (var j = 0; j < +second.length; j++) first[i++] = second[j];
             first.length = i;
             return first;
+        },
+        error: function(msg) {
+            throw msg;
         },
         now: Date.now
     });
@@ -259,6 +292,9 @@
         },
         last: function() {
             return this.eq(-1);
+        },
+        nodeName: function(elem, name) {
+            return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
         }
     });
     var _JSLite = window.JSLite;
@@ -269,5 +305,39 @@
         if (deep && window.JSLite === JSLite) window.JSLite = _JSLite;
         return JSLite;
     };
+    JSLite.fn.extend({
+        // 设置或返回被选元素的属性值。
+        attr: function(name, value) {
+            var result, k;
+            return "string" == typeof name && !(1 in arguments) ? !this.length || 1 !== this[0].nodeType ? void 0 : !(result = this[0].getAttribute(name)) && name in this[0] ? this[0][name] : result : this.each(function(n) {
+                if (isObject(name)) for (k in name) this.setAttribute(k, name[k]); else this.setAttribute(name, funcArg(this, value));
+            });
+        },
+        // 从每一个匹配的元素中删除一个属性
+        removeAttr: function(name) {
+            return this.each(function() {
+                1 === this.nodeType && this.removeAttribute(name);
+            });
+        },
+        // 获取在匹配的元素集中的第一个元素的属性值。
+        prop: function(name, value) {
+            name = propMap[name] || name;
+            return 1 in arguments ? this.each(function(idx) {
+                this[name] = funcArg(this, value, idx, this[name]);
+            }) : this[0] && this[0][name];
+        },
+        // 用来删除由.prop()方法设置的属性集
+        removeProp: function(name) {
+            name = propMap[name] || name;
+            return this.each(function() {
+                // 在IE中处理window属性可能报错
+                try {
+                    this[name] = void 0;
+                    delete this[name];
+                } catch (e) {}
+            });
+        }
+    });
     window.JSLite = window.$ = JSLite;
+    return JSLite;
 });

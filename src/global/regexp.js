@@ -13,6 +13,8 @@ let idRE = /^#([\w-]+)$/
 let classRE = /^\.([\w-]+)$/
 // 正则匹配 tag标签
 let tagRE = /^[\w-]+$/
+// 全文查找出现的匹配所有大写字母字符
+let capitalRE = /([A-Z])/g;
 
 export { 
     trimRE, 
@@ -21,5 +23,6 @@ export {
     tagExpanderRE,
     classRE,
     tagRE,
-    idRE 
+    idRE,
+    capitalRE 
 }

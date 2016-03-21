@@ -48,8 +48,15 @@ function isEmptyObject(obj){
     return true;
 }
 
+// 转换为驼峰式
 function camelCase(string){
     return string.replace( /^-ms-/, "ms-" ).replace( /-([a-z])/g, ( all, letter ) => letter.toUpperCase() );
+}
+
+// 处理arg为函数的的情况
+// 为函数的时候执行函数返回，返回函数返回的字符串
+function funcArg(context, arg, idx, payload) {
+    return isFunction(arg) ? arg.call(context, idx, payload) : arg;
 }
 
 export { 
@@ -63,5 +70,6 @@ export {
     isString,
     isEmptyObject,
     inArray,
-    camelCase
+    camelCase,
+    funcArg
 }

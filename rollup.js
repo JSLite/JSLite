@@ -40,6 +40,7 @@ rollup({
         // iife – 使用于<script> 标签引用的方式
         // umd – 适用于CommonJs和AMD风格通用模式
         format: 'umd',
+        moduleName: 'JSLite',
         banner: banner_str
     })   
 } ).catch(function(err){

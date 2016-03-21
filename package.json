@@ -42,11 +42,11 @@
     "mocha-phantomjs": "~4.0.2"
   },
   "dependencies": {
-    "babel-preset-es2015-rollup": "^1.1.1",
-    "npm-watch": "^0.1.1",
-    "rollup": "^0.25.4",
-    "rollup-plugin-babel": "^2.4.0",
-    "rollup-plugin-replace": "^1.1.0",
-    "uglify-js": "^2.6.2"
+    "babel-preset-es2015-rollup": "~1.1.1",
+    "npm-watch": "~0.1.1",
+    "rollup": "~0.25.4",
+    "rollup-plugin-babel": "~2.4.0",
+    "rollup-plugin-replace": "~1.1.0",
+    "uglify-js": "~2.6.2"
   }
 }

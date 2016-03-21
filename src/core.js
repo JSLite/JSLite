@@ -1,6 +1,7 @@
 import { JSLite, version, slice, emptyArray } from './global/var.js';
-import { trimRE } from './global/regexp.js';
 import init from './core/init.js';
+import { trimRE } from './global/regexp.js';
+import globalEval from './core/globalEval.js';
 import { isArrayLike, type, isDocument, isWindow, isFunction, isObject, isPlainObject, isString, isEmptyObject, inArray, camelCase
  } from './core/validator';
 
@@ -81,7 +82,11 @@ JSLite.extend({
     inArray, 
     isEmptyObject, 
     type,
+    // 转换为驼峰式
     camelCase,
+    // 执行一段js代码
+    globalEval,
+    // 去掉字符串起始和结尾的空格
     trim:(text) =>`${text == null ? "" : ( text + "" ).replace( trimRE, "" )}`,
     each(elements, callback) {
         if (isArrayLike(elements)) {
@@ -152,6 +157,7 @@ JSLite.extend({
         first.length = i;
         return first;
     },
+    error(msg){throw msg},
     now: Date.now,
 })
 
@@ -177,14 +183,15 @@ JSLite.fn.extend({
             slice.call( this );
     },
     size(){return this.length;},
-    eq(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1))},
+    eq(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1)); },
     ready(callback){
         if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(JSLite)
         else document.addEventListener('DOMContentLoaded', function(){callback(JSLite) }, false)
         return this
     },
     first(){return this.eq( 0 )},
-    last(){return this.eq( -1 )}
+    last(){return this.eq( -1 )},
+    nodeName:(elem, name) => elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase()
 })
 
 var _JSLite = window.JSLite,

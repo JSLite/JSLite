@@ -23,6 +23,20 @@ let containers = {
     'td': tableRow,
     'th': tableRow
 }
+let propMap = {
+    'tabindex': 'tabIndex',
+    'readonly': 'readOnly',
+    'for': 'htmlFor',
+    'class': 'className',
+    'maxlength': 'maxLength',
+    'cellspacing': 'cellSpacing',
+    'cellpadding': 'cellPadding',
+    'rowspan': 'rowSpan',
+    'colspan': 'colSpan',
+    'usemap': 'useMap',
+    'frameborder': 'frameBorder',
+    'contenteditable': 'contentEditable'
+}
 
 // 构造函数
 // 通过实例init函数，每次都构建新的init实例对象，来分隔this，避免交互混淆
@@ -56,4 +70,4 @@ function fragment(html, name) {
     return dom;
 }
 
-export { JSLite, version, emptyArray, slice, filter, some, emptyObject, toString, elementTypes, fragment, class2type }
+export { JSLite, version, emptyArray, slice, filter, some, emptyObject, toString, elementTypes, fragment, class2type, propMap }
