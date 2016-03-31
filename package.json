@@ -16,7 +16,7 @@
     },
     "licenses": "MIT",
     "idoc": {
-        "theme": "default",
+        "theme": "handbook",
         "md": [
             "接口文档.md",
             "关于.md"
