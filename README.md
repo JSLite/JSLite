@@ -14,9 +14,8 @@
 让web开发更迅速，下载执行更快、量级更轻，针对现代高级浏览器的JavaScript库。 推进前端开发标准对于攻城师来说，人人有责。  
 
 **如有疑问欢迎到这些地方交流：**  
-
-QQ交流群：397463673   
-[segmentfault社区](http://segmentfault.com/t/jslite/blogs) | [官方网站](http://jslite.io) | [官方文档-更详细](http://jslite.io/API/)
+  
+[segmentfault社区](http://segmentfault.com/t/jslite/blogs) | [官方网站](http://jslite.io) 
 
 > 1. jQuery 的目标是兼容所有主流浏览器，这就意味着它的大量代码对移动端的浏览器是无用或者低效的。
 > 2. 而 JSLite 只针对先进浏览器(支持HTML5,CSS3)、移动端浏览器编写，使用js新方法实现jQuery API，因此体积更小、效率更高.
