@@ -18,10 +18,23 @@ JSLite
 [官方网站](http://jslite.io) | [官方文档-更详细](http://jslite.io/API/)
 
 
-## Test - 测试
+## 开发
 
 > 测试需要在系统上安装 `Node.js`的 `4.x` 以上版本。 
 
 ```bash
-$ npm install && npm run build
+# 安装依赖
+$ npm install 
+
+# 生成
+$ npm run build
+
+# 测试代码
+$ npm test
 ```
+
+## License
+
+[MIT](http://opensource.org/licenses/MIT)
+
+Copyright (c) 2014-2016 kenny.wang
