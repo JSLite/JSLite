@@ -23,20 +23,5 @@ JSLite
 > 测试需要在系统上安装 `Node.js`的 `4.x` 以上版本。 
 
 ```bash
-# 安装全局的 gulp
 $ npm install && npm run build
-
-# 监听模式
-$ npm run watch
-
-# 如果不能执行build
-$ chmod +x .bin/build.sh
-
-# 在命令行中 － 查看测试结果
-# 进行单元测试
-$ npm test 
-
-# 可以在浏览器中查看 － 编写预览测试结果
-# 打开 test/index.html
-$ open test/index.html
 ```

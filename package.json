@@ -15,7 +15,7 @@
     "browser",
     "javascript"
   ],
-  "author": "kenny wang <398188662@qq.com> (http://JSLite.io)",
+  "author": "kenny wang <wowohoo@qq.com> (http://JSLite.io)",
   "license": {
     "type": "MIT",
     "url": "http://jslite.io/license/"
@@ -30,23 +30,27 @@
   },
   "scripts": {
     "test": "mocha-phantomjs test/index.html",
-    "watch": "npm-watch",
-    "build":"./.bin/build.sh"
+    "build": "node ./build/build.js",
+    "dev": "webpack --watch --config build/webpack.dev.config.js"
   },
   "bugs": {
     "url": "https://github.com/JSLite/JSLite/issues"
   },
   "devDependencies": {
-    "chai": "~3.5.0",
-    "mocha": "~2.4.5",
-    "mocha-phantomjs": "~4.0.2"
-  },
-  "dependencies": {
-    "babel-preset-es2015-rollup": "~1.1.1",
-    "npm-watch": "~0.1.1",
-    "rollup": "~0.25.4",
-    "rollup-plugin-babel": "~2.4.0",
-    "rollup-plugin-replace": "~1.1.0",
-    "uglify-js": "~2.6.2"
+    "babel-core": "^6.8.0",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015-rollup": "^1.1.1",
+    "babel-runtime": "^6.6.1",
+    "bannerjs": "^1.0.1",
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "mocha-phantomjs": "^4.0.2",
+    "rollup": "^0.25.4",
+    "rollup-plugin-babel": "^2.4.0",
+    "rollup-plugin-replace": "^1.1.0",
+    "uglify-js": "^2.6.2",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1",
+    "zlib": "^1.0.5"
   }
 }
