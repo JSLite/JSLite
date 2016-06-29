@@ -1,7 +1,9 @@
+<img align="right" height="120" src="./doc/jslite.png">
+
 JSLite
 ---
 
-[![](https://img.shields.io/github/issues/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/issues)  [![](https://img.shields.io/github/forks/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/network) [![](https://img.shields.io/github/stars/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/stargazers) [![](https://jaywcjlove.github.io/sb/license/mit.svg)](https://raw.githubusercontent.com/JSLite/JSLite/master/MIT-LICENSE) [![](https://travis-ci.org/JSLite/JSLite.svg?branch=master)](https://travis-ci.org/JSLite/JSLite) [![](https://img.shields.io/github/release/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/releases) [![](http://jaywcjlove.github.io/sb/i/segmentfault.svg)](https://segmentfault.com/t/jslite) 
+[![](https://img.shields.io/github/issues/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/issues)  [![](https://img.shields.io/github/forks/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/network) [![](https://img.shields.io/github/stars/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/stargazers) [![](https://jaywcjlove.github.io/sb/license/mit.svg)](https://raw.githubusercontent.com/JSLite/JSLite/master/MIT-LICENSE) [![](https://travis-ci.org/JSLite/JSLite.svg?branch=master)](https://travis-ci.org/JSLite/JSLite) [![](https://img.shields.io/github/release/JSLite/JSLite.svg)](https://github.com/JSLite/JSLite/releases) [![](http://jaywcjlove.github.io/sb/ico/segmentfault.svg)](https://segmentfault.com/t/jslite) 
 
 ```
    __     ______     __         __     ______   ______    
@@ -15,7 +17,7 @@ JSLite
 - 尝试用ES6(初步使用ES6模块化)
 - 使用[Rollup.js](https://github.com/rollup/rollup) 打包
 
-[官方网站](http://jslite.io) | [官方文档-更详细](http://jslite.io/API/)
+[官方网站](http://jslite.io) 
 
 
 ## 开发
