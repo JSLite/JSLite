@@ -30,7 +30,7 @@
   },
   "scripts": {
     "test": "mocha-phantomjs test/index.html",
-    "lint": "eslint src/core/init.js",
+    "lint": "eslint src/**.js",
     "build": "node ./build/build.js",
     "dev": "webpack --watch --config build/webpack.dev.config.js"
   },
