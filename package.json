@@ -52,7 +52,6 @@
     "rollup-plugin-replace": "^1.1.0",
     "uglify-js": "^2.6.2",
     "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.14.1",
-    "zlib": "^1.0.5"
+    "webpack-dev-server": "^1.14.1"
   }
 }
