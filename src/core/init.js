@@ -1,6 +1,6 @@
 import { JSLite, slice, emptyArray, elementTypes } from '../global/var.js';
-import { fragmentRE, idRE, classRE, tagRE } from '../global/regexp'
-import { type, fragment, isFunction } from './validator'
+import { fragmentRE, idRE, classRE, tagRE } from '../global/regexp';
+import { type, fragment, isFunction } from './validator';
 
 export default function(selector,context){
     var dom ;
@@ -16,7 +16,7 @@ export default function(selector,context){
 
             // 如果selector是一个 JSLite dome 实例，
             // 如果它是一个HTML片段，从它创建节点
-            dom = fragment(selector, RegExp.$1, context),selector=null;
+        dom = fragment(selector, RegExp.$1, context),selector=null;
     } else if (isFunction(selector)) {
         //如果selector是个函数，则在DOM ready的时候执行它
         return JSLite(document).ready(selector);

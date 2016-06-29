@@ -7,8 +7,8 @@ import { isArrayLike, type, isDocument, isWindow, isFunction, isObject, isPlainO
 
 JSLite.fn = JSLite.prototype = {
     jslite:version,
-    init:init,
-}
+    init:init
+};
 
 // 给init函数后实例化JSLite原型
 // JSLite.fn.init.prototype = JSLite.prototype;
@@ -57,7 +57,7 @@ JSLite.extend = JSLite.fn.extend = function() {
                 if ( Object.prototype.hasOwnProperty.call( options, prop ) ) {
                     // 如果深度合并和属性是对象，合并属性
                     if ( deep && isPlainObject(target)) {
-                        target[prop] = extend( true, target[prop], options[prop] );
+                        target[prop] = JSLite.extend( true, target[prop], options[prop] );
                     } else {
                         target[prop] = options[prop];
                     }
@@ -68,7 +68,7 @@ JSLite.extend = JSLite.fn.extend = function() {
 
     // 返回修改过的对象
     return target;
-}
+};
 
 
 JSLite.extend({
@@ -129,11 +129,11 @@ JSLite.extend({
         return emptyArray.concat.apply( [], ret );
     },
     // 使用过滤函数过滤数组元素。
-    grep(elems, callback, invert){
+    grep(elems, callback, _invert){
 
         var callbackInverse,
-            matches = [];
-            invert = !invert;
+            matches = [],
+            invert = !_invert;
 
         // 将循环到的值保存到 matches 数组中
         for (let i = 0; i < elems.length; i++ ) {
@@ -159,26 +159,26 @@ JSLite.extend({
     },
     // 一个DOM节点是否包含另一个DOM节点。
     contains( parent, node){
-        if(parent&&!node) return document.documentElement.contains(parent)
-        return parent !== node && parent.contains(node)
+        if(parent&&!node) return document.documentElement.contains(parent);
+        return parent !== node && parent.contains(node);
     },
-    error(msg){throw msg},
-    now: Date.now,
-})
+    error(msg){throw msg;},
+    now: Date.now
+});
 
 JSLite.fn.extend({
     forEach: emptyArray.forEach,
     concat: emptyArray.concat,
     indexOf: emptyArray.indexOf,
-    toArray(){ return this.get() },
+    toArray(){ return this.get();},
     each(callback ){ return JSLite.each(this,callback);},
     map(callback){
         return JSLite.map(this, function( elem, i ) {
             return callback.call( elem, i, elem );
-        } )
+        } );
     },
     slice(){
-        return slice.apply( this, arguments )
+        return slice.apply( this, arguments );
     },
     get(num) {
         return num != null ?
@@ -190,14 +190,14 @@ JSLite.fn.extend({
     size(){return this.length;},
     eq(idx){return idx === -1 ? JSLite(this.slice(idx)) : JSLite(this.slice(idx, + idx + 1)); },
     ready(callback){
-        if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(JSLite)
-        else document.addEventListener('DOMContentLoaded', function(){callback(JSLite) }, false)
-        return this
+        if (/complete|loaded|interactive/.test(document.readyState) && document.body) callback(JSLite);
+        else document.addEventListener('DOMContentLoaded', function(){callback(JSLite); }, false);
+        return this;
     },
-    first(){return this.eq( 0 )},
-    last(){return this.eq( -1 )},
+    first(){return this.eq( 0 );},
+    last(){return this.eq( -1 );},
     nodeName:(elem, name) => elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase()
-})
+});
 
 var _JSLite = window.JSLite,
     _$ = window.$;

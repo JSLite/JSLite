@@ -1,19 +1,19 @@
 import { JSLite, containers, class2type, emptyArray, slice } from '../global/var';
-import { singleTagRE, tagExpanderRE, fragmentRE} from '../global/regexp'
+import { singleTagRE, tagExpanderRE, fragmentRE} from '../global/regexp';
 
-"Boolean Number String Function Array Date RegExp Object Error Symbol".split(" ").map(function(itm,idx){
+"Boolean Number String Function Array Date RegExp Object Error Symbol".split(" ").map(function(itm){
     class2type[ "[object " + itm + "]" ] = itm.toLowerCase();
-})
+});
 
 function type(obj) {
     // 不用 String(obj) 转字符串，为了兼容 Android <4.3 ，iOS < 8.4 
     // http://caniuse.com/#search=String
     return obj == null 
         ? obj + "" 
-        : class2type[toString.call(obj)] || "object"
+        : class2type[toString.call(obj)] || "object";
 }
 
-function isObject(obj){ return type(obj) == "object" }
+function isObject(obj){ return type(obj) == "object";}
 function isArrayLike(obj){
     return type(obj.length) == 'number';
 }
@@ -44,7 +44,7 @@ function inArray(elem, array, i){
 
 function isEmptyObject(obj){
     for ( var name in obj ) {
-        return false;
+        return name && false;
     }
     return true;
 }
@@ -94,7 +94,7 @@ function dasherize(str) {
        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1_$2')
        .replace(/([a-z\d])([A-Z])/g, '$1_$2')
        .replace(/_/g, '-')
-       .toLowerCase()
+       .toLowerCase();
 }
 
 export { 
@@ -112,4 +112,4 @@ export {
     funcArg,
     dasherize,
     fragment
-}
+};
