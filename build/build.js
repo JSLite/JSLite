@@ -5,7 +5,7 @@ var replace       = require('rollup-plugin-replace');
 var uglify        = require('uglify-js')
 var banner        = require('bannerjs');
 var pkg           = require('../package');
-var zlib          = require('zlib');
+// var zlib          = require('zlib');
 
 // var main = fs
 //   .readFileSync('src/global/var.js', 'utf-8')
@@ -85,10 +85,10 @@ function zip () {
   return new Promise(function (resolve, reject) {
     fs.readFile('dist/JSLite.min.js', function (err, buf) {
       if (err) return reject(err)
-      zlib.gzip(buf, function (err, buf) {
-        if (err) return reject(err)
-        write('dist/JSLite.min.js.gz', buf).then(resolve)
-      })
+      // zlib.gzip(buf, function (err, buf) {
+      //   if (err) return reject(err)
+      //   write('dist/JSLite.min.js.gz', buf).then(resolve)
+      // })
     })
   })
 }
