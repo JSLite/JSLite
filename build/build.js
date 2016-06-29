@@ -6,6 +6,8 @@ var uglify        = require('uglify-js')
 var banner        = require('bannerjs');
 var pkg           = require('../package');
 // var zlib          = require('zlib');
+// var targz          = require('tar.gz');
+var zlib = require('zlib');
 
 // var main = fs
 //   .readFileSync('src/global/var.js', 'utf-8')
@@ -81,14 +83,20 @@ function write (dest, code) {
   })
 }
 
+// 压缩 gz 文件
 function zip () {
   return new Promise(function (resolve, reject) {
     fs.readFile('dist/JSLite.min.js', function (err, buf) {
-      if (err) return reject(err)
-      // zlib.gzip(buf, function (err, buf) {
-      //   if (err) return reject(err)
-      //   write('dist/JSLite.min.js.gz', buf).then(resolve)
-      // })
+      if (err) return reject(err);
+      zlib.gzip(buf, function(err,buffer){
+        if (err) return reject(err);
+        var toFilePath = 'dist/JSLite.min.gz'
+        var gzip = zlib.createGzip();
+        var inp = fs.createReadStream('dist/JSLite.min.js');
+        var out = fs.createWriteStream(toFilePath);
+        inp.pipe(gzip).pipe(out);
+        console.log(blue(toFilePath) + ' ' + getSize(buffer));
+      })
     })
   })
 }
